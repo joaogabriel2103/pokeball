@@ -1,216 +1,130 @@
-// report-generator.js - Showcase Pro V22
-// Lógica de Relatório Profissional com Fundo Timbrado
+// report-generator.js - V30 (Full Detail Report)
 
-async function generatePDF(data) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-    });
-    
-    const COL_DARK = [33, 41, 54];
-    const COL_GRAY = [100, 116, 139];
-    const COL_GREEN = [217, 237, 19];
-    const COL_LIGHT = [248, 250, 252];
-
-    // --- 1. CARREGAMENTO DO FUNDO (TENTATIVA DUPLA) ---
-    const loadImage = (url) => {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.src = url;
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(url);
-        });
-    };
-
-    let bgImage = null;
-    try {
-        bgImage = await loadImage('/timbrado.jpg');
-    } catch (e1) {
+window.generatePDFBlob = async function(data) {
+    return new Promise(async (resolve, reject) => {
         try {
-            bgImage = await loadImage('/timbrado.jpg.jpg');
-        } catch (e2) {
-            console.warn("Papel timbrado não encontrado (nem .jpg nem .jpg.jpg).");
-            alert("Aviso: Papel timbrado não encontrado na pasta 'public'. O relatório será gerado com fundo branco.");
-        }
-    }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+            
+            const COL = { dark: [15,23,42], blue: [37,99,235], gray: [100,116,139], line: [200,200,200] };
+            
+            const loadImage = (src) => new Promise(r => { const i=new Image(); i.src=src; i.onload=()=>r(i); i.onerror=()=>r(null); });
+            const bg = await loadImage('/timbrado.jpg');
+            if(bg) doc.addImage(bg, 'JPEG', 0, 0, 210, 297);
 
-    // Função auxiliar para desenhar fundo em qualquer página
-    const drawBackground = () => {
-        if (bgImage) {
-            doc.addImage(bgImage, 'JPEG', 0, 0, 210, 297);
-        }
-    };
+            let y = 45;
+            
+            // Título e Status
+            doc.setFont("helvetica", "bold"); doc.setFontSize(20); doc.setTextColor(...COL.dark);
+            doc.text("Relatório de Produção Completo", 20, y);
+            
+            // Tag Status
+            doc.setFontSize(10); doc.setFillColor(...COL.blue); doc.setTextColor(255);
+            doc.roundedRect(150, y-7, 40, 8, 2, 2, 'F');
+            doc.text(String(data.status).toUpperCase(), 170, y-2, {align:'center'});
+            y += 15;
 
-    // Desenha fundo na primeira página
-    drawBackground();
+            // --- BLOCO 1: IDENTIFICAÇÃO COMPLETA ---
+            doc.setDrawColor(...COL.line); doc.setFillColor(250, 250, 250);
+            doc.roundedRect(20, y, 170, 35, 2, 2, 'FD');
+            
+            const pText = (lbl, val, x, curY) => {
+                doc.setFont("helvetica", "bold"); doc.setFontSize(7); doc.setTextColor(...COL.gray);
+                doc.text(lbl.toUpperCase(), x, curY+5);
+                doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(...COL.dark);
+                doc.text(String(val||'-'), x, curY+10);
+            };
 
-    // --- 2. CONTEÚDO DO RELATÓRIO ---
-    let y = 50;
+            pText("Cliente", data.client, 25, y);
+            pText("Produto", data.product, 85, y);
+            pText("Finalidade", data.purpose, 145, y);
+            
+            pText("Equipamento (Vendor/Model)", `${data.vendor||''} ${data.model||''}`, 25, y+15);
+            pText("Serial / Tag", data.serial, 85, y+15);
+            pText("Hostname", data.hostname, 145, y+15);
+            
+            y += 45;
 
-    // Cabeçalho
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.setTextColor(...COL_DARK);
-    doc.text("Relatório de Montagem", 20, y);
-    
-    y += 6;
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(...COL_GRAY);
-    doc.text(`Serial/Tag: ${data.serial || 'N/A'}`, 20, y);
-    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 140, y);
+            // --- BLOCO 2: HARDWARE DETALHADO (LISTA COMPLETA) ---
+            doc.setFont("helvetica", "bold"); doc.setFontSize(14); doc.setTextColor(...COL.blue);
+            doc.text("Inventário de Hardware", 20, y);
+            doc.line(20, y+2, 190, y+2);
+            y += 10;
 
-    y += 10;
+            // CPU/OS/IP
+            doc.setFontSize(9); doc.setTextColor(...COL.dark);
+            doc.text(`Processador: ${data.cpu || 'N/A'}`, 25, y); y += 5;
+            doc.text(`Sistema Operacional: ${data.os || 'N/A'}`, 25, y); y += 5;
+            doc.text(`IP Manutenção: ${data.qa_ip || 'N/A'}`, 25, y); y += 8;
 
-    // Bloco 1: Identificação
-    doc.setFillColor(...COL_LIGHT);
-    doc.setDrawColor(220);
-    doc.roundedRect(20, y, 170, 35, 3, 3, 'FD');
-    
-    y += 8;
-    const printField = (label, val, x, _y) => {
-        doc.setFont("helvetica", "bold");
-        doc.setTextColor(...COL_DARK);
-        doc.setFontSize(9);
-        doc.text(label, x, _y);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(50);
-        doc.text(String(val || '-').toUpperCase(), x, _y + 5);
-    };
+            // Helper de Lista
+            const renderList = (title, items, formatter) => {
+                if(items && items.length > 0) {
+                    if(y > 260) { doc.addPage(); if(bg) doc.addImage(bg,'JPEG',0,0,210,297); y=40; }
+                    doc.setFont("helvetica", "bold"); doc.text(title, 25, y); y+=5;
+                    doc.setFont("helvetica", "normal");
+                    items.forEach(item => {
+                        if(y > 275) { doc.addPage(); if(bg) doc.addImage(bg,'JPEG',0,0,210,297); y=40; }
+                        doc.text(`• ${formatter(item)}`, 30, y);
+                        y += 5;
+                    });
+                    y += 3;
+                }
+            };
 
-    printField("CLIENTE", data.client, 25, y);
-    printField("PRODUTO", data.product, 85, y);
-    printField("FINALIDADE", data.purpose, 145, y);
-    
-    y += 12;
-    printField("FABRICANTE / MODELO", `${data.vendor || ''} ${data.model || ''}`, 25, y);
-    printField("SISTEMA OPERACIONAL", data.os, 85, y);
-    printField("HOSTNAME", data.hostname, 145, y);
+            renderList("Memória RAM:", data.ram, (r) => `${r.gb}GB ${r.model||''} (S/N: ${r.serial||'N/A'})`);
+            renderList("Armazenamento (Discos):", data.disks, (d) => `${d.model||''} ${d.size||''} (S/N: ${d.serial||'N/A'})`);
+            renderList("Placas de Expansão:", data.cards, (c) => `${c.type||''} ${c.model||''} (S/N: ${c.serial||'N/A'})`);
 
-    y += 25;
+            y += 5;
 
-    // Bloco 2: Controle de Qualidade
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
-    doc.setTextColor(...COL_DARK);
-    doc.text("Controle de Qualidade & Rede", 20, y);
-    doc.setDrawColor(...COL_GREEN);
-    doc.setLineWidth(1);
-    doc.line(20, y+2, 85, y+2);
+            // --- BLOCO 3: HISTÓRICO (QUEM FEZ O QUE) ---
+            if(y > 240) { doc.addPage(); if(bg) doc.addImage(bg,'JPEG',0,0,210,297); y=40; }
+            
+            doc.setFont("helvetica", "bold"); doc.setFontSize(14); doc.setTextColor(...COL.blue);
+            doc.text("Fluxo de Montagem & Responsáveis", 20, y);
+            doc.line(20, y+2, 190, y+2);
+            y += 10;
 
-    y += 10;
-    doc.setFontSize(10);
-    doc.setTextColor(...COL_DARK);
-    doc.text(`IP de Manutenção:`, 20, y);
-    doc.setFont("helvetica", "normal");
-    doc.text(data.qa_ip || 'Não definido', 60, y);
+            if(data.history && data.history.length) {
+                // Ordena cronológico (antigo -> novo) para mostrar o fluxo
+                const hist = [...data.history].sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+                
+                doc.setFillColor(245, 247, 250);
+                doc.rect(20, y, 170, 8, 'F');
+                doc.setFontSize(8); doc.setTextColor(...COL.gray);
+                doc.text("DATA/HORA", 25, y+5);
+                doc.text("RESPONSÁVEL", 70, y+5);
+                doc.text("AÇÃO", 120, y+5);
+                y += 10;
 
-    y += 8;
-    const qaItems = [
-        { label: "Teste Funcionalidade", val: data.qa_func },
-        { label: "Trilhos do Servidor", val: data.qa_rails },
-        { label: "Org. Cabos Internos", val: data.qa_cables },
-        { label: "Adesivos / Etiquetas", val: data.qa_stickers },
-        { label: "Validação DB/CFG", val: data.qa_db }
-    ];
+                hist.forEach((h, i) => {
+                    if(y > 275) { doc.addPage(); if(bg) doc.addImage(bg,'JPEG',0,0,210,297); y=40; }
+                    const d = new Date(h.timestamp).toLocaleString('pt-BR');
+                    doc.setTextColor(...COL.dark);
+                    doc.text(d, 25, y);
+                    doc.text(h.user || 'Sistema', 70, y);
+                    
+                    // Quebra de linha na mensagem
+                    const lines = doc.splitTextToSize(h.msg, 70);
+                    doc.text(lines, 120, y);
+                    y += (lines.length * 4) + 2;
+                });
+            }
 
-    let qaX = 20;
-    doc.setFontSize(9);
-    qaItems.forEach((item, i) => {
-        doc.setFillColor(item.val ? 16 : 200, item.val ? 185 : 200, item.val ? 129 : 200);
-        doc.circle(qaX, y - 1, 2, 'F');
-        doc.setTextColor(60);
-        doc.text(item.label, qaX + 4, y);
-        qaX += 65;
-        if (i === 2) { qaX = 20; y += 6; }
+            const pdfOutput = doc.output('datauristring');
+            resolve(pdfOutput);
+        } catch (e) { reject(e); }
     });
+};
 
-    y += 15;
-
-    // Bloco 3: Hardware
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
-    doc.setTextColor(...COL_DARK);
-    doc.text("Especificações de Hardware", 20, y);
-    doc.setDrawColor(...COL_GREEN);
-    doc.line(20, y+2, 85, y+2);
-
-    y += 10;
-    const addLine = (txt) => {
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(9);
-        doc.setTextColor(50);
-        doc.text("• " + txt, 25, y);
-        y += 5;
-    };
-
-    doc.setFont("helvetica", "bold"); doc.text("Processador:", 20, y); y+=5;
-    addLine(data.cpu || 'Padrão');
-    y += 2;
-
-    doc.setFont("helvetica", "bold"); doc.text("Memória RAM:", 20, y); y+=5;
-    if (data.ram && data.ram.length > 0) {
-        data.ram.forEach(r => addLine(`${r.gb}GB - ${r.model} (S/N: ${r.serial || '-'})`));
-    } else { addLine("Nenhum módulo registrado"); }
-    y += 2;
-
-    doc.setFont("helvetica", "bold"); doc.text("Armazenamento:", 20, y); y+=5;
-    if (data.disks && data.disks.length > 0) {
-        data.disks.forEach(d => addLine(`${d.size} - ${d.model} (S/N: ${d.serial || '-'})`));
-    } else { addLine("Nenhum disco registrado"); }
-    y += 2;
-
-    doc.setFont("helvetica", "bold"); doc.text("Placas Adicionais:", 20, y); y+=5;
-    if (data.cards && data.cards.length > 0) {
-        data.cards.forEach(c => addLine(`${c.type} - ${c.model} (S/N: ${c.serial || '-'})`));
-    } else { addLine("Nenhuma placa offboard"); }
-
-    y += 10;
-
-    // Bloco 4: Fotos
-    const renderPhotoBlock = (title, photos) => {
-        if (!photos || photos.length === 0) return;
-
-        if (y > 200) { doc.addPage(); drawBackground(); y = 40; }
-
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(12);
-        doc.setTextColor(...COL_DARK);
-        doc.text(title, 20, y);
-        y += 8;
-
-        let x = 20;
-        photos.forEach(src => {
-            if (x > 150) { x = 20; y += 55; }
-            if (y > 240) { doc.addPage(); drawBackground(); y = 40; x = 20; }
-
-            try {
-                doc.setDrawColor(200);
-                doc.rect(x, y, 50, 40); 
-                doc.addImage(src, 'JPEG', x+1, y+1, 48, 38);
-                x += 55;
-            } catch(e) { console.error('Erro ao adicionar foto', e); }
-        });
-        y += 55;
-    };
-
-    // Prepara Arrays de fotos
-    let pServer = Array.isArray(data.server_photos) ? data.server_photos : (data.server_photo ? [data.server_photo] : []);
-    let pBox = Array.isArray(data.box_photos) ? data.box_photos : (data.box_photo ? [data.box_photo] : []);
-
-    renderPhotoBlock("Fotos do Servidor", pServer);
-    renderPhotoBlock("Fotos da Caixa / Embalagem", pBox);
-
-    // Rodapé
-    const pageCount = doc.internal.getNumberOfPages();
-    for(let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(150);
-        doc.text(`Página ${i} de ${pageCount} - Showcase Pro Report`, 105, 290, { align: 'center' });
-    }
-
-    doc.save(`Relatorio_${data.serial || 'Montagem'}.pdf`);
+// Função wrapper para download direto
+window.generatePDF = async function(data) {
+    try {
+        const uri = await window.generatePDFBlob(data);
+        const a = document.createElement('a');
+        a.href = uri;
+        a.download = `Relatorio_${data.hostname || 'server'}.pdf`;
+        a.click();
+    } catch(e) { alert('Erro PDF: ' + e.message); }
 }

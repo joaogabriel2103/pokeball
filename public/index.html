@@ -3,104 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Showcase Pro - V22 Final</title>
+    <title>Showcase Pro - V29</title>
     <link rel="icon" href="data:,">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="report-generator.js"></script>
-    
     <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Orbitron', 'sans-serif'] }, 
-                    colors: { swc: { dark: '#0f172a', green: '#d9ed13', gray: '#334155', surface: '#f8fafc' }, noc: { bg: '#0b0c15', card: '#151621', accent: '#d9ed13' } } 
-                } 
-            } 
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Orbitron', 'sans-serif'] }, colors: { swc: { dark: '#0f172a', green: '#d9ed13', gray: '#334155', surface: '#f8fafc' }, noc: { bg: '#0b0c15', card: '#151621', accent: '#d9ed13' } }, animation: { 'fade-in': 'fadeIn 0.3s ease-in-out' }, keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } } } } } }
     </script>
-    
     <style>
-        .step-content { display: none; }
-        .step-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .custom-scrollbar::-webkit-scrollbar { width: 10px; height: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 6px; border: 2px solid #f1f5f9; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-        .details-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, opacity 0.3s ease-out; opacity: 0; }
-        .details-content.open { max-height: 1000px; opacity: 1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f1f5f9; }
-        
-        .chevron-icon { transition: transform 0.3s; }
-        .chevron-icon.rotate { transform: rotate(180deg); }
-        
-        .field-hidden { display: none !important; }
-        .field-required label::after { content: " *"; color: #ef4444; }
-
-        /* MODO TV */
-        body.tv-mode aside, body.tv-mode header { display: none !important; }
-        body.tv-mode main { height: 100vh; padding: 0; background-color: #0b0c15; color: white; }
-        body.tv-mode .view-section { max-width: 100%; padding: 2rem; height: 100vh; overflow: hidden; }
-        body.tv-mode .bg-white { background-color: #151621 !important; border-color: #2d2f3f !important; color: white !important; }
-        body.tv-mode .text-slate-800 { color: white !important; }
-        body.tv-mode .text-slate-500 { color: #94a3b8 !important; }
-        body.tv-mode .tv-number { font-family: 'Orbitron', sans-serif; color: #d9ed13; text-shadow: 0 0 10px rgba(217, 237, 19, 0.4); }
-        body.tv-mode #exit-tv-btn { display: block; }
-        .live-dot { width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } }
+        .step-content { display: none; } .step-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; } .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .details-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, opacity 0.3s ease-out; opacity: 0; } .details-content.open { max-height: 1000px; opacity: 1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f1f5f9; }
+        .chevron-icon { transition: transform 0.3s; } .chevron-icon.rotate { transform: rotate(180deg); }
+        .field-hidden { display: none !important; } .field-required label::after { content: " *"; color: #ef4444; }
+        #toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 100; display: flex; flex-direction: column; gap: 0.5rem; }
+        .toast { background: white; padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-left: 4px solid; transform: translateX(100%); transition: transform 0.3s ease-out; display: flex; align-items: center; gap: 0.75rem; min-width: 300px; }
+        .toast.show { transform: translateX(0); } .toast-success { border-color: #10b981; } .toast-error { border-color: #ef4444; } .toast-info { border-color: #3b82f6; }
+        body.tv-mode aside, body.tv-mode header { display: none !important; } body.tv-mode main { height: 100vh; padding: 0; background-color: #0b0c15; color: white; } body.tv-mode .view-section { max-width: 100%; padding: 2rem; height: 100vh; overflow: hidden; } body.tv-mode .bg-white { background-color: #151621 !important; border-color: #2d2f3f !important; color: white !important; } body.tv-mode .text-slate-800 { color: white !important; } body.tv-mode .text-slate-500 { color: #94a3b8 !important; } body.tv-mode .tv-number { font-family: 'Orbitron', sans-serif; color: #d9ed13; text-shadow: 0 0 10px rgba(217, 237, 19, 0.4); } body.tv-mode #exit-tv-btn { display: block; } .live-dot { width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; animation: pulse 2s infinite; } @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } }
     </style>
 </head>
 <body class="bg-gray-100 text-slate-800 font-sans h-screen flex overflow-hidden hidden" id="app-body">
-
-    <button id="exit-tv-btn" onclick="toggleTVMode()" class="fixed top-4 right-4 z-50 bg-red-600 text-white p-2 rounded-full opacity-0 hover:opacity-100 transition hidden shadow-xl" title="Sair do Modo TV"><i class="ph ph-x text-xl"></i></button>
+    <div id="toast-container"></div>
+    <button id="exit-tv-btn" onclick="toggleTVMode()" class="fixed top-4 right-4 z-50 bg-red-600 text-white p-3 rounded-full opacity-0 hover:opacity-100 transition hidden shadow-xl border-2 border-white" title="Sair do Modo TV"><i class="ph ph-x text-xl"></i></button>
 
     <aside class="w-64 bg-swc-dark text-white flex flex-col shadow-2xl z-30 flex-shrink-0">
         <div class="h-16 flex items-center px-6 border-b border-white/10 gap-3">
-            <div class="w-8 h-8 rounded-lg bg-swc-green text-swc-dark flex items-center justify-center font-bold text-lg shadow-lg shadow-swc-green/20">O</div>
-            <div><h1 class="font-bold text-base tracking-wide text-white">Showcase<span class="text-swc-green">Pro</span></h1></div>
+            <div class="w-8 h-8 rounded-lg bg-swc-green text-swc-dark flex items-center justify-center font-bold text-lg">O</div>
+            <h1 class="font-bold text-base tracking-wide text-white">Showcase<span class="text-swc-green">Pro</span></h1>
         </div>
-        
         <div class="px-6 py-4 border-b border-white/10 bg-white/5">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center font-bold text-swc-green border border-white/10" id="user-avatar">U</div>
-                <div class="overflow-hidden">
-                    <p class="text-sm font-bold text-white truncate" id="user-name">...</p>
-                    <p class="text-[10px] text-gray-400 truncate uppercase tracking-wider" id="user-role">...</p>
-                </div>
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center font-bold text-swc-green border border-white/10 shadow-inner" id="user-avatar">U</div>
+                <div class="overflow-hidden"><p class="text-sm font-bold text-white truncate" id="user-name">...</p><p class="text-[10px] text-gray-400 truncate uppercase tracking-wider" id="user-role">...</p></div>
             </div>
         </div>
-
         <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto custom-scrollbar">
             <p class="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2 mt-2">Visão Geral</p>
             <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-chart-pie-slice text-lg"></i><span class="text-sm">Relatórios</span></button>
-            
             <p class="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2 mt-4">Produção</p>
             <button onclick="navigateTo('pokeball')" id="nav-pokeball" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all group"><i class="ph ph-hard-drives text-lg group-hover:text-swc-green"></i><span class="text-sm font-medium">Servidores</span></button>
             <button onclick="navigateTo('rotom')" id="nav-rotom" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-check-square-offset text-lg"></i><span class="text-sm">Tarefas</span></button>
-            
             <p class="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2 mt-4">Gestão</p>
             <button onclick="navigateTo('rotines')" id="nav-rotines" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-arrows-clockwise text-lg"></i><span class="text-sm">Rotinas</span></button>
             <button onclick="navigateTo('tm')" id="nav-tm" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-book-bookmark text-lg"></i><span class="text-sm">Manuais</span></button>
             <button onclick="navigateTo('team')" id="nav-team" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-users text-lg"></i><span class="text-sm">Equipe</span></button>
             <button onclick="navigateTo('settings')" id="nav-settings" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-sliders text-lg"></i><span class="text-sm">Configurações</span></button>
         </nav>
-        
         <div class="p-4 border-t border-white/10"><button onclick="logout()" class="w-full flex items-center gap-2 text-red-400 hover:text-red-300 text-sm px-3 py-2 rounded-lg hover:bg-red-500/10 transition"><i class="ph ph-sign-out text-lg"></i> Sair</button></div>
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative transition-all duration-500">
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 shadow-sm z-10 flex-shrink-0">
-            <div id="header-left" class="flex items-center gap-4"></div>
-            <div id="header-action"></div>
+            <div id="header-left" class="flex items-center gap-4"></div><div id="header-action"></div>
         </header>
         <div class="flex-1 overflow-y-auto p-8 scroll-smooth relative custom-scrollbar">
-            
             <div id="view-dashboard" class="view-section hidden max-w-7xl mx-auto fade-in">
                 <div class="flex justify-between items-end mb-6">
                     <div><h2 class="text-2xl font-bold text-slate-800 tv-title">Visão Geral</h2><p class="text-sm text-slate-500 tv-text flex items-center gap-2"><span class="live-dot"></span> Atualizado em tempo real</p></div>
@@ -112,10 +72,6 @@
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-3xl"><i class="ph ph-users"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-team-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Equipe</p></div></div>
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Entregas</p></div></div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 h-80">
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card col-span-1 flex flex-col"><h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Status da Esteira</h4><div class="flex-1 relative"><canvas id="chartServers"></canvas></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card col-span-2 flex flex-col"><h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Produtividade da Equipe</h4><div class="flex-1 relative"><canvas id="chartTeam"></canvas></div></div>
-                </div>
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card"><h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Últimas Movimentações</h4><div id="dash-server-list" class="space-y-3"></div></div>
             </div>
 
@@ -124,16 +80,16 @@
                     <div><h3 class="text-2xl font-bold text-slate-800">Linha de Produção</h3><p class="text-sm text-slate-500">Acompanhamento de montagem.</p></div>
                     <div class="flex gap-2">
                          <input type="text" id="server-search" placeholder="Buscar..." onkeyup="applyServerFilter()" class="border p-2 rounded text-sm outline-none focus:ring-1 focus:ring-swc-green">
-                         <select id="server-filter" onchange="applyServerFilter()" class="border p-2 rounded text-sm bg-white outline-none"><option value="Todos">Todos</option><option value="Despachado">Concluídos</option></select>
+                         <select id="server-filter" onchange="applyServerFilter()" class="border p-2 rounded text-sm bg-white outline-none"><option value="Produção">Em Produção</option><option value="Concluído">Concluídos</option><option value="Todos">Todos</option></select>
                     </div>
                 </div>
-                <div id="servers-container" class="space-y-4"></div>
+                <div id="servers-container" class="space-y-4 pb-12"></div>
             </div>
 
-            <div id="view-rotom" class="view-section hidden max-w-7xl mx-auto fade-in"><div id="tasks-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div></div>
-            <div id="view-rotines" class="view-section hidden max-w-6xl mx-auto fade-in"><div id="rotines-list-container" class="grid grid-cols-1 gap-4"></div></div>
-            <div id="view-tm" class="view-section hidden max-w-6xl mx-auto fade-in"><div id="manuals-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
-            <div id="view-team" class="view-section hidden max-w-6xl mx-auto fade-in"><div id="team-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div></div>
+            <div id="view-rotom" class="view-section hidden max-w-7xl mx-auto fade-in"><div id="tasks-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pb-12"></div></div>
+            <div id="view-rotines" class="view-section hidden max-w-6xl mx-auto fade-in"><div id="rotines-list-container" class="grid grid-cols-1 gap-4 pb-12"></div></div>
+            <div id="view-tm" class="view-section hidden max-w-6xl mx-auto fade-in"><div id="manuals-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"></div></div>
+            <div id="view-team" class="view-section hidden max-w-6xl mx-auto fade-in"><div id="team-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-12"></div></div>
             
             <div id="view-settings" class="view-section hidden max-w-6xl mx-auto fade-in">
                 <div class="mb-8 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
@@ -143,12 +99,12 @@
                         <button onclick="saveCurrentWorkflow()" class="bg-swc-dark text-white px-4 py-2 rounded text-sm font-bold hover:bg-black transition">Salvar Fluxo</button>
                     </div>
                     <div id="workflow-editor" class="hidden bg-gray-50 p-4 rounded border border-gray-200">
-                        <p class="text-xs font-bold text-slate-500 uppercase mb-2">Etapas (Visibilidade & Obrigatoriedade)</p>
+                        <p class="text-xs font-bold text-slate-500 uppercase mb-2">Etapas</p>
                         <ul id="workflow-steps-list" class="space-y-3 mb-4"></ul>
                         <div class="flex gap-2"><input type="text" id="new-step-name" placeholder="Nome da nova etapa" class="border p-2 rounded text-sm flex-1"><button onclick="addWorkflowStep()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Adicionar</button></div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="settings-grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-12" id="settings-grid">
                      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Produtos <button onclick="addOption('product')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-product" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
                      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Finalidades <button onclick="addOption('purpose')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-purpose" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
                      <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Fabricantes <button onclick="addOption('vendor')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-vendor" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
@@ -165,7 +121,7 @@
     </div>
 
     <template id="tpl-server">
-        <div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl">
+        <div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full">
             <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-20 shadow-sm flex-shrink-0">
                 <div><h3 class="text-xl font-bold text-slate-800 flex items-center gap-2"><i class="ph ph-hard-drives text-swc-green"></i> <span id="modal-title">Ficha</span></h3></div>
                 <button onclick="closeModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors"><i class="ph ph-x text-lg"></i></button>
@@ -177,39 +133,17 @@
                         <div><label class="text-[10px] font-bold text-swc-green uppercase tracking-wider block mb-1.5">Status Atual</label><select id="inp-status" class="bg-slate-900 border border-slate-600 text-white text-sm rounded-lg p-2.5 w-72 font-semibold focus:ring-2 focus:ring-swc-green outline-none cursor-pointer transition-all hover:border-slate-500" onchange="updateServerFormState()"><option>Carregando...</option></select></div>
                         <i class="ph ph-conveyor-belt text-4xl text-slate-600 opacity-50"></i>
                     </div>
-                    
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-tag text-lg"></i> Identificação</h4><div class="mb-5 field-wrapper" id="wrapper-client"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Cliente <i class="ph ph-question text-blue-400 cursor-help" title="Nome do cliente"></i></label><input type="text" id="inp-client" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray focus:ring-1 focus:ring-swc-gray transition-all" placeholder="Nome do Cliente"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-product"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Produto <i class="ph ph-question text-blue-400 cursor-help" title="Modelo"></i></label><select id="inp-product" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray transition-all"></select></div><div class="field-wrapper" id="wrapper-purpose"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Finalidade <i class="ph ph-question text-blue-400 cursor-help" title="Motivo"></i></label><select id="inp-purpose" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray transition-all" onchange="updateWorkflowFromPurpose(this.value)"></select></div></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-tag text-lg"></i> Identificação</h4><div class="mb-5 field-wrapper" id="wrapper-client"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Cliente</label><input type="text" id="inp-client" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray focus:ring-1 focus:ring-swc-gray transition-all" placeholder="Nome do Cliente"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-product"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Produto</label><select id="inp-product" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray transition-all"></select></div><div class="field-wrapper" id="wrapper-purpose"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Finalidade</label><select id="inp-purpose" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray transition-all" onchange="updateWorkflowFromPurpose(this.value)"></select></div></div></div>
                     <div id="section-hardware" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> Plataforma</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5"><div class="field-wrapper" id="wrapper-vendor"><label class="block text-xs font-bold text-slate-500 mb-1.5">Fabricante</label><select id="inp-vendor" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray"></select></div><div class="col-span-1 md:col-span-2 field-wrapper" id="wrapper-model"><label class="block text-xs font-bold text-slate-500 mb-1.5">Modelo</label><input type="text" id="inp-model" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray"></div><div class="field-wrapper" id="wrapper-serial"><label class="block text-xs font-bold text-slate-500 mb-1.5">Serial (Tag)</label><input type="text" id="inp-serial" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-cpu"><label class="block text-xs font-bold text-slate-500 mb-1.5">Processador</label><input type="text" id="inp-cpu" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray"></div><div class="field-wrapper" id="wrapper-os"><label class="block text-xs font-bold text-slate-500 mb-1.5">Sistema Operacional</label><select id="inp-os" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray"></select></div></div></div>
                     <div id="section-assembly" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-wrench text-lg"></i> Componentes</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="field-wrapper" id="wrapper-disks"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">DISCOS</label><button type="button" onclick="addDisk()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="disks-container" class="space-y-3"></div></div><div class="field-wrapper" id="wrapper-cards"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">PLACAS</label><button type="button" onclick="addCard()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="cards-container" class="space-y-3"></div></div><div class="field-wrapper" id="wrapper-ram"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">RAM</label><button type="button" onclick="addRam()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="ram-container" class="space-y-3"></div></div></div></div>
                     <div id="section-config" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-terminal-window text-lg"></i> Rede</h4><div class="field-wrapper" id="wrapper-hostname"><label class="block text-xs font-bold text-slate-500 mb-1.5">Hostname</label><input type="text" id="inp-hostname" class="w-full border border-green-300 bg-green-50 text-green-800 font-bold font-mono rounded-lg p-3 outline-none focus:ring-1 focus:ring-green-500"></div></div>
-                    <div id="section-qa" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm field-wrapper"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-clipboard-text text-lg"></i> Controle de Qualidade</h4><div class="mb-6 field-wrapper" id="wrapper-qa_ip"><label class="block text-xs font-bold text-slate-500 mb-1.5">IP de Manutenção</label><input type="text" id="inp-qa_ip" class="w-full border border-gray-300 rounded-lg p-3 outline-none font-mono text-sm focus:border-swc-gray" placeholder="Ex: 192.168.100.50"></div><div class="field-wrapper" id="wrapper-qa_checklist"><label class="block text-xs font-bold text-slate-500 mb-3">Validações Obrigatórias</label><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_func" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Teste Funcionalidade</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_rails" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Trilhos do Servidor</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_cables" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Organização Cabos</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_stickers" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Adesivos/Etiquetas</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group col-span-1 md:col-span-2"><input type="checkbox" id="inp-qa_db" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Validação DB / CFG</span></label></div></div></div>
-                    
-                    <div id="section-photos" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-camera text-lg"></i> Registro Fotográfico</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <label class="block text-xs font-bold text-slate-500">Fotos do Servidor</label>
-                                    <button type="button" onclick="document.getElementById('upload-server').click()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button>
-                                </div>
-                                <input type="file" id="upload-server" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'server')">
-                                <div id="gallery-server" class="grid grid-cols-3 gap-2"></div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <label class="block text-xs font-bold text-slate-500">Fotos da Caixa</label>
-                                    <button type="button" onclick="document.getElementById('upload-box').click()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button>
-                                </div>
-                                <input type="file" id="upload-box" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'box')">
-                                <div id="gallery-box" class="grid grid-cols-3 gap-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 pt-6 mt-8 border-t border-gray-200">
+                    <div id="section-qa" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm field-wrapper"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-clipboard-text text-lg"></i> Controle de Qualidade</h4><div class="mb-6 field-wrapper" id="wrapper-qa_ip"><label class="block text-xs font-bold text-slate-500 mb-1.5">IP de Manutenção</label><input type="text" id="inp-qa_ip" class="w-full border border-gray-300 rounded-lg p-3 outline-none font-mono text-sm focus:border-swc-gray" placeholder="Ex: 192.168.100.50"></div><div class="field-wrapper mb-6" id="wrapper-qa_checklist"><label class="block text-xs font-bold text-slate-500 mb-3">Validações Obrigatórias</label><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_func" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Teste Funcionalidade</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_rails" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Trilhos do Servidor</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_cables" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Organização Cabos</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_stickers" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Adesivos/Etiquetas</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group col-span-1 md:col-span-2"><input type="checkbox" id="inp-qa_db" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Validação DB / CFG</span></label></div></div><div class="mt-4" id="wrapper-qa_details"><label class="block text-xs font-bold text-slate-500 mb-1.5">Observações Detalhadas de Teste</label><textarea id="inp-qa_details" rows="4" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-green text-sm" placeholder="Descreva detalhes dos testes..."></textarea></div></div>
+                    <div id="section-photos" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-camera text-lg"></i> Registro Fotográfico</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><div class="flex justify-between items-center mb-2"><label class="block text-xs font-bold text-slate-500">Fotos do Servidor</label><button type="button" onclick="document.getElementById('upload-server').click()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button></div><input type="file" id="upload-server" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'server')"><div id="gallery-server" class="grid grid-cols-3 gap-2"></div></div><div><div class="flex justify-between items-center mb-2"><label class="block text-xs font-bold text-slate-500">Fotos da Caixa</label><button type="button" onclick="document.getElementById('upload-box').click()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button></div><input type="file" id="upload-box" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'box')"><div id="gallery-box" class="grid grid-cols-3 gap-2"></div></div></div></div>
+                    <div class="flex items-center gap-3 pt-6 mt-8 border-t border-gray-200 sticky bottom-0 bg-gray-50 pb-2 z-20">
                         <button type="button" onclick="deleteItem('servers')" id="btn-delete" class="px-5 py-2.5 text-red-500 border border-red-200 bg-white rounded-xl hover:bg-red-50 transition font-medium hidden">Excluir</button>
                         <div class="flex-1"></div>
-                        <button type="button" onclick="gatherDataAndGeneratePDF()" class="px-6 py-3 text-blue-600 border border-blue-200 hover:bg-blue-50 rounded-xl font-medium transition flex items-center gap-2"><i class="ph ph-file-pdf"></i> Relatório</button>
+                        <button type="button" onclick="sendManualEmail(event, document.getElementById('item-id').value)" class="px-6 py-3 text-slate-600 border border-gray-300 hover:bg-gray-100 rounded-xl font-medium transition flex items-center gap-2" title="Enviar Email Agora"><i class="ph ph-envelope-simple text-lg"></i> Email</button>
+                        <button type="button" onclick="window.generatePDF(allServers.find(s=>s.id===document.getElementById('item-id').value))" class="px-6 py-3 text-blue-600 border border-blue-200 hover:bg-blue-50 rounded-xl font-medium transition flex items-center gap-2"><i class="ph ph-file-pdf"></i> Relatório</button>
                         <button type="button" onclick="closeModal()" class="px-6 py-3 text-slate-500 hover:bg-gray-200 rounded-xl font-medium transition">Cancelar</button>
                         <button type="submit" class="px-8 py-3 bg-swc-dark text-white rounded-xl font-bold shadow-lg hover:bg-black hover:shadow-xl transition transform hover:-translate-y-0.5">Salvar</button>
                     </div>
@@ -219,9 +153,9 @@
         </div>
     </template>
 
-    <template id="tpl-team"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl"><div class="p-8 overflow-y-auto flex-1"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Usuário</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-name" class="w-full border p-3 rounded-lg" placeholder="Nome" required><div class="grid grid-cols-2 gap-4"><input type="text" id="inp-role" class="border p-3 rounded-lg" placeholder="Cargo" required><input type="text" id="inp-initials" class="border p-3 rounded-lg" placeholder="Sigla" required maxlength="2"></div><div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3"><h4 class="text-xs font-bold text-slate-500">Acesso</h4><input type="text" id="inp-email" class="w-full border p-3 rounded-lg" placeholder="Login" required><input type="password" id="inp-password" class="w-full border p-3 rounded-lg" placeholder="Senha" required></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('users')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
-    <template id="tpl-manual"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl"><div class="p-8 overflow-y-auto flex-1"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Manual</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><select id="inp-category" class="w-full border p-3 rounded-lg"></select><textarea id="inp-content" rows="8" class="w-full border p-3 rounded-lg font-mono text-sm" required></textarea><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('manuals')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
-    <template id="tpl-rotine"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl"><div class="p-8 overflow-y-auto flex-1"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Rotina</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><div class="grid grid-cols-2 gap-4"><select id="inp-frequency" class="border p-3 rounded-lg"><option value="Diária">Diária</option><option value="Semanal">Semanal</option><option value="Quinzenal">Quinzenal</option><option value="Mensal">Mensal</option></select><select id="inp-assignedTo" class="border p-3 rounded-lg"></select></div><hr><div class="flex justify-between"><h4 class="font-bold">Subtarefas</h4><button type="button" onclick="addStep()" class="text-xs bg-black text-white px-2 py-1 rounded">+ Add</button></div><div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto"></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('rotines')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    <template id="tpl-team"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Usuário</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-name" class="w-full border p-3 rounded-lg" placeholder="Nome" required><div class="grid grid-cols-2 gap-4"><input type="text" id="inp-role" class="border p-3 rounded-lg" placeholder="Cargo" required><input type="text" id="inp-initials" class="border p-3 rounded-lg" placeholder="Sigla" required maxlength="2"></div><div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3"><h4 class="text-xs font-bold text-slate-500">Acesso</h4><input type="text" id="inp-email" class="w-full border p-3 rounded-lg" placeholder="Login" required><input type="password" id="inp-password" class="w-full border p-3 rounded-lg" placeholder="Senha" required></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('users')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    <template id="tpl-manual"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Manual</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><select id="inp-category" class="w-full border p-3 rounded-lg"></select><textarea id="inp-content" rows="8" class="w-full border p-3 rounded-lg font-mono text-sm" required></textarea><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('manuals')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    <template id="tpl-rotine"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Rotina</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><div class="grid grid-cols-2 gap-4"><select id="inp-frequency" class="border p-3 rounded-lg"><option value="Diária">Diária</option><option value="Semanal">Semanal</option><option value="Quinzenal">Quinzenal</option><option value="Mensal">Mensal</option></select><select id="inp-assignedTo" class="border p-3 rounded-lg"></select></div><hr><div class="flex justify-between"><h4 class="font-bold">Subtarefas</h4><button type="button" onclick="addStep()" class="text-xs bg-black text-white px-2 py-1 rounded">+ Add</button></div><div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto"></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('rotines')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
 
     <script>
         const API = '/api';
@@ -233,6 +167,14 @@
             cpu: 'Processador', os: 'SO', disks: 'Discos', cards: 'Placas', ram: 'RAM', hostname: 'Hostname',
             qa_ip: 'IP Manutenção', qa_checklist: 'Checklist QA'
         };
+
+        function showToast(msg, type='success') {
+            const t = document.createElement('div');
+            t.className = `toast ${type==='error'?'toast-error':(type==='info'?'toast-info':'toast-success')} show`;
+            t.innerHTML = `<i class="ph ${type==='success'?'ph-check-circle':'ph-info'} text-xl"></i> <span>${msg}</span>`;
+            document.getElementById('toast-container').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
 
         function checkAuth() { const s=localStorage.getItem('user_session'); if(!s)window.location.href='login.html'; else{ currentUser=JSON.parse(s); document.getElementById('app-body').classList.remove('hidden'); document.getElementById('user-name').innerText=currentUser.name; document.getElementById('user-role').innerText=currentUser.role; document.getElementById('user-avatar').innerText=currentUser.initials; if(currentUser.color) document.getElementById('user-avatar').className=`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${currentUser.color}`; } }
         function logout() { localStorage.removeItem('user_session'); window.location.href='login.html'; }
@@ -287,7 +229,6 @@
             } catch(e){ console.error("Error loading data:", e); }
         }
 
-        // --- DASHBOARD & CHARTS ---
         async function loadDashboardData() { 
             const [s, t, u] = await Promise.all([fetch(`${API}/servers`).then(r=>r.json()), fetch(`${API}/tasks`).then(r=>r.json()), fetch(`${API}/users`).then(r=>r.json())]); 
             document.getElementById('dash-servers-count').innerText = s.length; 
@@ -313,7 +254,6 @@
             if(teamChart) { teamChart.options.scales.x.ticks.color = isTv ? 'white' : '#666'; teamChart.options.scales.y.ticks.color = isTv ? 'white' : '#666'; teamChart.update(); }
         }
 
-        // --- WORKFLOW EDITOR ---
         function renderWorkflowsSettings(list) {
             const sel = document.getElementById('settings-workflow-select');
             if(!sel) return;
@@ -359,9 +299,8 @@
         }
         async function addWorkflowStep() { const purpose = document.getElementById('settings-workflow-select').value; const input = document.getElementById('new-step-name'); if(!purpose || !input.value) return; let wf = cachedWorkflows.find(w => w.purpose === purpose); wf.steps.push({ name: input.value, fields: [], required: [] }); input.value = ''; loadWorkflowEditor(purpose); }
         async function removeWorkflowStep(purpose, idx) { let wf = cachedWorkflows.find(w => w.purpose === purpose); wf.steps.splice(idx, 1); loadWorkflowEditor(purpose); }
-        async function saveCurrentWorkflow() { const purpose = document.getElementById('settings-workflow-select').value; if(!purpose) return; const wf = cachedWorkflows.find(w => w.purpose === purpose); await fetch(`${API}/workflows/${purpose}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ steps: wf.steps }) }); alert('Fluxo salvo!'); }
+        async function saveCurrentWorkflow() { const purpose = document.getElementById('settings-workflow-select').value; if(!purpose) return; const wf = cachedWorkflows.find(w => w.purpose === purpose); await fetch(`${API}/workflows/${purpose}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ steps: wf.steps }) }); showToast('Fluxo salvo!'); }
 
-        // --- SERVER FORM LOGIC ---
         function updateWorkflowFromPurpose(purpose, currentStatus) {
             let wf = cachedWorkflows.find(w => w.purpose === purpose);
             const steps = wf ? wf.steps : [{name:'Solicitação', fields:['client'], required:[]}];
@@ -374,6 +313,16 @@
             }
         }
         
+        // --- FORMATADOR DE ESPECIFICAÇÕES ---
+        function getFormattedSpecs(s) {
+            let t = `Equipamento: ${s.product||'N/A'}\n`;
+            t += `Servidor ${s.vendor||''} ${s.model||''}, S/N: ${s.serial||'N/A'}\n`;
+            if(s.cpu) t+=`CPU: ${s.cpu}\n`;
+            if(s.cards && s.cards.length) s.cards.forEach(c => t += `${c.type||'Placa'} ${c.model||''}, S/N: ${c.serial||''}\n`);
+            if(s.disks && s.disks.length) s.disks.forEach(d => t += `SSD ${d.model||''} ${d.size||''}, S/N: ${d.serial||''}\n`);
+            return t;
+        }
+
         function updateServerFormState(status) { 
             const purpose = document.getElementById('inp-purpose').value;
             const wf = cachedWorkflows.find(w => w.purpose === purpose);
@@ -381,6 +330,7 @@
             if(!steps) return;
             if(!status) status = document.getElementById('inp-status').value;
             const currentStepObj = steps.find(s => s.name === status);
+            
             if(!currentStepObj) return;
             
             const visibleFields = currentStepObj.fields || [];
@@ -408,11 +358,7 @@
             if(visibleFields.some(f => ['vendor','model','serial','cpu','os'].includes(f))) hw.classList.add('active'); else hw.classList.remove('active');
             if(visibleFields.some(f => ['disks','cards','ram'].includes(f))) ass.classList.add('active'); else ass.classList.remove('active');
             if(visibleFields.includes('hostname')) cfg.classList.add('active'); else cfg.classList.remove('active');
-            if(visibleFields.includes('qa_ip') || visibleFields.includes('qa_checklist')) {
-                qaSection.classList.add('active');
-            } else {
-                qaSection.classList.remove('active');
-            }
+            if(visibleFields.includes('qa_ip') || visibleFields.includes('qa_checklist')) qaSection.classList.add('active'); else qaSection.classList.remove('active');
         }
 
         function validateStepStrict(data, status) {
@@ -429,13 +375,12 @@
                 else { if (!val || val.toString().trim() === '') missing.push(FIELD_LABELS[field]); }
             });
             if(missing.length > 0) {
-                alert(`Para o status "${status}", os seguintes campos são obrigatórios:\n\n- ${missing.join('\n- ')}`);
+                showToast(`Para "${status}", preencha: ${missing.join(', ')}`, 'error');
                 return false;
             }
             return true;
         }
 
-        // --- FOTOS LOGIC (COM ALTA QUALIDADE + PROTEÇÃO ANTI-CRASH) ---
         function processFiles(input, type) {
             if (input.files && input.files.length > 0) {
                 Array.from(input.files).forEach(file => {
@@ -443,36 +388,17 @@
                     reader.onload = function(e) {
                         const img = new Image();
                         img.src = e.target.result;
-                        
                         img.onload = () => {
                             const canvas = document.createElement('canvas');
                             const ctx = canvas.getContext('2d');
-                            
-                            // CONFIGURAÇÃO DE QUALIDADE
-                            // 2000px é mais que suficiente para impressão A4 nítida
-                            // Se deixar original, o navegador trava (Stack Overflow)
                             const MAX_WIDTH = 2000; 
-                            const QUALITY = 0.9; // 90% de qualidade (quase sem perda visível)
-
+                            const QUALITY = 0.9;
                             let width = img.width;
                             let height = img.height;
-
-                            // Só redimensiona se for GIGANTE, senão mantém original
-                            if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
-
-                            canvas.width = width;
-                            canvas.height = height;
-                            
-                            // Desenha a imagem redimensionada no canvas
+                            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                            canvas.width = width; canvas.height = height;
                             ctx.drawImage(img, 0, 0, width, height);
-
-                            // Converte para texto (Base64) com alta qualidade
                             const dataUrl = canvas.toDataURL('image/jpeg', QUALITY);
-                            
-                            // Salva no array e atualiza a tela
                             currentPhotos[type].push(dataUrl);
                             renderPhotoGallery(type);
                         };
@@ -500,93 +426,65 @@
             renderPhotoGallery(type);
         }
 
-        // --- PDF HELPER: GATHER DATA FROM DOM ---
-        function gatherDataAndGeneratePDF() {
-            const data = {
-                client: document.getElementById('inp-client').value,
-                product: document.getElementById('inp-product').value,
-                serial: document.getElementById('inp-serial').value,
-                model: document.getElementById('inp-model').value,
-                cpu: document.getElementById('inp-cpu').value,
-                vendor: document.getElementById('inp-vendor').value,
-                os: document.getElementById('inp-os').value,
-                hostname: document.getElementById('inp-hostname').value,
-                qa_ip: document.getElementById('inp-qa_ip').value,
-                qa_func: document.getElementById('inp-qa_func').checked,
-                qa_rails: document.getElementById('inp-qa_rails').checked,
-                qa_cables: document.getElementById('inp-qa_cables').checked,
-                qa_stickers: document.getElementById('inp-qa_stickers').checked,
-                qa_db: document.getElementById('inp-qa_db').checked,
-                
-                ram: [], disks: [], cards: [],
-                server_photos: currentPhotos.server,
-                box_photos: currentPhotos.box
-            };
-
-            document.querySelectorAll('.ram-item').forEach(div => {
-                data.ram.push({ model: div.querySelector('.r-model').value, gb: div.querySelector('.r-gb').value, serial: div.querySelector('.r-serial').value });
-            });
-            document.querySelectorAll('.disk-item').forEach(div => {
-                data.disks.push({ size: div.querySelector('.d-size').value, model: div.querySelector('.d-model').value, serial: div.querySelector('.d-serial').value });
-            });
-            document.querySelectorAll('.card-item').forEach(div => {
-                data.cards.push({ type: div.querySelector('.c-type').value, model: div.querySelector('.c-model').value, serial: div.querySelector('.c-serial').value });
-            });
-
-            generatePDF(data);
-        }
-
-        // --- RENDERERS (UPDATED) ---
-        function printServerReport(id) {
-            const serverData = allServers.find(s => s.id === id);
-            if (serverData) generatePDF(serverData);
-            else alert('Erro ao encontrar dados.');
-        }
-
         function renderServers(list) {
             const container = document.getElementById('servers-container');
-            if(!list || list.length === 0) return container.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400"><i class="ph ph-hard-drives text-5xl mb-4"></i><p>Nenhum servidor em produção.</p></div>';
+            if(!list || list.length === 0) return container.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400"><i class="ph ph-hard-drives text-5xl mb-4"></i><p>Nenhum servidor encontrado.</p></div>';
             
             container.innerHTML = list.map(i => {
                 const wf = cachedWorkflows.find(w => w.purpose === i.purpose);
                 const steps = wf ? wf.steps.map(s => s.name) : (i.steps ? i.steps.map(s=>s.name) : [i.status]);
                 const stepIndex = steps.indexOf(i.status);
-                const isFinished = stepIndex === steps.length - 1;
+                const isConcluido = i.status === 'Concluído';
+                const isFinished = stepIndex >= steps.length - 1; 
                 
                 let timelineHTML = '';
-                steps.forEach((step, idx) => {
-                    let colorClass = 'bg-gray-200';
-                    if (idx < stepIndex) colorClass = 'bg-swc-green'; else if (idx === stepIndex) colorClass = isFinished ? 'bg-swc-green' : 'bg-blue-500 animate-pulse scale-125 shadow-sm';
-                    let label = '';
-                    if(idx === 0 || idx === steps.length -1 || idx === stepIndex) label = `<div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-[8px] font-bold uppercase tracking-wide ${idx === stepIndex ? 'text-blue-600' : 'text-gray-400'}">${step.substring(0,8)}</div>`;
-                    timelineHTML += `<div class="relative flex-1 flex items-center h-2 group" title="${step}"><div class="w-full h-1 ${idx <= stepIndex ? 'bg-swc-green' : 'bg-gray-100'}"></div><div class="absolute left-0 w-3 h-3 rounded-full ${colorClass} transition-all z-10 border-2 border-white"></div>${label}</div>`;
-                });
+                if (!isConcluido) {
+                    steps.forEach((step, idx) => {
+                        let colorClass = 'bg-gray-200';
+                        if (idx < stepIndex) colorClass = 'bg-swc-green'; else if (idx === stepIndex) colorClass = 'bg-blue-500 animate-pulse scale-125 shadow-sm';
+                        let label = '';
+                        if(idx === 0 || idx === steps.length -1 || idx === stepIndex) label = `<div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-[8px] font-bold uppercase tracking-wide ${idx === stepIndex ? 'text-blue-600' : 'text-gray-400'}">${step.substring(0,8)}</div>`;
+                        timelineHTML += `<div class="relative flex-1 flex items-center h-2 group" title="${step}"><div class="w-full h-1 ${idx <= stepIndex ? 'bg-swc-green' : 'bg-gray-100'}"></div><div class="absolute left-0 w-3 h-3 rounded-full ${colorClass} transition-all z-10 border-2 border-white"></div>${label}</div>`;
+                    });
+                } else {
+                    timelineHTML = `<div class="w-full bg-green-100 text-green-700 text-center text-xs font-bold py-1 rounded">PROCESSAMENTO CONCLUÍDO</div>`;
+                }
 
                 const specs = [];
                 if(i.cpu) specs.push(`<span class="bg-purple-50 text-purple-700 border border-purple-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${i.cpu}</span>`);
                 if(i.ram && i.ram.length) specs.push(`<span class="bg-blue-50 text-blue-700 border border-blue-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${i.ram.length}x RAM</span>`);
                 
-                const btnAction = (stepIndex < steps.length - 1) ? `<button onclick="advanceStatus(event, '${i.id}', '${i.status}')" class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-colors shadow-sm" title="Avançar Etapa"><i class="ph ph-caret-double-right text-sm"></i></button>` : `<span class="text-green-600"><i class="ph ph-check-circle text-xl"></i></span>`;
+                let btnAction = '';
+                if (isConcluido) {
+                    btnAction = `<span class="text-green-600"><i class="ph ph-check-circle text-xl"></i></span>`;
+                } else {
+                    const btnClass = isFinished ? 'bg-green-50 text-green-600 hover:bg-green-600 hover:text-white' : 'bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white';
+                    const btnIcon = isFinished ? 'ph-check' : 'ph-caret-double-right';
+                    btnAction = `<button onclick="advanceStatus(event, '${i.id}', '${i.status}')" class="w-8 h-8 rounded-full ${btnClass} flex items-center justify-center transition-colors shadow-sm" title="${isFinished ? 'Finalizar' : 'Avançar Etapa'}"><i class="ph ${btnIcon} text-sm"></i></button>`;
+                }
                 
-                return `<div class="bg-white p-5 rounded-xl border ${isFinished ? 'border-green-200 ring-1 ring-green-50' : 'border-gray-200'} shadow-sm hover:shadow-md transition-all mb-4 group relative overflow-visible cursor-pointer" onclick="navigateTo('pokeball', '${i.id}')"><div class="flex justify-between items-center mb-2"><div class="flex items-center gap-4 flex-1"><div class="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-lg text-slate-400"><i class="ph ph-hard-drives"></i></div><div><h4 class="font-bold text-base text-slate-800 flex items-center gap-2">${i.hostname || '<span class="italic text-slate-400 font-normal">Pendente</span>'}<span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded border border-slate-200 font-normal">${i.product || 'Prod'}</span></h4><div class="flex items-center gap-2 mt-1">${specs.join('')}</div></div></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="text-[10px] font-bold uppercase text-slate-400">Status</p><span class="text-xs font-bold ${isFinished ? 'text-green-600' : 'text-blue-600'}">${i.status}</span></div><button onclick="event.stopPropagation(); printServerReport('${i.id}')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 text-blue-600 transition-colors" title="Gerar Relatório"><i class="ph ph-file-pdf text-lg"></i></button><button onclick="event.stopPropagation(); toggleDetails('${i.id}', this)" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition-transform chevron-icon"><i class="ph ph-caret-down text-lg"></i></button>${btnAction}</div></div><div class="mt-6 mb-2 pl-14 pr-12 relative"><div class="flex items-center w-full">${timelineHTML}<div class="relative w-3 h-3"><div class="w-3 h-3 rounded-full ${isFinished ? 'bg-swc-green' : 'bg-gray-200'} border-2 border-white relative z-10"></div></div></div></div><div id="details-${i.id}" class="details-content bg-white"><div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600"><div><p class="font-bold text-slate-400 uppercase mb-1">Base</p><p>Fabr.: ${i.vendor||'-'} ${i.model||''}</p><p>S/N: ${i.serial||'-'} | OS: ${i.os||'-'}</p></div><div><p class="font-bold text-slate-400 uppercase mb-1">Expansões</p>${i.disks ? i.disks.map(d=>`<div>• ${d.size} ${d.model}</div>`).join('') : ''}</div></div></div></div>`;
+                return `<div class="bg-white p-5 rounded-xl border ${isConcluido ? 'border-green-200 ring-1 ring-green-50' : 'border-gray-200'} shadow-sm hover:shadow-md transition-all mb-4 group relative overflow-visible cursor-pointer" onclick="openEditModal('pokeball', '${i.id}')"><div class="flex justify-between items-center mb-2"><div class="flex items-center gap-4 flex-1"><div class="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-lg text-slate-400"><i class="ph ph-hard-drives"></i></div><div><h4 class="font-bold text-base text-slate-800 flex items-center gap-2">${i.hostname || '<span class="italic text-slate-400 font-normal">Pendente</span>'}<span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded border border-slate-200 font-normal">${i.product || 'Prod'}</span></h4><div class="flex items-center gap-2 mt-1">${specs.join('')}</div></div></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="text-[10px] font-bold uppercase text-slate-400">Status</p><span class="text-xs font-bold ${isConcluido ? 'text-green-600' : 'text-blue-600'}">${i.status}</span></div><button onclick="event.stopPropagation(); window.generatePDF({hostname:'${i.hostname}', ...${JSON.stringify(i).replace(/"/g, "'")}})" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 text-blue-600 transition-colors" title="Gerar Relatório"><i class="ph ph-file-pdf text-lg"></i></button><button onclick="event.stopPropagation(); sendManualEmail(event, '${i.id}')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-500 transition-colors" title="Enviar Email Manual"><i class="ph ph-envelope-simple text-lg"></i></button><button onclick="event.stopPropagation(); toggleDetails('${i.id}', this)" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition-transform chevron-icon"><i class="ph ph-caret-down text-lg"></i></button>${btnAction}</div></div><div class="mt-6 mb-2 pl-14 pr-12 relative"><div class="flex items-center w-full">${timelineHTML}<div class="relative w-3 h-3"><div class="w-3 h-3 rounded-full ${isConcluido ? 'bg-swc-green' : 'bg-gray-200'} border-2 border-white relative z-10"></div></div></div></div><div id="details-${i.id}" class="details-content bg-white"><div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600"><div><p class="font-bold text-slate-400 uppercase mb-1">Base</p><p>Fabr.: ${i.vendor||'-'} ${i.model||''}</p><p>S/N: ${i.serial||'-'} | OS: ${i.os||'-'}</p></div><div><p class="font-bold text-slate-400 uppercase mb-1">Expansões</p>${i.disks ? i.disks.map(d=>`<div>• ${d.size} ${d.model}</div>`).join('') : ''}</div></div></div></div>`;
             }).join('');
         }
         function toggleDetails(id, btn) { const content = document.getElementById(`details-${id}`); content.classList.toggle('open'); btn.classList.toggle('rotate'); }
+        
         function applyServerFilter() { 
             const filter = document.getElementById('server-filter').value; 
             const term = document.getElementById('server-search').value?.toLowerCase() || ''; 
             let filtered = allServers || []; 
+            
             if (filter !== 'Todos') { 
-                if (filter === 'Despachado') filtered = filtered.filter(s => s.status === 'Despachado'); 
-                else filtered = filtered.filter(s => s.status !== 'Despachado'); 
+                if (filter === 'Concluído') filtered = filtered.filter(s => s.status === 'Concluído'); 
+                else filtered = filtered.filter(s => s.status !== 'Concluído'); 
             } 
-            if (term) filtered = filtered.filter(s => (s.client?.toLowerCase().includes(term)) || (s.hostname?.toLowerCase().includes(term))); 
+            
+            if (term) filtered = filtered.filter(s => (s.client?.toLowerCase().includes(term)) || (s.hostname?.toLowerCase().includes(term)) || (s.serial?.toLowerCase().includes(term))); 
             renderServers(filtered); 
         }
 
-        function renderTeam(list) { document.getElementById('team-container').innerHTML = list.map(u => `<div onclick="navigateTo('team', '${u.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer flex flex-col items-center text-center group relative"><div class="w-16 h-16 rounded-full ${u.color || 'bg-gray-800'} text-white flex items-center justify-center text-xl font-bold mb-3 transition group-hover:scale-110">${u.initials}</div><h4 class="font-bold text-lg text-slate-800">${u.name}</h4><span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded mt-1">${u.role}</span></div>`).join(''); }
-        function renderTMs(list) { document.getElementById('manuals-container').innerHTML = list.map(i => `<div onclick="navigateTo('tm', '${i.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer group relative"><h4 class="font-bold text-lg mb-2 text-slate-800">${i.title}</h4><span class="text-xs bg-gray-100 px-2 py-1 rounded text-slate-500">${i.category}</span><p class="text-xs text-slate-400 mt-4 line-clamp-3 font-mono">${i.content}</p></div>`).join(''); }
-        function renderRotinesList(list) { document.getElementById('rotines-list-container').innerHTML = list.map(i => `<div onclick="navigateTo('rotines', '${i.id}')" class="bg-white p-4 rounded border flex justify-between items-center cursor-pointer hover:bg-gray-50"><div><h4 class="font-bold text-lg text-slate-800">${i.title}</h4><p class="text-sm text-slate-500">${i.frequency} | ${i.assignedTo}</p></div><i class="ph ph-caret-right text-slate-400"></i></div>`).join(''); }
+        function renderTeam(list) { document.getElementById('team-container').innerHTML = list.map(u => `<div onclick="openEditModal('team', '${u.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer flex flex-col items-center text-center group relative"><div class="w-16 h-16 rounded-full ${u.color || 'bg-gray-800'} text-white flex items-center justify-center text-xl font-bold mb-3 transition group-hover:scale-110">${u.initials}</div><h4 class="font-bold text-lg text-slate-800">${u.name}</h4><span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded mt-1">${u.role}</span></div>`).join(''); }
+        function renderTMs(list) { document.getElementById('manuals-container').innerHTML = list.map(i => `<div onclick="openEditModal('tm', '${i.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer group relative"><h4 class="font-bold text-lg mb-2 text-slate-800">${i.title}</h4><span class="text-xs bg-gray-100 px-2 py-1 rounded text-slate-500">${i.category}</span><p class="text-xs text-slate-400 mt-4 line-clamp-3 font-mono">${i.content}</p></div>`).join(''); }
+        function renderRotinesList(list) { document.getElementById('rotines-list-container').innerHTML = list.map(i => `<div onclick="openEditModal('rotines', '${i.id}')" class="bg-white p-4 rounded border flex justify-between items-center cursor-pointer hover:bg-gray-50"><div><h4 class="font-bold text-lg text-slate-800">${i.title}</h4><p class="text-sm text-slate-500">${i.frequency} | ${i.assignedTo}</p></div><i class="ph ph-caret-right text-slate-400"></i></div>`).join(''); }
         
         function renderTasks(list) { 
             const c = document.getElementById('tasks-container'); 
@@ -608,7 +506,11 @@
         async function openCreateModal(view) { renderModalForm(view, null); }
         async function openEditModal(view, id) {
             let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : 'rotines'));
-            try { const res = await fetch(`${API}/${endpoint}/${id}`); if(res.ok) renderModalForm(view, await res.json()); else navigateTo(view); } catch (e) { navigateTo(view); }
+            try { 
+                const res = await fetch(`${API}/${endpoint}/${id}`); 
+                if(res.ok) renderModalForm(view, await res.json()); 
+                else { showToast('Item não encontrado.', 'error'); navigateTo(view); }
+            } catch (e) { navigateTo(view); }
         }
 
         async function renderModalForm(view, data) {
@@ -616,17 +518,19 @@
             const content = document.getElementById('modal-content');
             let tplId = view === 'tm' ? 'tpl-manual' : (view === 'pokeball' ? 'tpl-server' : (view === 'team' ? 'tpl-team' : 'tpl-rotine'));
             content.innerHTML = document.getElementById(tplId).innerHTML;
+            
+            // Reset animation state
             modal.classList.remove('hidden');
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
 
             const isEdit = !!data;
             if(document.getElementById('modal-title')) document.getElementById('modal-title').innerText = isEdit ? 'Editar' : 'Novo';
 
-            // IMPORTANT: Populate selects BEFORE setting values to avoid race conditions
             if(view === 'pokeball' || view === 'tm') await populateSelects();
             if(view === 'team') await populateUserSelect(); 
             if(view === 'rotines') await populateUserSelect();
 
-            // RESET PHOTOS STATE
             currentPhotos = { server: [], box: [] };
 
             if(isEdit) {
@@ -634,7 +538,6 @@
                 if(delBtn) delBtn.classList.remove('hidden');
                 document.getElementById('item-id').value = data.id;
                 
-                // History
                 if(data.history?.length > 0 && view !== 'settings') {
                     const list = document.getElementById('history-list');
                     if(list) {
@@ -644,39 +547,29 @@
                 }
             }
 
-            // --- VIEW SPECIFIC LOGIC ---
             if(view === 'pokeball') {
                 if(isEdit) {
                     ['hostname','client','product','purpose','vendor','model','serial','cpu','os'].forEach(k => { const el=document.getElementById('inp-'+k); if(el) el.value = data[k] || ''; });
                     
-                    // --- CARREGAR DADOS DE QA ---
+                    // QA
                     document.getElementById('inp-qa_ip').value = data.qa_ip || '';
-                    document.getElementById('inp-qa_func').checked = !!data.qa_func;
-                    document.getElementById('inp-qa_rails').checked = !!data.qa_rails;
-                    document.getElementById('inp-qa_cables').checked = !!data.qa_cables;
-                    document.getElementById('inp-qa_stickers').checked = !!data.qa_stickers;
-                    document.getElementById('inp-qa_db').checked = !!data.qa_db;
+                    if(document.getElementById('inp-qa_details')) document.getElementById('inp-qa_details').value = data.qa_details || '';
+                    
+                    ['qa_func','qa_rails','qa_cables','qa_stickers','qa_db'].forEach(k => {
+                        document.getElementById('inp-'+k).checked = !!data[k];
+                    });
 
-                    // --- CARREGAR FOTOS (COMPATIBILIDADE COM ANTIGO E NOVO) ---
-                    if (data.server_photos && Array.isArray(data.server_photos)) {
-                        currentPhotos.server = data.server_photos;
-                    } else if (data.server_photo) {
-                        currentPhotos.server.push(data.server_photo);
-                    }
+                    if (data.server_photos && Array.isArray(data.server_photos)) currentPhotos.server = data.server_photos;
+                    else if (data.server_photo) currentPhotos.server.push(data.server_photo);
 
-                    if (data.box_photos && Array.isArray(data.box_photos)) {
-                        currentPhotos.box = data.box_photos;
-                    } else if (data.box_photo) {
-                        currentPhotos.box.push(data.box_photo);
-                    }
+                    if (data.box_photos && Array.isArray(data.box_photos)) currentPhotos.box = data.box_photos;
+                    else if (data.box_photo) currentPhotos.box.push(data.box_photo);
                     
                     renderPhotoGallery('server');
                     renderPhotoGallery('box');
-                    // ------------------------------------
 
                     updateWorkflowFromPurpose(data.purpose, data.status);
                     
-                    // Populate Arrays
                     if(data.disks) data.disks.forEach(d => addDisk(d.size, d.model, d.serial));
                     if(data.cards) data.cards.forEach(c => addCard(c.type, c.model, c.serial));
                     if(data.ram) data.ram.forEach(r => addRam(r.model, r.gb, r.serial));
@@ -723,22 +616,18 @@
                     cpu: document.getElementById('inp-cpu').value, 
                     os: document.getElementById('inp-os').value, 
                     
-                    // --- SALVAR DADOS DE QA + MULTIPLAS FOTOS ---
                     qa_ip: document.getElementById('inp-qa_ip').value,
+                    qa_details: document.getElementById('inp-qa_details') ? document.getElementById('inp-qa_details').value : '',
                     qa_func: document.getElementById('inp-qa_func').checked,
                     qa_rails: document.getElementById('inp-qa_rails').checked,
                     qa_cables: document.getElementById('inp-qa_cables').checked,
                     qa_stickers: document.getElementById('inp-qa_stickers').checked,
                     qa_db: document.getElementById('inp-qa_db').checked,
                     
-                    // Salvando as listas de fotos
                     server_photos: currentPhotos.server,
                     box_photos: currentPhotos.box,
-                    // ------------------
-
                     disks, cards, ram 
                 };
-                
                 Object.assign(body, tempData);
             } 
             else if (view === 'team') { Object.assign(body, { name: document.getElementById('inp-name').value, role: document.getElementById('inp-role').value, initials: document.getElementById('inp-initials').value, email: document.getElementById('inp-email').value, password: document.getElementById('inp-password').value }); if(!id) body.color = ['bg-red-500','bg-blue-500','bg-green-500'][Math.floor(Math.random()*3)]; } 
@@ -747,26 +636,109 @@
 
             try { 
                 const res = await fetch(url, { method: method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) }); 
-                if(res.ok) { closeModal(); loadData(view); } else alert('Erro ao salvar.'); 
-            } catch(e) { alert('Erro conexão ou imagem muito grande.'); }
+                if(res.ok) { 
+                    showToast('Dados salvos com sucesso!');
+                    closeModal(); 
+                    loadData(view); 
+                } else {
+                    showToast('Erro ao salvar dados.', 'error');
+                }
+            } catch(e) { 
+                showToast('Erro de conexão ou arquivo muito grande.', 'error'); 
+            }
         }
 
         async function advanceStatus(e, id, currentStatus) {
-            e.stopPropagation(); 
-            const res = await fetch(`${API}/servers/${id}`); 
-            const s = await res.json();
-            const steps = s.steps ? s.steps.map(st => st.name) : [];
+            e.stopPropagation();
+            if(!confirm('Deseja realmente avançar de etapa?')) return;
+
+            const s = allServers.find(x => x.id === id);
+            const wf = cachedWorkflows.find(w => w.purpose === s.purpose);
+            if(!wf) return showToast('Fluxo não encontrado', 'error');
+
+            const steps = wf.steps.map(st => st.name);
             const idx = steps.indexOf(currentStatus);
-            if(idx === -1 || idx >= steps.length - 1) return;
             
+            // Lógica de Conclusão: Se estiver no último ou além, finaliza.
+            let nextStep = '';
+            let finishing = false;
+            
+            if (idx >= steps.length - 1) {
+                nextStep = 'Concluído';
+                finishing = true;
+                showToast('Finalizando processo e enviando relatórios...', 'info');
+            } else {
+                nextStep = steps[idx + 1];
+            }
+
             if(!validateStepStrict(s, currentStatus)) {
-                openEditModal('pokeball', id); 
+                openEditModal('pokeball', id);
                 return;
             }
-            
-            const nextStep = steps[idx + 1];
-            await fetch(`${API}/servers/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: nextStep, userAction: currentUser.name }) }); 
-            loadData('pokeball'); 
+
+            try {
+                // Atualiza status
+                await fetch(`${API}/servers/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: nextStep, userAction: currentUser.name }) });
+                
+                // Se finalizou, notifica
+                if (finishing) {
+                    const updatedS = await fetch(`${API}/servers/${id}`).then(r=>r.json());
+                    const pdf = await window.generatePDFBlob(updatedS);
+                    
+                    await fetch(`${API}/notify`, {
+                        method: 'POST', headers:{'Content-Type':'application/json'},
+                        body: JSON.stringify({
+                            hostname: updatedS.hostname,
+                            status: 'Concluído',
+                            pdf, 
+                            user: currentUser.name,
+                            details: updatedS.qa_details,
+                            specs: getFormattedSpecs(updatedS) // <--- ADICIONADO AQUI
+                        })
+                    });
+                    showToast('Processo concluído e notificado!');
+                } else {
+                    showToast(`Avançado para ${nextStep}`);
+                }
+                
+                loadData('pokeball');
+            } catch(err) {
+                console.error(err);
+                showToast('Erro ao processar', 'error');
+            }
+        }
+
+        async function sendManualEmail(e, serverId) {
+            if(e) e.stopPropagation();
+            if(!confirm('Enviar relatório atual por e-mail agora?')) return;
+
+            showToast('Gerando e enviando...', 'info');
+
+            try {
+                const res = await fetch(`${API}/servers/${serverId}`);
+                const data = await res.json();
+                const pdfBase64 = await window.generatePDFBlob(data);
+
+                const notifyRes = await fetch(`${API}/notify`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        hostname: data.hostname,
+                        status: data.status,
+                        pdf: pdfBase64,
+                        user: currentUser.name,
+                        details: "Envio manual solicitado pelo usuário.",
+                        specs: getFormattedSpecs(data) // <--- ADICIONADO AQUI TAMBÉM
+                    })
+                });
+
+                if(notifyRes.ok) showToast('Relatório enviado com sucesso!');
+                else throw new Error('Falha na API de notificação');
+
+            } catch(err) {
+                console.error(err);
+                showToast('Erro ao enviar relatório.', 'error');
+            }
         }
 
         // --- DYNAMIC FIELDS ---
@@ -811,13 +783,21 @@
             }
         }
 
-        async function addOption(type) { const val = prompt("Novo valor:"); if(val) { await fetch(`${API}/options`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ type, value: val }) }); loadData('settings'); } }
-        async function deleteOption(id) { if(confirm('Excluir?')) { await fetch(`${API}/options/${id}`, { method: 'DELETE' }); loadData('settings'); } }
-        async function deleteItem(collection) { if(!confirm('Confirmar exclusão?')) return; const id = document.getElementById('item-id').value; await fetch(`${API}/${collection}/${id}`, { method: 'DELETE' }); closeModal(); loadData(window.location.hash.split('/')[0].slice(1)); }
+        async function addOption(type) { const val = prompt("Novo valor:"); if(val) { await fetch(`${API}/options`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ type, value: val }) }); loadData('settings'); showToast('Opção adicionada'); } }
+        async function deleteOption(id) { if(confirm('Excluir?')) { await fetch(`${API}/options/${id}`, { method: 'DELETE' }); loadData('settings'); showToast('Opção removida'); } }
+        async function deleteItem(collection) { if(!confirm('Confirmar exclusão?')) return; const id = document.getElementById('item-id').value; await fetch(`${API}/${collection}/${id}`, { method: 'DELETE' }); closeModal(); loadData(window.location.hash.split('/')[0].slice(1)); showToast('Item excluído'); }
         
-        function closeModal(c=true) { document.getElementById('modal').classList.add('hidden'); if(c) history.pushState("",document.title,window.location.pathname+window.location.search+window.location.hash.split('/')[0]); }
+        function closeModal(c=true) { 
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                document.getElementById('modal').classList.add('hidden'); 
+                if(c) history.pushState("",document.title,window.location.pathname+window.location.search+window.location.hash.split('/')[0]); 
+            }, 200);
+        }
         async function toggleTaskStep(id, idx, val) { await fetch(`${API}/tasks/${id}/step`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ stepIndex: idx, completed: val, userAction: currentUser.name }) }); loadData('rotom'); }
-        async function finishTask(id) { await fetch(`${API}/tasks/${id}/status`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: 'Concluído', userAction: currentUser.name }) }); loadData('rotom'); }
+        async function finishTask(id) { await fetch(`${API}/tasks/${id}/status`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: 'Concluído', userAction: currentUser.name }) }); loadData('rotom'); showToast('Tarefa concluída!'); }
     </script>
 </body>
 </html>

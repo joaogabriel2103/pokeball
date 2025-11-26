@@ -1,259 +1,211 @@
-// server.js - ShowcasePro V22 (Fixed & Optimized with Photo Support)
+// server.js - ShowcasePro V29 (Final Completo & Formatado)
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { Low, JSONFile } from 'lowdb';
+import { Low, JSONFile } from 'lowdb'; // Importação correta v3
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid'; 
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer'; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// --- ⚙️ CONFIGURAÇÕES (PREENCHA SEUS DADOS) ---
+const CONFIG = {
+    email: {
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false, // true para porta 465, false para outras
+        user: 'alertas@showcasepro.com.br', 
+        pass: 'cafe iysx tkwj obny' 
+    },
+    emailDestino: 'jgoncalves@showcasepro.com.br', 
+    googleChatWebhook: 'https://chat.googleapis.com/v1/spaces/AAQAASwfdZU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=lIV_dz3W8AqVLDSZ69TNC6w_Srmj3CA-AgHTpI2SAvM' // Cole seu Webhook aqui
+};
 
 const app = express();
 const PORT = 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
+const PUBLIC_DIR = path.join(__dirname, 'public');
+const UPLOADS_DIR = path.join(PUBLIC_DIR, 'uploads');
 
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
+// Garante diretórios
+[DATA_DIR, PUBLIC_DIR, UPLOADS_DIR].forEach(d => { if(!fs.existsSync(d)) fs.mkdirSync(d, {recursive:true}); });
 
+// Inicializa Banco
 const adapter = new JSONFile(DB_FILE);
 const db = new Low(adapter);
 
-// Helper para obter data local YYYY-MM-DD
-const getLocalDateStr = (dateObj = new Date()) => {
-    const offset = dateObj.getTimezoneOffset() * 60000;
-    return new Date(dateObj.getTime() - offset).toISOString().split('T')[0];
+// --- HELPERS ---
+const saveBase64 = (str) => {
+    if(!str || typeof str !== 'string' || !str.startsWith('data:image')) return str;
+    try {
+        const ext = str.split(';')[0].split('/')[1];
+        const data = str.split(',')[1];
+        const name = `img_${Date.now()}_${crypto.randomBytes(4).toString('hex')}.${ext}`;
+        fs.writeFileSync(path.join(UPLOADS_DIR, name), Buffer.from(data, 'base64'));
+        return `/uploads/${name}`;
+    } catch(e) { return null; }
 };
 
-function validateData(data, requiredFields = []) {
-    if (!data || typeof data !== 'object') return false;
-    for (const field of requiredFields) {
-        if (data[field] === undefined || data[field] === null || data[field] === '') {
-            return false;
-        }
+const processImages = (d) => {
+    if(!d || typeof d !== 'object') return d;
+    if(Array.isArray(d)) return d.map(x => typeof x==='string' && x.startsWith('data:image') ? saveBase64(x) : processImages(x));
+    for(let k in d) {
+        if(['server_photos','box_photos'].includes(k)) d[k] = Array.isArray(d[k]) ? d[k].map(saveBase64).filter(x=>x) : d[k];
+        else if(typeof d[k] === 'object') processImages(d[k]);
     }
-    return true;
-}
+    return d;
+};
 
-// Lógica corrigida para datas e fusos
-function shouldRunToday(freq, startStr, targetStr) {
-    try {
-        if (!startStr || !targetStr) return false;
-        const start = new Date(startStr + 'T00:00:00');
-        const target = new Date(targetStr + 'T00:00:00');
-        if (isNaN(start.getTime()) || isNaN(target.getTime())) return false;
-        const diffTime = Math.abs(target - start);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        if (target < start) return false;
+const transporter = nodemailer.createTransport({
+    host: CONFIG.email.host, port: CONFIG.email.port, secure: CONFIG.email.secure,
+    auth: { user: CONFIG.email.user, pass: CONFIG.email.pass }
+});
 
-        switch (freq) {
-            case 'Diária': return true;
-            case 'Semanal': return target.getDay() === start.getDay();
-            case 'Quinzenal': return diffDays % 14 === 0;
-            case 'Mensal': return target.getDate() === start.getDate();
-            case 'Semestral': return diffDays % 180 === 0;
-            case 'Anual': return target.getMonth() === start.getMonth() && target.getDate() === start.getDate();
-            default: return false;
-        }
-    } catch (error) {
-        console.error('Erro em shouldRunToday:', error);
-        return false;
-    }
-}
-
-async function initializeDB() {
-    try {
-        await db.read();
-        db.data ||= {};
-        const collections = ['servers', 'rotines', 'tasks', 'manuals', 'users', 'options', 'workflows'];
-        collections.forEach(k => {
-            if (!db.data[k]) db.data[k] = [];
-            db.data[k].forEach(item => {
-                if (!item.history) item.history = [];
-                if (!item.id) item.id = uuidv4();
-            });
-        });
-        if (db.data.users.length === 0) {
-            db.data.users.push({ 
-                id: uuidv4(), name: 'Admin Showcase', email: 'swc', password: '$w311c@#', role: 'Super Admin', initials: 'SW', color: 'bg-gray-900', history: [], createdAt: new Date().toISOString()
-            });
-        }
-        await db.write();
-        console.log('Banco de dados validado.');
-    } catch (error) {
-        console.error('Erro fatal ao inicializar banco:', error);
-    }
-}
-
+// --- MIDDLEWARES ---
 app.use(cors());
-// AUMENTADO PARA 50mb PARA SUPORTAR FOTOS
-app.use(bodyParser.json({ limit: '50mb' })); 
-app.use(express.static('public'));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(express.static(PUBLIC_DIR));
 
-app.use(async (req, res, next) => { 
-    try { if (!db.data) await db.read(); next(); } catch (error) { res.status(500).json({ error: 'Erro de leitura DB' }); }
+// Middleware: Garante DB carregado
+app.use(async (req,res,next) => { 
+    if(!db.data) { 
+        await db.read(); 
+        db.data ||= { servers:[], users:[], workflows:[], options:[], rotines:[], tasks:[], manuals:[] }; 
+    } 
+    next(); 
 });
 
-const addHistory = (item, msg, user = 'Sistema') => {
-    if (!item.history) item.history = [];
-    item.history.unshift({ msg, user, timestamp: new Date().toISOString() });
-};
-const findIndex = (col, id) => db.data[col].findIndex(i => i.id === id);
-const findById = (col, id) => db.data[col].find(i => i.id === id);
+// --- ROTA DE NOTIFICAÇÃO (FORMATADA) ---
+app.post('/api/notify', async (req, res) => {
+    const { hostname, status, pdf, user, details, specs } = req.body;
 
-// --- ROTAS ---
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body;
-    const user = db.data.users.find(u => u.email === email && u.password === password);
-    user ? res.json(user) : res.status(401).json({ error: 'Credenciais inválidas' });
+    console.log(`🔔 Notificando: ${hostname}`);
+
+    try {
+        // 1. Google Chat (Texto puro com quebras de linha)
+        if (CONFIG.googleChatWebhook) {
+            const chatText = `✅ *Entrega Finalizada*\n\n` +
+                             `${specs || ''}\n\n` + // AQUI ENTRA SEU TEXTO FORMATADO
+                             `👤 *Responsável:* ${user}\n` +
+                             `📋 *Obs:* ${details || '-'}`;
+            
+            await fetch(CONFIG.googleChatWebhook, {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ text: chatText })
+            });
+        }
+
+        // 2. E-mail (Texto simples preservando quebras de linha)
+        if (pdf) {
+            const emailBody = `RELATÓRIO DE ENTREGA\n\n` +
+                              `${specs || ''}\n\n` + // TEXTO FORMATADO IGUAL AO CHAT
+                              `-----------------------------------\n` +
+                              `Responsável: ${user}\n` +
+                              `Observações: ${details || 'Nenhuma'}\n\n` +
+                              `O relatório técnico completo segue em anexo.`;
+
+            await transporter.sendMail({
+                from: `"Showcase System" <${CONFIG.email.user}>`,
+                to: CONFIG.emailDestino,
+                subject: `[Entrega] ${hostname}`,
+                text: emailBody, // Usa 'text' para preservar formatação exata
+                attachments: [{ filename: `Relatorio_${hostname}.pdf`, content: Buffer.from(pdf.split(',')[1], 'base64') }]
+            });
+        }
+
+        res.json({ success: true });
+    } catch (error) { 
+        console.error('Erro envio:', error);
+        res.json({ success: false, error: error.message }); 
+    }
 });
 
-app.get('/api/options', (req, res) => res.json(db.data.options || []));
-app.post('/api/options', async (req, res) => {
-    if (!validateData(req.body, ['type', 'value'])) return res.status(400).json({ error: 'Dados inválidos' });
-    db.data.options.push({ id: uuidv4(), ...req.body });
-    await db.write();
-    res.status(201).json({});
+// --- ROTAS DE DADOS ---
+
+// SERVIDORES
+app.get('/api/servers', (req,res) => res.json(db.data.servers || []));
+app.get('/api/servers/:id', (req,res) => { const s = db.data.servers.find(x => x.id === req.params.id); s ? res.json(s) : res.status(404).json({}); });
+app.post('/api/servers', async (req,res) => {
+    let d = processImages(req.body); d.id = uuidv4(); d.history = []; d.createdAt = new Date().toISOString(); if(!d.status) d.status = 'Início';
+    db.data.servers.push(d); await db.write(); res.json(d);
 });
-app.delete('/api/options/:id', async (req, res) => {
-    const i = findIndex('options', req.params.id);
-    if(i > -1) { db.data.options.splice(i, 1); await db.write(); }
-    res.json({});
+app.put('/api/servers/:id', async (req,res) => {
+    const idx = db.data.servers.findIndex(x => x.id === req.params.id); if(idx === -1) return res.status(404).json({});
+    let up = processImages(req.body); const old = db.data.servers[idx];
+    let msg = 'Atualizado'; if(up.status && up.status !== old.status) msg = `Status: ${up.status}`;
+    if(!old.history) old.history = []; old.history.unshift({ msg, user: up.userAction||'Sistema', timestamp: new Date().toISOString() });
+    delete up.userAction; db.data.servers[idx] = { ...old, ...up }; await db.write(); res.json(db.data.servers[idx]);
+});
+app.delete('/api/servers/:id', async (req, res) => { const i = db.data.servers.findIndex(x => x.id === req.params.id); if(i > -1) { db.data.servers.splice(i, 1); await db.write(); } res.json({}); });
+
+// TAREFAS (Com filtro de data restaurado)
+app.get('/api/tasks', (req, res) => {
+    const { date } = req.query;
+    let list = db.data.tasks || [];
+    if (date) list = list.filter(t => t.dueDate === date);
+    res.json(list);
+});
+app.put('/api/tasks/:id/step', async (req, res) => {
+    const t = db.data.tasks.find(x => x.id === req.params.id);
+    if(t && t.checklist[req.body.stepIndex]) {
+        t.checklist[req.body.stepIndex].completed = req.body.completed;
+        await db.write(); res.json(t);
+    } else res.status(404).json({});
+});
+app.put('/api/tasks/:id/status', async (req, res) => {
+    const t = db.data.tasks.find(x => x.id === req.params.id);
+    if(t) { t.status = req.body.status; await db.write(); res.json(t); } else res.status(404).json({});
 });
 
-app.get('/api/workflows', (req, res) => res.json(db.data.workflows || []));
-app.put('/api/workflows/:purpose', async (req, res) => {
-    const purpose = req.params.purpose;
-    let flowIndex = db.data.workflows.findIndex(w => w.purpose === purpose);
-    const steps = req.body.steps || [];
-    if (flowIndex === -1) db.data.workflows.push({ id: uuidv4(), purpose, steps });
-    else db.data.workflows[flowIndex].steps = steps;
-    await db.write();
-    res.json({});
-});
-
-['users', 'manuals', 'rotines'].forEach(col => {
+// OUTROS (Rotinas, Users, Manuais) - Restaurados individualmente
+['rotines', 'users', 'manuals', 'options', 'workflows'].forEach(col => {
     app.get(`/api/${col}`, (req, res) => res.json(db.data[col] || []));
-    app.get(`/api/${col}/:id`, (req, res) => { const i = findById(col, req.params.id); i ? res.json(i) : res.status(404).json({}); });
+    
     app.post(`/api/${col}`, async (req, res) => {
-        const { userAction, ...d } = req.body;
-        const n = { id: uuidv4(), history: [], createdAt: new Date().toISOString(), ...d };
-        addHistory(n, 'Criado', userAction);
-        db.data[col].push(n);
-        await db.write();
-        res.status(201).json(n);
+        const d = { id: uuidv4(), ...req.body };
+        db.data[col].push(d); await db.write(); res.json(d);
     });
-    app.put(`/api/${col}/:id`, async (req, res) => {
-        const i = findIndex(col, req.params.id);
-        if(i === -1) return res.status(404).json({});
-        db.data[col][i] = { ...db.data[col][i], ...req.body };
-        await db.write();
-        res.json(db.data[col][i]);
-    });
+    
     app.delete(`/api/${col}/:id`, async (req, res) => {
-        const i = findIndex(col, req.params.id);
+        const i = db.data[col].findIndex(x => x.id === req.params.id);
         if(i > -1) { db.data[col].splice(i, 1); await db.write(); }
         res.json({});
     });
 });
 
-app.get('/api/servers', (req, res) => res.json(db.data.servers || []));
-app.get('/api/servers/:id', (req, res) => {
-    const i = findById('servers', req.params.id);
-    if (!i) return res.status(404).json({});
-    const wf = (db.data.workflows || []).find(w => w.purpose === i.purpose);
-    if (wf) i.steps = wf.steps;
-    res.json(i);
+// Rota específica de Update Workflows (importante para o editor)
+app.put('/api/workflows/:purpose', async (req,res) => {
+    const idx = db.data.workflows.findIndex(w => w.purpose === req.params.purpose);
+    if(idx === -1) db.data.workflows.push({id:uuidv4(), purpose:req.params.purpose, steps:req.body.steps});
+    else db.data.workflows[idx].steps = req.body.steps;
+    await db.write(); res.json({});
 });
 
-app.post('/api/servers', async (req, res) => {
-    const { userAction, ...data } = req.body;
-    if (!validateData(data, ['purpose'])) return res.status(400).json({ error: 'Finalidade obrigatória' });
-    const workflow = (db.data.workflows || []).find(w => w.purpose === data.purpose);
-    const steps = workflow ? workflow.steps : [{name:'Solicitação', fields:['client']}];
-    const newServer = { 
-        id: uuidv4(), status: steps[0]?.name || 'Início', steps, checklist: [], history: [], disks: [], cards: [], ram: [], createdAt: new Date().toISOString(), ...data 
-    };
-    addHistory(newServer, `Iniciado: ${newServer.hostname || 'Novo Server'}`, userAction);
-    db.data.servers.push(newServer);
+// Rota específica Users Update
+app.put('/api/users/:id', async (req, res) => {
+    const i = db.data.users.findIndex(x => x.id === req.params.id);
+    if(i > -1) { db.data.users[i] = {...db.data.users[i], ...req.body}; await db.write(); res.json(db.data.users[i]); }
+    else res.status(404).json({});
+});
+
+// Login
+app.post('/api/login', (req, res) => {
+    const u = db.data.users.find(x => x.email === req.body.email && x.password === req.body.password);
+    u ? res.json(u) : res.status(401).json({ error: 'Inválido' });
+});
+
+// Inicialização
+const init = async () => {
+    await db.read();
+    db.data ||= {servers:[], users:[], workflows:[], options:[], rotines:[], tasks:[], manuals:[]};
+    if(!db.data.users.length) db.data.users.push({id:uuidv4(),name:'Admin',email:'swc',password:'123',role:'Admin',initials:'AD'});
     await db.write();
-    res.status(201).json(newServer);
-});
-
-app.put('/api/servers/:id', async (req, res) => {
-    const idx = findIndex('servers', req.params.id);
-    if (idx === -1) return res.status(404).json({});
-    const server = db.data.servers[idx];
-    const { userAction, ...data } = req.body;
-    if (data.purpose && data.purpose !== server.purpose) {
-        const wf = (db.data.workflows || []).find(w => w.purpose === data.purpose);
-        if (wf) { server.steps = wf.steps; server.status = wf.steps[0].name; addHistory(server, `Fluxo alterado para ${data.purpose}`, userAction); }
-    }
-    if(data.status && data.status !== server.status) { addHistory(server, `Status: ${data.status}`, userAction); } 
-    else if (!data.purpose) { addHistory(server, 'Dados atualizados', userAction); }
-    
-    db.data.servers[idx] = { ...server, ...data };
-    await db.write();
-    res.json(db.data.servers[idx]);
-});
-
-app.delete('/api/servers/:id', async (req, res) => {
-    const i = findIndex('servers', req.params.id);
-    if(i > -1) { db.data.servers.splice(i, 1); await db.write(); }
-    res.json({});
-});
-
-app.get('/api/tasks', async (req, res) => {
-    try {
-        const { date } = req.query;
-        const targetDateStr = date ? date : getLocalDateStr();
-        let tasksCreated = false;
-        const rotinas = db.data.rotines || [];
-        const tasks = db.data.tasks || [];
-
-        for (const rotina of rotinas) {
-            const startStr = rotina.createdAt.split('T')[0];
-            if (shouldRunToday(rotina.frequency, startStr, targetDateStr)) {
-                const existing = tasks.find(t => t.templateId === rotina.id && t.dueDate === targetDateStr);
-                if (!existing) {
-                    const template = Array.isArray(rotina.template) ? rotina.template : []; 
-                    const checklistItems = (rotina.steps || template).map(i => ({ step: i.title || i.step, manual: i.manual, completed: false }));
-                    const newTask = { 
-                        id: uuidv4(), title: rotina.title, templateId: rotina.id, dueDate: targetDateStr, frequency: rotina.frequency, status: 'Pendente', assignedTo: rotina.assignedTo, checklist: checklistItems, history: [], createdAt: new Date().toISOString() 
-                    };
-                    tasks.push(newTask);
-                    tasksCreated = true;
-                }
-            }
-        }
-        if (tasksCreated) { db.data.tasks = tasks; await db.write(); }
-        res.json(tasks.filter(t => t.dueDate === targetDateStr));
-    } catch(e) {
-        console.error("Erro ao gerar tarefas:", e);
-        res.status(500).json([]);
-    }
-});
-
-app.put('/api/tasks/:id/step', async (req, res) => {
-    const task = findById('tasks', req.params.id);
-    if (!task) return res.status(404).json({ error: 'Tarefa não encontrada' });
-    const { stepIndex, completed } = req.body;
-    if (task.checklist && task.checklist[stepIndex]) { task.checklist[stepIndex].completed = completed; await db.write(); }
-    res.json(task);
-});
-
-app.put('/api/tasks/:id/status', async (req, res) => {
-    const task = findById('tasks', req.params.id);
-    if (!task) return res.status(404).json({ error: 'Tarefa não encontrada' });
-    task.status = req.body.status;
-    await db.write();
-    res.json(task);
-});
-
-app.use((req, res) => res.status(404).json({ error: 'Not found' }));
-
-initializeDB().then(() => {
-    app.listen(PORT, '0.0.0.0', () => { console.log(`🚀 Server ShowcasePro Ready on port ${PORT}`); });
-});
+    app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Server V29 Rodando na porta ${PORT}`));
+};
+init();

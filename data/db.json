@@ -1,5 +1,108 @@
 {
-  "servers": [],
+  "servers": [
+    {
+      "userAction": "João Gabriel",
+      "hostname": "ifn-record",
+      "client": "TV Ceara",
+      "product": "IFN 150",
+      "purpose": "Venda",
+      "status": "Concluído",
+      "vendor": "Dell",
+      "model": "R250",
+      "serial": "123458",
+      "cpu": "XEON E3-1330",
+      "os": "Ubuntu 20.04 LTS",
+      "qa_ip": "192.168.200.50",
+      "qa_details": "Testes feito de entrada de vídeo e saída ASI",
+      "qa_func": true,
+      "qa_rails": true,
+      "qa_cables": true,
+      "qa_stickers": true,
+      "qa_db": true,
+      "server_photos": [],
+      "box_photos": [],
+      "disks": [
+        {
+          "size": "128GB",
+          "model": "WD",
+          "serial": "SWC5536"
+        }
+      ],
+      "cards": [
+        {
+          "type": "Dectek",
+          "model": "2144",
+          "serial": "21440035"
+        }
+      ],
+      "ram": [
+        {
+          "model": "Saumsung",
+          "gb": "8GB",
+          "serial": "ssadsa51"
+        }
+      ],
+      "id": "d1d7adc7-1c48-4171-90f6-5348825d21a3",
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:42:26.140Z"
+        },
+        {
+          "msg": "Status: Expedição ",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:42:23.879Z"
+        },
+        {
+          "msg": "Status: Concluído",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:37:17.622Z"
+        },
+        {
+          "msg": "Status: Expedição ",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:37:14.339Z"
+        },
+        {
+          "msg": "Atualizado",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:30:25.699Z"
+        },
+        {
+          "msg": "Status: Concluído",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:24:27.041Z"
+        },
+        {
+          "msg": "Status: Expedição ",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:24:20.384Z"
+        },
+        {
+          "msg": "Atualizado",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:24:17.902Z"
+        },
+        {
+          "msg": "Status: Controle de Qualidade ",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:23:53.737Z"
+        },
+        {
+          "msg": "Atualizado",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:23:51.242Z"
+        },
+        {
+          "msg": "Status: Produção e Configuração ",
+          "user": "João Gabriel",
+          "timestamp": "2025-11-26T20:22:38.493Z"
+        }
+      ],
+      "createdAt": "2025-11-26T20:22:35.453Z"
+    }
+  ],
   "tasks": [
     {
       "id": "b9dadfc6-7628-4516-9d5a-f176f16a67a5",
