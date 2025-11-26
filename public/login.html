@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Showcase Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { swc: { dark: '#18181b', green: '#d9ed13', gray: '#27272a' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-swc-dark h-screen flex items-center justify-center font-sans">
+
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-2 bg-swc-green"></div>
+
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-swc-green">
+                <span class="text-3xl font-bold text-swc-dark">O</span>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">Showcase<span class="text-swc-green">Pro</span></h1>
+            <p class="text-gray-500 text-sm">Gestão de T.I. Inteligente</p>
+        </div>
+
+        <form id="login-form" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Usuário ou Email</label>
+                <div class="relative">
+                    <i class="ph ph-user absolute left-3 top-3 text-gray-400 text-lg"></i>
+                    
+                    <input type="text" id="email" class="w-full border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 outline-none focus:border-swc-green focus:ring-1 focus:ring-swc-green transition" placeholder="Ex: swc ou seu@email.com" required>
+                
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Senha</label>
+                <div class="relative">
+                    <i class="ph ph-lock-key absolute left-3 top-3 text-gray-400 text-lg"></i>
+                    <input type="password" id="password" class="w-full border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 outline-none focus:border-swc-green focus:ring-1 focus:ring-swc-green transition" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <div id="error-msg" class="hidden text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+                Credenciais inválidas.
+            </div>
+
+            <button type="submit" class="w-full bg-swc-dark text-white font-bold py-3 rounded-lg hover:bg-black transition shadow-lg flex justify-center items-center gap-2">
+                Entrar no Sistema <i class="ph ph-arrow-right"></i>
+            </button>
+        </form>
+
+        <p class="text-center text-xs text-gray-400 mt-6">© 2025 ShowCase Pro - #jgoncalves</p>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (res.ok) {
+                    const user = await res.json();
+                    // Salva o usuário na sessão
+                    localStorage.setItem('user_session', JSON.stringify(user));
+                    window.location.href = 'index.html';
+                } else {
+                    errorMsg.classList.remove('hidden');
+                    errorMsg.innerText = "Usuário ou senha incorretos.";
+                }
+            } catch (err) {
+                errorMsg.classList.remove('hidden');
+                errorMsg.innerText = "Erro ao conectar ao servidor.";
+            }
+        });
+    </script>
+</body>
+</html>

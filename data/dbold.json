@@ -1,0 +1,1048 @@
+{
+  "servers": [],
+  "rotines": [
+    {
+      "id": "adacc856-5d75-44d6-b3ae-5a5ef0707fa2",
+      "createdAt": "2025-11-24T14:58:16.398Z",
+      "history": [
+        {
+          "msg": "Rotina atualizada",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:26:27.822Z"
+        },
+        {
+          "msg": "Rotina atualizada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:53:03.960Z"
+        },
+        {
+          "msg": "Rotina atualizada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:50:11.373Z"
+        },
+        {
+          "msg": "Rotina atualizada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:46:20.112Z"
+        },
+        {
+          "msg": "Rotina atualizada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:45:23.149Z"
+        },
+        {
+          "msg": "Rotina atualizada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:45:18.652Z"
+        },
+        {
+          "msg": "Rotina atualizada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:43:33.229Z"
+        },
+        {
+          "msg": "Rotina criada",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:58:16.398Z"
+        }
+      ],
+      "template": [
+        {
+          "title": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\", com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia."
+        },
+        {
+          "title": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\nCaso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize."
+        },
+        {
+          "title": "Olhar Deskmanager e designar novos chamados em aberto",
+          "manual": "1 - Acessar o DeskManager com seu login.\n2 - https://showcasepro.desk.ms/?Ticket#ChamadosSuporte -> Checar Chamados na Distribuição \"Na Fila\".\n3 - Abrir a Aba Transferência e definir o destino Grupo ou Operador.\n4 - Salvar"
+        }
+      ],
+      "title": "Rotina Diária TI",
+      "frequency": "Diária",
+      "assignedTo": "Eduardo Bacchiega",
+      "steps": [
+        {
+          "title": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\", com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia."
+        },
+        {
+          "title": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\nCaso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize."
+        },
+        {
+          "title": "Olhar Deskmanager e designar novos chamados em aberto",
+          "manual": "1 - Acessar o DeskManager com seu login.\n2 - https://showcasepro.desk.ms/?Ticket#ChamadosSuporte -> Checar Chamados na Distribuição \"Na Fila\".\n3 - Abrir a Aba Transferência e definir o destino Grupo ou Operador.\n4 - Salvar"
+        }
+      ],
+      "userAction": "Admin Showcase"
+    },
+    {
+      "id": "869c9b0f-1f35-49b5-b420-e0c5c849d059",
+      "history": [
+        {
+          "msg": "Criado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-26T13:33:12.667Z"
+        }
+      ],
+      "createdAt": "2025-11-26T13:33:12.667Z",
+      "title": "Rotina Diária Infra/Prod",
+      "frequency": "Diária",
+      "assignedTo": "Keven Ramos",
+      "steps": [
+        {
+          "title": "Ligar servidores em montagem na Bancada",
+          "manual": "1 - Verifique se há algum servidor sendo instalado pela equipe de DEV e ligue se necessário.\n2 - Certifique que estão acessíveis."
+        },
+        {
+          "title": "Checar Monitoração",
+          "manual": "1 - Na Sala 2G visualize se todos os decoders estão com sinais na televisão de monitoração.\n2 - Caso algum esteja \"Sem Sinal\" reinicie ou troque a saída do divisor."
+        },
+        {
+          "title": "Aferindo baias de PROD 19C",
+          "manual": "1 - Faça uma análise superficial na sala para garantir que as produções estejam sendo executadas corretamente."
+        }
+      ]
+    },
+    {
+      "id": "d9b8344b-3e34-4f8c-9d82-32192e2ed6b8",
+      "history": [
+        {
+          "msg": "Criado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-26T13:35:56.772Z"
+        }
+      ],
+      "createdAt": "2025-11-26T13:35:56.772Z",
+      "title": "Rotina Diária Infra/TI/Redes",
+      "frequency": "Diária",
+      "assignedTo": "João Gabriel",
+      "steps": [
+        {
+          "title": "Checar disponibilidade de servidores na 115G",
+          "manual": "1 - Na sala 115G verificar servidores no rack e garantir que todos estão ligados."
+        },
+        {
+          "title": "Conferir a rotina de Backup do MAM SP para o Drive",
+          "manual": "1 - Acessar o https://drive.google.com/drive/u/0/folders/1mFbXOMnUuuPEBhbHfBkbETe6sktxyBKz.\n2 - Checar a Data do último upload."
+        },
+        {
+          "title": "Checagem de montagem e supervisão de entregas",
+          "manual": "1 - Checar como está a montagem de equipamentos / produtos\n2 - Garantir a qualidade na montagem entrega de produtos"
+        },
+        {
+          "title": "Garantir que todos os equipamentos de rede estejam acessíveis.",
+          "manual": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo\n4 - Checar Status do Pfsense\n"
+        }
+      ],
+      "userAction": "Admin Showcase"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "74cd11b0-e59e-425e-aa49-8cad25f6cb66",
+      "title": "Checagem Diário TI",
+      "templateId": "8fa58b71-acd3-4fce-b234-d38048606283",
+      "location": "CPD",
+      "assignedTo": "Eduardo Bacchiega",
+      "dueDate": "2025-11-24",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "Checar dispositivos de Rede UNIFI",
+          "manual": "",
+          "completed": true
+        },
+        {
+          "step": "Checar PFSENSE",
+          "manual": "",
+          "completed": true
+        },
+        {
+          "step": "Ligar TV e carregar Dashboard's",
+          "manual": "",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:03.399Z"
+        },
+        {
+          "msg": "Concluiu: Ligar TV e carregar Dashboard's",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:02.259Z"
+        },
+        {
+          "msg": "Concluiu: Checar PFSENSE",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:01.934Z"
+        },
+        {
+          "msg": "Concluiu: Checar dispositivos de Rede UNIFI",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:01.576Z"
+        },
+        {
+          "msg": "Auto-agendada",
+          "user": "Sistema",
+          "timestamp": "2025-11-24T14:21:43.275Z"
+        }
+      ],
+      "createdAt": "2025-11-24T14:21:43.275Z"
+    },
+    {
+      "id": "9d7fc514-ddeb-416a-9598-83f7c40424b6",
+      "title": "Checar máquinas",
+      "templateId": "be431d5c-5f5e-4796-a864-e445630974d8",
+      "location": "CPD",
+      "assignedTo": "Keven Ramos",
+      "dueDate": "2025-11-24",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "Checar máquina de PROD",
+          "manual": "",
+          "completed": true
+        },
+        {
+          "step": "",
+          "manual": "",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:05.683Z"
+        },
+        {
+          "msg": "Concluiu: ",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:05.161Z"
+        },
+        {
+          "msg": "Concluiu: Checar máquina de PROD",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:04.799Z"
+        },
+        {
+          "msg": "Auto-agendada",
+          "user": "Sistema",
+          "timestamp": "2025-11-24T14:31:04.285Z"
+        }
+      ],
+      "createdAt": "2025-11-24T14:31:04.285Z"
+    },
+    {
+      "id": "ebfadb6d-40bf-4e43-9fef-695de950c7a4",
+      "title": "Teste diários",
+      "templateId": "f2d74b2f-bae5-4509-bc13-f358fa461324",
+      "location": "CPD",
+      "assignedTo": "Admin Showcase",
+      "dueDate": "2025-11-24",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "teste",
+          "manual": "",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:06.966Z"
+        },
+        {
+          "msg": "Concluiu: teste",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:47:06.416Z"
+        },
+        {
+          "msg": "Auto-agendada (Diária)",
+          "user": "Sistema",
+          "timestamp": "2025-11-24T14:34:27.909Z"
+        }
+      ],
+      "createdAt": "2025-11-24T14:34:27.909Z"
+    },
+    {
+      "id": "385fc560-a25e-4e63-85ec-921f211c4653",
+      "title": "Checagem Diária TI",
+      "templateId": "adacc856-5d75-44d6-b3ae-5a5ef0707fa2",
+      "location": "CPD",
+      "assignedTo": "Eduardo Bacchiega",
+      "dueDate": "2025-11-24",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:58:30.837Z"
+        },
+        {
+          "msg": "Concluiu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:58:29.214Z"
+        },
+        {
+          "msg": "Auto-agendada (Diária)",
+          "user": "Sistema",
+          "timestamp": "2025-11-24T14:58:17.621Z"
+        }
+      ],
+      "createdAt": "2025-11-24T14:58:17.621Z"
+    },
+    {
+      "id": "6df3fbe0-7c68-4c9c-89b2-69b14847f2b3",
+      "title": "Checagem Diária TI",
+      "templateId": "adacc856-5d75-44d6-b3ae-5a5ef0707fa2",
+      "location": "CPD",
+      "assignedTo": "Eduardo Bacchiega",
+      "dueDate": "2025-11-25",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:29:01.715Z"
+        },
+        {
+          "msg": "Concluiu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:29:00.884Z"
+        },
+        {
+          "msg": "Reabriu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:22:56.019Z"
+        },
+        {
+          "msg": "Concluiu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:22:55.738Z"
+        },
+        {
+          "msg": "Reabriu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:42:59.708Z"
+        },
+        {
+          "msg": "Concluiu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:42:58.700Z"
+        },
+        {
+          "msg": "Auto-agendada (Diária)",
+          "user": "Sistema",
+          "timestamp": "2025-11-25T13:08:41.332Z"
+        }
+      ],
+      "createdAt": "2025-11-25T13:08:41.332Z"
+    },
+    {
+      "id": "30495f67-ae15-44eb-a090-8bb675dcd2eb",
+      "title": "Checagem Diária TI",
+      "templateId": "adacc856-5d75-44d6-b3ae-5a5ef0707fa2",
+      "location": "CPD",
+      "assignedTo": "",
+      "dueDate": "2025-11-26",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\", com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia.",
+          "completed": true
+        },
+        {
+          "step": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\nCaso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Auto-agendada (Diária)",
+          "user": "Sistema",
+          "timestamp": "2025-11-25T14:45:29.119Z"
+        }
+      ],
+      "createdAt": "2025-11-25T14:45:29.119Z"
+    },
+    {
+      "id": "6803c838-a7d1-4739-843b-0d4505b1d4b1",
+      "title": "Checagem Diária TI",
+      "templateId": "adacc856-5d75-44d6-b3ae-5a5ef0707fa2",
+      "location": "CPD",
+      "assignedTo": "",
+      "dueDate": "2025-11-27",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\", com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia.",
+          "completed": true
+        },
+        {
+          "step": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\nCaso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.",
+          "completed": true
+        },
+        {
+          "step": "Olhar Deskmanager e designar novos chamados em aberto",
+          "manual": "",
+          "completed": true
+        }
+      ],
+      "history": [
+        {
+          "msg": "Status: Concluído",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:26:51.878Z"
+        },
+        {
+          "msg": "Concluiu etapa: Olhar Deskmanager e designar novos chamados em aberto",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:26:50.855Z"
+        },
+        {
+          "msg": "Concluiu etapa: Checar Dispositivos UNIFI e Pfsense",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:26:49.673Z"
+        },
+        {
+          "msg": "Concluiu etapa: Ligar TV do T.I e Iniciar Dashboard",
+          "user": "Gustavo Cavalcanti",
+          "timestamp": "2025-11-25T17:26:48.542Z"
+        },
+        {
+          "msg": "Auto-agendada (Diária)",
+          "user": "Sistema",
+          "timestamp": "2025-11-25T14:48:43.390Z"
+        }
+      ],
+      "createdAt": "2025-11-25T14:48:43.390Z"
+    },
+    {
+      "id": "5f43dd4f-b650-42a6-8793-24e1512e32f3",
+      "title": "Rotina Diária Infra/Prod",
+      "templateId": "869c9b0f-1f35-49b5-b420-e0c5c849d059",
+      "dueDate": "2025-11-26",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "assignedTo": "Keven Ramos",
+      "checklist": [
+        {
+          "step": "Ligar servidores em montagem na Bancada",
+          "manual": "1 - Verifique se há algum servidor sendo instalado pela equipe de DEV e ligue se necessário.\n2 - Certifique que estão acessíveis.",
+          "completed": true
+        },
+        {
+          "step": "Checar Monitoração",
+          "manual": "1 - Na Sala 2G visualize se todos os decoders estão com sinais na televisão de monitoração.\n2 - Caso algum esteja \"Sem Sinal\" reinicie ou troque a saída do divisor.",
+          "completed": true
+        },
+        {
+          "step": "Aferindo baias de PROD 19C",
+          "manual": "1 - Faça uma análise superficial na sala para garantir que as produções estejam sendo executadas corretamente.",
+          "completed": true
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:33:24.038Z"
+    },
+    {
+      "id": "45727e49-b663-4428-9d4f-5098446e5bc2",
+      "title": "Rotina Diária Infra/TI/Redes",
+      "templateId": "d9b8344b-3e34-4f8c-9d82-32192e2ed6b8",
+      "dueDate": "2025-11-26",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "assignedTo": "João Gabriel",
+      "checklist": [
+        {
+          "step": "Checar disponibilidade de servidores na 115G",
+          "manual": "",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:36:24.025Z"
+    },
+    {
+      "id": "259c88c5-f6b2-42e7-aa3a-190c8c6b7dc1",
+      "title": "Rotina Diária Infra/Prod",
+      "templateId": "869c9b0f-1f35-49b5-b420-e0c5c849d059",
+      "dueDate": "2025-11-27",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "Keven Ramos",
+      "checklist": [
+        {
+          "step": "Ligar servidores em montagem na Bancada",
+          "manual": "1 - Verifique se há algum servidor sendo instalado pela equipe de DEV e ligue se necessário.\n2 - Certifique que estão acessíveis.",
+          "completed": false
+        },
+        {
+          "step": "Checar Monitoração",
+          "manual": "1 - Na Sala 2G visualize se todos os decoders estão com sinais na televisão de monitoração.\n2 - Caso algum esteja \"Sem Sinal\" reinicie ou troque a saída do divisor.",
+          "completed": false
+        },
+        {
+          "step": "Aferindo baias de PROD 19C",
+          "manual": "1 - Faça uma análise superficial na sala para garantir que as produções estejam sendo executadas corretamente.",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:39:54.908Z"
+    },
+    {
+      "id": "8739cfd7-189c-4cab-8728-30d5a7dfb453",
+      "title": "Rotina Diária Infra/TI/Redes",
+      "templateId": "d9b8344b-3e34-4f8c-9d82-32192e2ed6b8",
+      "dueDate": "2025-11-27",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "João Gabriel",
+      "checklist": [
+        {
+          "step": "Checar disponibilidade de servidores na 115G",
+          "manual": "1 - Na sala 115G verificar servidores no rack e garantir que todos estão ligados.",
+          "completed": false
+        },
+        {
+          "step": "Conferir a rotina de Backup do MAM SP para o Drive",
+          "manual": "1 - Acessar o https://drive.google.com/drive/u/0/folders/1mFbXOMnUuuPEBhbHfBkbETe6sktxyBKz.\n2 - Checar a Data do último upload.",
+          "completed": false
+        },
+        {
+          "step": "Checagem de montagem e supervisão de entregas",
+          "manual": "1 - Checar como está a montagem de equipamentos / produtos\n2 - Garantir a qualidade na montagem entrega de produtos",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:39:54.908Z"
+    },
+    {
+      "id": "72ec9f37-006b-4d5a-9b82-dcfb6f6428ba",
+      "title": "Rotina Diária TI",
+      "templateId": "adacc856-5d75-44d6-b3ae-5a5ef0707fa2",
+      "dueDate": "2025-12-01",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "Eduardo Bacchiega",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\", com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia.",
+          "completed": false
+        },
+        {
+          "step": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\nCaso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.",
+          "completed": false
+        },
+        {
+          "step": "Olhar Deskmanager e designar novos chamados em aberto",
+          "manual": "1 - Acessar o DeskManager com seu login.\n2 - https://showcasepro.desk.ms/?Ticket#ChamadosSuporte -> Checar Chamados na Distribuição \"Na Fila\".\n3 - Abrir a Aba Transferência e definir o destino Grupo ou Operador.\n4 - Salvar",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:42:37.123Z"
+    },
+    {
+      "id": "d5d34305-ac5a-4b96-9e0f-d7861ccea891",
+      "title": "Rotina Diária Infra/Prod",
+      "templateId": "869c9b0f-1f35-49b5-b420-e0c5c849d059",
+      "dueDate": "2025-12-01",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "Keven Ramos",
+      "checklist": [
+        {
+          "step": "Ligar servidores em montagem na Bancada",
+          "manual": "1 - Verifique se há algum servidor sendo instalado pela equipe de DEV e ligue se necessário.\n2 - Certifique que estão acessíveis.",
+          "completed": false
+        },
+        {
+          "step": "Checar Monitoração",
+          "manual": "1 - Na Sala 2G visualize se todos os decoders estão com sinais na televisão de monitoração.\n2 - Caso algum esteja \"Sem Sinal\" reinicie ou troque a saída do divisor.",
+          "completed": false
+        },
+        {
+          "step": "Aferindo baias de PROD 19C",
+          "manual": "1 - Faça uma análise superficial na sala para garantir que as produções estejam sendo executadas corretamente.",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:42:37.123Z"
+    },
+    {
+      "id": "c256d840-b5b0-49fc-8480-c641570ca910",
+      "title": "Rotina Diária Infra/TI/Redes",
+      "templateId": "d9b8344b-3e34-4f8c-9d82-32192e2ed6b8",
+      "dueDate": "2025-12-01",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "João Gabriel",
+      "checklist": [
+        {
+          "step": "Checar disponibilidade de servidores na 115G",
+          "manual": "1 - Na sala 115G verificar servidores no rack e garantir que todos estão ligados.",
+          "completed": false
+        },
+        {
+          "step": "Conferir a rotina de Backup do MAM SP para o Drive",
+          "manual": "1 - Acessar o https://drive.google.com/drive/u/0/folders/1mFbXOMnUuuPEBhbHfBkbETe6sktxyBKz.\n2 - Checar a Data do último upload.",
+          "completed": false
+        },
+        {
+          "step": "Checagem de montagem e supervisão de entregas",
+          "manual": "1 - Checar como está a montagem de equipamentos / produtos\n2 - Garantir a qualidade na montagem entrega de produtos",
+          "completed": false
+        },
+        {
+          "step": "Garantir que todos os equipamentos de rede estejam acessíveis.",
+          "manual": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo\n4 - Checar Status do Pfsense\n",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-26T13:42:37.123Z"
+    }
+  ],
+  "manuals": [
+    {
+      "id": "2de97d08-8e46-4a86-8a0a-f4af31cb1e00",
+      "title": "Checagem Dispositivos UNIFI",
+      "category": "Rede",
+      "content": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo\n",
+      "history": [
+        {
+          "msg": "Conteúdo editado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:52:17.269Z"
+        },
+        {
+          "msg": "Conteúdo editado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:44:57.090Z"
+        },
+        {
+          "msg": "Editado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T16:09:43.661Z"
+        },
+        {
+          "msg": "TM Criado: Checagem Dispositivos UNIFI",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T15:06:51.799Z"
+        }
+      ],
+      "createdAt": "2025-11-24T15:06:51.799Z"
+    },
+    {
+      "id": "64a54f13-fce0-4ea8-8b9c-372abc715343",
+      "title": "Iniciar Dashboard's Cubi Monitoramento",
+      "category": "Departamento",
+      "content": "1 - Ligar Cubi\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\", com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia.",
+      "history": [
+        {
+          "msg": "TM Criado: Iniciar Dashboard's Cubi Monitoramento",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:42:54.580Z"
+        }
+      ],
+      "createdAt": "2025-11-25T14:42:54.580Z"
+    },
+    {
+      "id": "f7961de5-0f14-44ad-a127-f3914f3d867b",
+      "title": "Designar Chamados DeskManager",
+      "category": "Departamento",
+      "content": "1 - Acessar o DeskManager com seu login.\n2 - https://showcasepro.desk.ms/?Ticket#ChamadosSuporte -> Checar Chamados na Distribuição \"Na Fila\".\n3 - Abrir a Aba Transferência e definir o destino Grupo ou Operador.\n4 - Salvar",
+      "history": [
+        {
+          "msg": "Conteúdo editado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:50:02.143Z"
+        },
+        {
+          "msg": "TM Criado: Designar Chamados DeskManager",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-25T14:48:24.315Z"
+        }
+      ],
+      "createdAt": "2025-11-25T14:48:24.315Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "bdfa8b84-ffca-4f5a-9919-a89963769156",
+      "name": "Admin Showcase",
+      "email": "swc",
+      "password": "$w311c@#",
+      "role": "Super Admin",
+      "initials": "SW",
+      "color": "bg-gray-900",
+      "history": []
+    },
+    {
+      "id": "fa6a7cc0-44fe-4239-9d05-5eae9f2cc96d",
+      "history": [
+        {
+          "msg": "Usuário cadastrado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:20:04.415Z"
+        }
+      ],
+      "name": "Eduardo Bacchiega",
+      "role": "Analista de Suporte Jr.",
+      "initials": "EB",
+      "email": "ebacchiega@showcasepro.com.br",
+      "password": "swc123",
+      "color": "bg-green-500"
+    },
+    {
+      "id": "6c825a7e-7707-482f-ad19-dd2fb921b464",
+      "history": [
+        {
+          "msg": "Usuário cadastrado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T14:20:23.249Z"
+        }
+      ],
+      "name": "Keven Ramos",
+      "role": "Analista de Suporte Jr.",
+      "initials": "KR",
+      "email": "kramos@showcasepro.com.br",
+      "password": "swc123",
+      "color": "bg-purple-500"
+    },
+    {
+      "id": "e796316c-1cc7-48f9-a823-04956f382ae8",
+      "history": [
+        {
+          "msg": "Usuário cadastrado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-24T15:02:21.687Z"
+        }
+      ],
+      "name": "Gustavo Cavalcanti",
+      "role": "Analista de T.I Pleno",
+      "initials": "GC",
+      "email": "gcavalcanti@showcasepro.com.br",
+      "password": "swc123",
+      "color": "bg-green-500"
+    },
+    {
+      "id": "0db4c439-9596-4fb4-baa3-742b21cd333c",
+      "history": [
+        {
+          "msg": "Criado",
+          "user": "Admin Showcase",
+          "timestamp": "2025-11-26T13:34:09.476Z"
+        }
+      ],
+      "createdAt": "2025-11-26T13:34:09.476Z",
+      "name": "João Gabriel",
+      "role": "Analista de T.I Pleno",
+      "initials": "JG",
+      "email": "jgoncalves@showcasepro.com.br",
+      "password": "swc123",
+      "color": "bg-blue-500"
+    }
+  ],
+  "options": [
+    {
+      "id": "aacdf6f6-8070-432c-a086-8486d3ca7738",
+      "type": "product",
+      "value": "Splicer",
+      "history": []
+    },
+    {
+      "id": "f75ab2f9-cd2c-45b7-8c57-761a14d6956e",
+      "type": "product",
+      "value": "XON",
+      "history": []
+    },
+    {
+      "id": "36cffb05-4c50-42b0-955c-ce5668bce1bf",
+      "type": "product",
+      "value": "XDA23",
+      "history": []
+    },
+    {
+      "id": "2cc22933-7219-4ce0-868c-8c5c14db9c07",
+      "type": "product",
+      "value": "XDA23 PRO",
+      "history": []
+    },
+    {
+      "id": "f2208c32-33ee-4327-b764-20c0843b6152",
+      "type": "product",
+      "value": "ENC",
+      "history": []
+    },
+    {
+      "id": "9736c6cf-33c0-48c8-a1f8-00b289f2c92b",
+      "type": "product",
+      "value": "DEC290",
+      "history": []
+    },
+    {
+      "id": "7fab3cc4-6b20-4a98-98ef-56a4d70da78b",
+      "type": "vendor",
+      "value": "Dell",
+      "history": []
+    },
+    {
+      "id": "bb35f51e-b656-4d6a-ba0a-e2edc74f3b5f",
+      "type": "vendor",
+      "value": "Supermicro",
+      "history": []
+    },
+    {
+      "id": "270515c3-c8dd-402a-b967-b273df35baa1",
+      "type": "vendor",
+      "value": "HP",
+      "history": []
+    },
+    {
+      "id": "5b31c320-c908-41fd-911d-922bdb02dd81",
+      "type": "vendor",
+      "value": "CPU (Montado)",
+      "history": []
+    },
+    {
+      "id": "7b3b67c0-07e0-49a9-bbd8-70ef14bdd199",
+      "type": "os",
+      "value": "Ubuntu 24.04 LTS",
+      "history": []
+    },
+    {
+      "id": "28fd09d8-27fb-4b76-a49a-1684a532cde7",
+      "type": "os",
+      "value": "Ubuntu 22.04 LTS",
+      "history": []
+    },
+    {
+      "id": "7fa899dc-82b1-40a9-80e9-d7e5332609ff",
+      "type": "os",
+      "value": "Ubuntu 20.04 LTS",
+      "history": []
+    },
+    {
+      "id": "456ffaf7-c996-4fb1-9cf5-1fa96156416d",
+      "type": "os",
+      "value": "Ubuntu 16.04 LTS",
+      "history": []
+    },
+    {
+      "id": "16a8e691-e9a8-461e-af3d-5142856c6a6d",
+      "type": "os",
+      "value": "Windows Server 2022",
+      "history": []
+    },
+    {
+      "id": "aadac4f1-1b22-4b24-99b7-0b8c67afece4",
+      "type": "tm_category",
+      "value": "Rede",
+      "history": []
+    },
+    {
+      "id": "91a44977-e554-4673-8c0d-aa6637e6a182",
+      "type": "tm_category",
+      "value": "Infra",
+      "history": []
+    },
+    {
+      "id": "71b3005d-03b9-4b53-999b-7dfa6b85779a",
+      "type": "tm_category",
+      "value": "Produção",
+      "history": []
+    },
+    {
+      "id": "564f74db-1e2f-4668-ac70-e5bd8f72eae6",
+      "type": "tm_category",
+      "value": "Servidores",
+      "history": []
+    },
+    {
+      "id": "de862c72-8eb4-470e-82df-255216cc0f26",
+      "type": "tm_category",
+      "value": "Segurança",
+      "history": []
+    },
+    {
+      "id": "34deb12a-e327-4fd5-9c00-f2f0a467c0fd",
+      "type": "card_type",
+      "value": "Nvidia",
+      "history": []
+    },
+    {
+      "id": "39ac07df-d2be-42ba-a01f-334e88909edb",
+      "type": "card_type",
+      "value": "TBS",
+      "history": []
+    },
+    {
+      "id": "b6d25e46-4116-4929-8b71-1f10500c2493",
+      "type": "card_type",
+      "value": "BlackMagic",
+      "history": []
+    },
+    {
+      "id": "9eb25654-85c6-496a-952b-b63a989b0274",
+      "type": "card_type",
+      "value": "Dectek",
+      "history": []
+    },
+    {
+      "id": "38468e13-0172-43d4-abe2-9935edf4e01c",
+      "type": "tm_category",
+      "value": "Departamento",
+      "history": []
+    },
+    {
+      "id": "aeb7f584-cfa2-4d78-8d83-0a9685f752bb",
+      "type": "vendor",
+      "value": "Lenovo",
+      "history": []
+    },
+    {
+      "id": "9bb4da0b-d6d5-42fe-b808-12a0fc6119dd",
+      "type": "purpose",
+      "value": "Venda",
+      "history": []
+    },
+    {
+      "id": "cc23f40a-b65c-47cd-af36-a4b0a95c8119",
+      "type": "purpose",
+      "value": "Manutenção",
+      "history": []
+    },
+    {
+      "id": "a39c421b-62d3-4ebf-a4ff-e40b8ec1abc0",
+      "type": "product",
+      "value": "IFN 150",
+      "history": []
+    }
+  ],
+  "workflows": [
+    {
+      "id": "a306fab4-aa29-4a85-a1af-3942feb33b46",
+      "purpose": "Venda",
+      "steps": [
+        {
+          "name": "Preparação",
+          "fields": [
+            "client",
+            "product",
+            "purpose"
+          ],
+          "required": [
+            "client",
+            "product",
+            "purpose"
+          ]
+        },
+        {
+          "name": "Produção e Configuração ",
+          "fields": [
+            "serial",
+            "cpu",
+            "os",
+            "disks",
+            "cards",
+            "ram",
+            "hostname",
+            "model",
+            "vendor",
+            "client",
+            "product",
+            "purpose"
+          ],
+          "required": [
+            "os",
+            "disks",
+            "hostname",
+            "model",
+            "vendor",
+            "client",
+            "product",
+            "purpose"
+          ]
+        },
+        {
+          "name": "Controle de Qualidade ",
+          "fields": [
+            "qa_ip",
+            "qa_checklist",
+            "client",
+            "os",
+            "disks",
+            "product",
+            "cards",
+            "vendor",
+            "ram",
+            "purpose",
+            "model",
+            "hostname",
+            "serial",
+            "cpu"
+          ],
+          "required": [
+            "qa_ip",
+            "qa_checklist",
+            "client",
+            "product",
+            "disks",
+            "os",
+            "purpose",
+            "model",
+            "hostname",
+            "vendor"
+          ]
+        },
+        {
+          "name": "Expedição ",
+          "fields": [],
+          "required": []
+        }
+      ],
+      "history": []
+    }
+  ],
+  "clients": []
+}
