@@ -131,7 +131,7 @@ const sendSuccessNotification = async (task, user) => {
 📋 *Checklist Realizado:*
 ${checklistDetails || 'Nenhum sub-item.'}
 
-_Sistema ShowcasePro_`;
+ShowCase PRO`;
 
     // 1. Envia Chat
     sendToChat(richMessage);
@@ -139,7 +139,7 @@ _Sistema ShowcasePro_`;
     // 2. Envia Email
     try {
         await transporter.sendMail({
-            from: `"Showcase System" <${CONFIG.email.user}>`,
+            from: `"ShowCase PRO Alertas" <${CONFIG.email.user}>`,
             to: CONFIG.emailDestino,
             subject: `✅ [CONCLUÍDO] ${task.title}`,
             text: richMessage
@@ -172,7 +172,7 @@ const checkAndNotifyDelays = async () => {
 
         try {
             await transporter.sendMail({
-                from: `"Showcase System" <${CONFIG.email.user}>`,
+                from: `"ShowCase PRO Alertas" <${CONFIG.email.user}>`,
                 to: CONFIG.emailDestino,
                 subject: `⚠️ [ALERTA] Pendências do dia - ${today}`,
                 text: alertMsg
@@ -283,7 +283,7 @@ app.post('/api/notify', async (req, res) => {
 
         if (pdf) {
             await transporter.sendMail({
-                from: `"Showcase System" <${CONFIG.email.user}>`,
+                from: `"ShowCase PRO Alertas" <${CONFIG.email.user}>`,
                 to: CONFIG.emailDestino,
                 subject: `[Entrega] ${hostname}`,
                 text: msg,
