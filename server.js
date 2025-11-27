@@ -1,4 +1,4 @@
-// server.js - ShowcasePro V41 (Webhook Debug & Rich Details)
+// server.js - ShowcasePro V42 (Routine Scheduler Fixed)
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -181,17 +181,33 @@ const checkAndNotifyDelays = async () => {
     }
 };
 
-// 3. Gerador de Rotinas
-const generateDailyTasks = async (dateTarget) => {
-    if (!isBusinessDay(dateTarget)) return;
+// 3. Gerador de Rotinas (Diária, Semanal, Mensal)
+const generateScheduledTasks = async (dateTarget) => {
+    if (!isBusinessDay(dateTarget)) return; 
+    
     await db.read();
     db.data ||= { servers:[], users:[], workflows:[], options:[], rotines:[], tasks:[], manuals:[] };
 
-    const dailyRoutines = (db.data.rotines || []).filter(r => r.frequency === 'Diária');
+    // Analisa data para saber qual tipo de rotina gerar
+    const dateObj = new Date(dateTarget + 'T00:00:00');
+    const dayOfWeek = dateObj.getDay(); // 0=Dom, 1=Seg...
+    const isMonday = dayOfWeek === 1; // 1 = Segunda-feira
+    const isFirstOfMonth = dateTarget.endsWith('-01'); // Dia 01
+
     let count = 0;
 
-    dailyRoutines.forEach(routine => {
+    // Filtra rotinas ativas
+    const routinesToProcess = (db.data.rotines || []).filter(r => {
+        if (r.frequency === 'Diária') return true;
+        if (r.frequency === 'Semanal' && isMonday) return true;
+        if (r.frequency === 'Mensal' && isFirstOfMonth) return true;
+        return false;
+    });
+
+    routinesToProcess.forEach(routine => {
+        // Evita duplicidade: verifica se já existe tarefa dessa rotina para esta data
         const exists = (db.data.tasks || []).find(t => t.dueDate === dateTarget && t.templateId === routine.id);
+        
         if (!exists) {
             db.data.tasks.push({
                 id: uuidv4(),
@@ -201,14 +217,22 @@ const generateDailyTasks = async (dateTarget) => {
                 frequency: routine.frequency,
                 status: 'Pendente',
                 assignedTo: routine.assignedTo,
-                checklist: (routine.steps || routine.template || []).map(s => ({ step: s.title || s.step, manual: s.manual, completed: false })),
+                checklist: (routine.steps || routine.template || []).map(s => ({ 
+                    step: s.title || s.step, 
+                    manual: s.manual, 
+                    completed: false 
+                })),
                 history: [],
                 createdAt: new Date().toISOString()
             });
             count++;
         }
     });
-    if (count > 0) await db.write();
+
+    if (count > 0) {
+        await db.write();
+        console.log(`✅ Geradas ${count} novas tarefas para ${dateTarget}`);
+    }
 };
 
 // --- MIDDLEWARES ---
@@ -232,8 +256,8 @@ setInterval(() => {
     const now = new Date();
     if (now.getHours() === 6 && now.getMinutes() === 0) {
         const today = now.toLocaleDateString('pt-BR').split('/').reverse().join('-');
-        console.log('⏰ Cron: Gerando tarefas diárias...');
-        generateDailyTasks(today);
+        console.log('⏰ Cron: Verificando rotinas agendadas...');
+        generateScheduledTasks(today);
     }
     if (now.getHours() === 16 && now.getMinutes() === 0) {
         checkAndNotifyDelays();
@@ -301,7 +325,8 @@ app.put('/api/tasks/:id/step', async (req, res) => {
     app.get(`/api/${col}`, (req, res) => {
         let list = db.data[col] || [];
         if (col === 'tasks' && req.query.date) {
-             if (isBusinessDay(req.query.date)) generateDailyTasks(req.query.date).then(()=>{}); 
+             // Garante que a rotina do dia foi gerada antes de retornar a lista
+             if (isBusinessDay(req.query.date)) generateScheduledTasks(req.query.date).then(()=>{}); 
              list = list.filter(t => t.dueDate === req.query.date);
         }
         res.json(list);
@@ -344,6 +369,6 @@ const init = async () => {
     await db.read();
     db.data ||= {servers:[], users:[], workflows:[], options:[], rotines:[], tasks:[], manuals:[]};
     await db.write();
-    app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Server V41 Rodando na porta ${PORT}`));
+    app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Server V42 Rodando na porta ${PORT}`));
 };
 init();

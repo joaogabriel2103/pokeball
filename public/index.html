@@ -3,57 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Showcase Pro - V36</title>
+    <title>ShowCase Pro - V39 (New Brand)</title>
     <link rel="icon" href="data:,">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="report-generator.js"></script>
     <script>
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Orbitron', 'sans-serif'] }, colors: { swc: { dark: '#0f172a', green: '#d9ed13', gray: '#334155', surface: '#f8fafc' }, noc: { bg: '#0b0c15', card: '#151621', accent: '#d9ed13' } }, animation: { 'fade-in': 'fadeIn 0.3s ease-in-out' }, keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } } } } } }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { 
+                        sans: ['Roboto', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif']
+                    }, 
+                    colors: { 
+                        // --- PALETA NOVA ---
+                        swc: { 
+                            primary: '#85B433',   // Verde Principal
+                            secondary: '#34B0B1', // Azul Secundário
+                            sidebar: '#003E3F',   // Menu Lateral (Dark Teal)
+                            
+                            gray: '#334155', 
+                            surface: '#f8fafc' 
+                        },
+                        // --- SEMÂNTICAS ---
+                        sem: {
+                            success: '#33B841', error: '#F6242A', alert: '#F66E00', info: '#A0B6D9'
+                        },
+                        noc: { bg: '#0b0c15', card: '#151621', accent: '#85B433' } 
+                    }, 
+                    animation: { 'fade-in': 'fadeIn 0.3s ease-in-out' }, 
+                    keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } } } 
+                } 
+            } 
+        }
     </script>
     <style>
+        h1, h2, h3, h4, .tv-number, .font-display { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Roboto', sans-serif; }
         .step-content { display: none; } .step-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; } .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .details-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, opacity 0.3s ease-out; opacity: 0; } .details-content.open { max-height: 1000px; opacity: 1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #f1f5f9; }
         .chevron-icon { transition: transform 0.3s; } .chevron-icon.rotate { transform: rotate(180deg); }
-        .field-hidden { display: none !important; } .field-required label::after { content: " *"; color: #ef4444; }
+        .field-hidden { display: none !important; } .field-required label::after { content: " *"; color: #F6242A; }
         #toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 100; display: flex; flex-direction: column; gap: 0.5rem; }
         .toast { background: white; padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-left: 4px solid; transform: translateX(100%); transition: transform 0.3s ease-out; display: flex; align-items: center; gap: 0.75rem; min-width: 300px; }
-        .toast.show { transform: translateX(0); } .toast-success { border-color: #10b981; } .toast-error { border-color: #ef4444; } .toast-info { border-color: #3b82f6; }
-        body.tv-mode aside, body.tv-mode header { display: none !important; } body.tv-mode main { height: 100vh; padding: 0; background-color: #0b0c15; color: white; } body.tv-mode .view-section { max-width: 100%; padding: 2rem; height: 100vh; overflow: hidden; } body.tv-mode .bg-white { background-color: #151621 !important; border-color: #2d2f3f !important; color: white !important; } body.tv-mode .text-slate-800 { color: white !important; } body.tv-mode .text-slate-500 { color: #94a3b8 !important; } body.tv-mode .tv-number { font-family: 'Orbitron', sans-serif; color: #d9ed13; text-shadow: 0 0 10px rgba(217, 237, 19, 0.4); } body.tv-mode #exit-tv-btn { display: block; } .live-dot { width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; animation: pulse 2s infinite; } @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } }
+        .toast.show { transform: translateX(0); } .toast-success { border-color: #33B841; } .toast-error { border-color: #F6242A; } .toast-info { border-color: #A0B6D9; }
+        body.tv-mode aside, body.tv-mode header { display: none !important; } body.tv-mode main { height: 100vh; padding: 0; background-color: #0b0c15; color: white; } body.tv-mode .view-section { max-width: 100%; padding: 2rem; height: 100vh; overflow: hidden; } body.tv-mode .bg-white { background-color: #151621 !important; border-color: #2d2f3f !important; color: white !important; } body.tv-mode .text-slate-800 { color: white !important; } body.tv-mode .text-slate-500 { color: #94a3b8 !important; } body.tv-mode .tv-number { font-family: 'Montserrat', sans-serif; color: #85B433; text-shadow: 0 0 10px rgba(133, 180, 51, 0.4); } body.tv-mode #exit-tv-btn { display: block; } .live-dot { width: 8px; height: 8px; background-color: #F6242A; border-radius: 50%; animation: pulse 2s infinite; } @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(246, 36, 42, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(246, 36, 42, 0); } }
     </style>
 </head>
 <body class="bg-gray-100 text-slate-800 font-sans h-screen flex overflow-hidden hidden" id="app-body">
     <div id="toast-container"></div>
-    <button id="exit-tv-btn" onclick="toggleTVMode()" class="fixed top-4 right-4 z-50 bg-red-600 text-white p-3 rounded-full opacity-0 hover:opacity-100 transition hidden shadow-xl border-2 border-white" title="Sair do Modo TV"><i class="ph ph-x text-xl"></i></button>
+    <button id="exit-tv-btn" onclick="toggleTVMode()" class="fixed top-4 right-4 z-50 bg-sem-error text-white p-3 rounded-full opacity-0 hover:opacity-100 transition hidden shadow-xl border-2 border-white" title="Sair do Modo TV"><i class="ph ph-x text-xl"></i></button>
 
-    <aside class="w-64 bg-swc-dark text-white flex flex-col shadow-2xl z-30 flex-shrink-0">
-        <div class="h-16 flex items-center px-6 border-b border-white/10 gap-3">
-            <div class="w-8 h-8 rounded-lg bg-swc-green text-swc-dark flex items-center justify-center font-bold text-lg">O</div>
-            <h1 class="font-bold text-base tracking-wide text-white">Showcase<span class="text-swc-green">Pro</span></h1>
+    <aside class="w-64 bg-swc-sidebar text-white flex flex-col shadow-2xl z-30 flex-shrink-0">
+        <div class="h-20 flex items-center justify-center px-6 border-b border-white/10">
+            <img src="logo.png" alt="ShowCase Pro" class="h-12 w-auto object-contain">
         </div>
         <div class="px-6 py-4 border-b border-white/10 bg-white/5">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center font-bold text-swc-green border border-white/10 shadow-inner" id="user-avatar">U</div>
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center font-bold text-swc-primary border border-white/10 shadow-inner" id="user-avatar">U</div>
                 <div class="overflow-hidden"><p class="text-sm font-bold text-white truncate" id="user-name">...</p><p class="text-[10px] text-gray-400 truncate uppercase tracking-wider" id="user-role">...</p></div>
             </div>
         </div>
         <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto custom-scrollbar">
-            <p class="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2 mt-2">Visão Geral</p>
-            <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-chart-pie-slice text-lg"></i><span class="text-sm">Relatórios</span></button>
-            <p class="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2 mt-4">Produção</p>
-            <button onclick="navigateTo('pokeball')" id="nav-pokeball" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all group"><i class="ph ph-hard-drives text-lg group-hover:text-swc-green"></i><span class="text-sm font-medium">Servidores</span></button>
-            <button onclick="navigateTo('rotom')" id="nav-rotom" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-check-square-offset text-lg"></i><span class="text-sm">Tarefas</span></button>
-            <p class="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2 mt-4">Gestão</p>
-            <button onclick="navigateTo('rotines')" id="nav-rotines" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-arrows-clockwise text-lg"></i><span class="text-sm">Rotinas</span></button>
-            <button onclick="navigateTo('tm')" id="nav-tm" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-book-bookmark text-lg"></i><span class="text-sm">Manuais</span></button>
-            <button onclick="navigateTo('team')" id="nav-team" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-users text-lg"></i><span class="text-sm">Equipe</span></button>
-            <button onclick="navigateTo('settings')" id="nav-settings" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-sliders text-lg"></i><span class="text-sm">Configurações</span></button>
+            <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 mt-2">Visão Geral</p>
+            <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-chart-pie-slice text-lg"></i><span class="text-sm font-medium">Relatórios</span></button>
+            <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 mt-4">Produção</p>
+            <button onclick="navigateTo('pokeball')" id="nav-pokeball" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all group"><i class="ph ph-hard-drives text-lg group-hover:text-swc-primary"></i><span class="text-sm font-medium">Servidores</span></button>
+            <button onclick="navigateTo('rotom')" id="nav-rotom" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-check-square-offset text-lg"></i><span class="text-sm font-medium">Tarefas</span></button>
+            <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 mt-4">Gestão</p>
+            <button onclick="navigateTo('rotines')" id="nav-rotines" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-arrows-clockwise text-lg"></i><span class="text-sm font-medium">Rotinas</span></button>
+            <button onclick="navigateTo('tm')" id="nav-tm" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-book-bookmark text-lg"></i><span class="text-sm font-medium">Manuais</span></button>
+            <button onclick="navigateTo('team')" id="nav-team" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-users text-lg"></i><span class="text-sm font-medium">Equipe</span></button>
+            <button onclick="navigateTo('settings')" id="nav-settings" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white transition-all"><i class="ph ph-sliders text-lg"></i><span class="text-sm font-medium">Configurações</span></button>
         </nav>
-        <div class="p-4 border-t border-white/10"><button onclick="logout()" class="w-full flex items-center gap-2 text-red-400 hover:text-red-300 text-sm px-3 py-2 rounded-lg hover:bg-red-500/10 transition"><i class="ph ph-sign-out text-lg"></i> Sair</button></div>
+        <div class="p-4 border-t border-white/10"><button onclick="logout()" class="w-full flex items-center gap-2 text-red-300 hover:text-red-200 text-sm px-3 py-2 rounded-lg hover:bg-sem-error/20 transition"><i class="ph ph-sign-out text-lg"></i> Sair</button></div>
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative transition-all duration-500">
@@ -64,51 +95,63 @@
             
             <div id="view-dashboard" class="view-section hidden max-w-7xl mx-auto fade-in">
                 <div class="flex justify-between items-end mb-6">
-                    <div><h2 class="text-2xl font-bold text-slate-800 tv-title">Visão Geral</h2><p class="text-sm text-slate-500 tv-text flex items-center gap-2"><span class="live-dot"></span> Atualizado em tempo real</p></div>
-                    <button onclick="toggleTVMode()" class="bg-slate-800 text-white px-4 py-2 rounded-lg hover:bg-black transition flex items-center gap-2 text-sm font-bold shadow-lg"><i class="ph ph-television"></i> Modo TV</button>
+                    <div><h2 class="text-2xl font-display font-bold text-slate-800 tv-title">Visão Geral do Dia</h2><p class="text-sm text-slate-500 tv-text flex items-center gap-2"><span class="live-dot"></span> Atualizado em tempo real</p></div>
+                    <button onclick="toggleTVMode()" class="bg-swc-sidebar text-white px-4 py-2 rounded-lg hover:bg-black transition flex items-center gap-2 text-sm font-bold shadow-lg"><i class="ph ph-television"></i> Modo TV</button>
                 </div>
                 
-                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl mb-6 flex items-start gap-3 shadow-sm">
-                    <div class="bg-indigo-100 text-indigo-600 p-2 rounded-lg">
-                        <i class="ph ph-question text-xl font-bold"></i>
+                <div class="bg-white border border-swc-secondary/20 p-4 rounded-xl mb-6 flex items-start gap-3 shadow-sm">
+                    <div class="bg-swc-secondary/10 text-swc-secondary p-2 rounded-lg">
+                        <i class="ph ph-calendar-check text-xl font-bold"></i>
                     </div>
                     <div>
-                        <h4 class="font-bold text-indigo-900 text-sm mb-1">Entenda os Indicadores</h4>
-                        <div class="flex flex-col sm:flex-row gap-4 text-xs text-indigo-700">
+                        <h4 class="font-bold text-slate-700 text-sm mb-1 font-display">Acompanhamento Diário (Hoje)</h4>
+                        <div class="flex flex-col sm:flex-row gap-4 text-xs text-slate-600">
                             <span class="flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-                                <strong>Diárias Pendentes:</strong> Contabiliza apenas rotinas <span class="underline decoration-orange-300">DIÁRIAS</span> em aberto.
+                                <span class="w-2 h-2 rounded-full bg-sem-alert"></span>
+                                <strong>Pendências Hoje:</strong> Tarefas agendadas para HOJE que ainda não foram feitas.
                             </span>
                             <span class="flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                                <strong>Semanais Feitas:</strong> Contabiliza rotinas <span class="underline decoration-green-300">SEMANAIS</span> já concluídas.
+                                <span class="w-2 h-2 rounded-full bg-sem-success"></span>
+                                <strong>Concluídas Hoje:</strong> Tarefas de HOJE que já foram finalizadas.
                             </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-3xl"><i class="ph ph-hard-drives"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-servers-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Em Produção</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-3xl"><i class="ph ph-warning-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-pending">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Diárias Pendentes</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-3xl"><i class="ph ph-users"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-team-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Equipe</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Semanais Feitas</p></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-full bg-swc-secondary/10 text-swc-secondary flex items-center justify-center text-3xl"><i class="ph ph-hard-drives"></i></div>
+                        <div><h4 class="text-4xl font-display font-bold text-slate-800 tv-number" id="dash-servers-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Em Produção</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-full bg-sem-alert/10 text-sem-alert flex items-center justify-center text-3xl"><i class="ph ph-warning-circle"></i></div>
+                        <div><h4 class="text-4xl font-display font-bold text-slate-800 tv-number" id="dash-tasks-pending">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Pendências Hoje</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-full bg-swc-sidebar/10 text-swc-sidebar flex items-center justify-center text-3xl"><i class="ph ph-users"></i></div>
+                        <div><h4 class="text-4xl font-display font-bold text-slate-800 tv-number" id="dash-team-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Equipe</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-full bg-sem-success/10 text-sem-success flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div>
+                        <div><h4 class="text-4xl font-display font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Concluídas Hoje</p></div>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card">
-                        <h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Distribuição de Status</h4>
+                        <h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text font-display">Distribuição de Status</h4>
                         <div class="h-64 relative"><canvas id="chartServers"></canvas></div>
                     </div>
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card">
-                        <h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Carga de Trabalho</h4>
+                        <h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text font-display">Carga de Trabalho (Hoje)</h4>
                         <div class="h-64 relative"><canvas id="chartTeam"></canvas></div>
                     </div>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card">
                     <div class="flex justify-between items-center mb-4">
-                        <h4 class="font-bold text-slate-700 uppercase text-xs tracking-wider tv-text">Últimas Movimentações</h4>
-                        <select id="dash-filter" onchange="loadDashboardData()" class="text-xs border border-gray-300 rounded-lg p-1.5 outline-none focus:ring-1 focus:ring-blue-500 bg-gray-50 text-slate-600 font-medium">
+                        <h4 class="font-bold text-slate-700 uppercase text-xs tracking-wider tv-text font-display">Últimas Movimentações</h4>
+                        <select id="dash-filter" onchange="loadDashboardData()" class="text-xs border border-gray-300 rounded-lg p-1.5 outline-none focus:ring-1 focus:ring-swc-secondary bg-gray-50 text-slate-600 font-medium">
                             <option value="Todos">Todos</option>
                             <option value="Produção">Em Produção</option>
                             <option value="Concluído">Concluídos</option>
@@ -120,9 +163,9 @@
 
             <div id="view-pokeball" class="view-section hidden max-w-full mx-auto fade-in">
                 <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-4">
-                    <div><h3 class="text-2xl font-bold text-slate-800">Linha de Produção</h3><p class="text-sm text-slate-500">Acompanhamento de montagem.</p></div>
+                    <div><h3 class="text-2xl font-display font-bold text-slate-800">Linha de Produção</h3><p class="text-sm text-slate-500">Acompanhamento de montagem.</p></div>
                     <div class="flex gap-2">
-                         <input type="text" id="server-search" placeholder="Buscar..." onkeyup="applyServerFilter()" class="border p-2 rounded text-sm outline-none focus:ring-1 focus:ring-swc-green">
+                         <input type="text" id="server-search" placeholder="Buscar..." onkeyup="applyServerFilter()" class="border p-2 rounded text-sm outline-none focus:ring-1 focus:ring-swc-primary">
                          <select id="server-filter" onchange="applyServerFilter()" class="border p-2 rounded text-sm bg-white outline-none"><option value="Produção">Em Produção</option><option value="Concluído">Concluídos</option><option value="Todos">Todos</option></select>
                     </div>
                 </div>
@@ -136,23 +179,23 @@
             
             <div id="view-settings" class="view-section hidden max-w-6xl mx-auto fade-in">
                 <div class="mb-8 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2"><i class="ph ph-conveyor-belt text-swc-green text-2xl"></i> Gerenciador de Fluxos</h3>
+                    <h3 class="text-lg font-bold font-display text-slate-800 mb-2 flex items-center gap-2"><i class="ph ph-conveyor-belt text-swc-primary text-2xl"></i> Gerenciador de Fluxos</h3>
                     <div class="flex gap-4 mb-4">
                         <select id="settings-workflow-select" class="border p-2 rounded text-sm bg-gray-50 w-64" onchange="loadWorkflowEditor(this.value)"><option value="">Selecione uma finalidade...</option></select>
-                        <button onclick="saveCurrentWorkflow()" class="bg-swc-dark text-white px-4 py-2 rounded text-sm font-bold hover:bg-black transition">Salvar Fluxo</button>
+                        <button onclick="saveCurrentWorkflow()" class="bg-swc-sidebar text-white px-4 py-2 rounded text-sm font-bold hover:bg-black transition">Salvar Fluxo</button>
                     </div>
                     <div id="workflow-editor" class="hidden bg-gray-50 p-4 rounded border border-gray-200">
                         <ul id="workflow-steps-list" class="space-y-3 mb-4"></ul>
-                        <div class="flex gap-2"><input type="text" id="new-step-name" placeholder="Nome da nova etapa" class="border p-2 rounded text-sm flex-1"><button onclick="addWorkflowStep()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Adicionar</button></div>
+                        <div class="flex gap-2"><input type="text" id="new-step-name" placeholder="Nome da nova etapa" class="border p-2 rounded text-sm flex-1"><button onclick="addWorkflowStep()" class="bg-swc-secondary text-white px-3 py-1 rounded text-sm hover:brightness-110">Adicionar</button></div>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-12" id="settings-grid">
-                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Produtos <button onclick="addOption('product')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-product" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
-                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Finalidades <button onclick="addOption('purpose')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-purpose" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
-                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Fabricantes <button onclick="addOption('vendor')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-vendor" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
-                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Sistemas Operacionais <button onclick="addOption('os')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-os" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
-                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Categorias de Manual <button onclick="addOption('tm_category')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-tm_category" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
-                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between">Tipos de Placa <button onclick="addOption('card_type')" class="text-xs bg-slate-900 text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-card_type" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
+                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between font-display">Produtos <button onclick="addOption('product')" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-product" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
+                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between font-display">Finalidades <button onclick="addOption('purpose')" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-purpose" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
+                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between font-display">Fabricantes <button onclick="addOption('vendor')" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-vendor" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
+                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between font-display">Sistemas Operacionais <button onclick="addOption('os')" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-os" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
+                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between font-display">Categorias de Manual <button onclick="addOption('tm_category')" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-tm_category" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
+                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm"><h4 class="font-bold text-slate-800 mb-4 flex justify-between font-display">Tipos de Placa <button onclick="addOption('card_type')" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black">+ Add</button></h4><ul id="list-card_type" class="space-y-2 text-sm max-h-40 overflow-y-auto custom-scrollbar"></ul></div>
                 </div>
             </div>
         </div>
@@ -165,44 +208,44 @@
     <template id="tpl-server">
         <div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full">
             <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-20 shadow-sm flex-shrink-0">
-                <div><h3 class="text-xl font-bold text-slate-800 flex items-center gap-2"><i class="ph ph-hard-drives text-swc-green"></i> <span id="modal-title">Ficha</span></h3></div>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors"><i class="ph ph-x text-lg"></i></button>
+                <div><h3 class="text-xl font-display font-bold text-slate-800 flex items-center gap-2"><i class="ph ph-hard-drives text-swc-primary"></i> <span id="modal-title">Ficha</span></h3></div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400 hover:text-sem-error transition-colors"><i class="ph ph-x text-lg"></i></button>
             </div>
             <div class="p-8 overflow-y-auto custom-scrollbar flex-1 bg-gray-50 min-h-0">
                 <form id="form-generic" class="space-y-8 pb-10">
                     <input type="hidden" id="item-id">
-                    <div class="bg-slate-800 p-5 rounded-xl text-white shadow-md flex items-center justify-between border border-slate-700">
-                        <div><label class="text-[10px] font-bold text-swc-green uppercase tracking-wider block mb-1.5">Status Atual</label><select id="inp-status" class="bg-slate-900 border border-slate-600 text-white text-sm rounded-lg p-2.5 w-72 font-semibold focus:ring-2 focus:ring-swc-green outline-none cursor-pointer transition-all hover:border-slate-500" onchange="updateServerFormState()"><option>Carregando...</option></select></div>
+                    <div class="bg-swc-sidebar p-5 rounded-xl text-white shadow-md flex items-center justify-between border border-slate-700">
+                        <div><label class="text-[10px] font-bold text-swc-primary uppercase tracking-wider block mb-1.5">Status Atual</label><select id="inp-status" class="bg-slate-900 border border-slate-600 text-white text-sm rounded-lg p-2.5 w-72 font-semibold focus:ring-2 focus:ring-swc-primary outline-none cursor-pointer transition-all hover:border-slate-500" onchange="updateServerFormState()"><option>Carregando...</option></select></div>
                         <i class="ph ph-conveyor-belt text-4xl text-slate-600 opacity-50"></i>
                     </div>
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-tag text-lg"></i> Identificação</h4><div class="mb-5 field-wrapper" id="wrapper-client"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Cliente</label><input type="text" id="inp-client" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray focus:ring-1 focus:ring-swc-gray transition-all" placeholder="Nome do Cliente"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-product"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Produto</label><select id="inp-product" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray transition-all"></select></div><div class="field-wrapper" id="wrapper-purpose"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Finalidade</label><select id="inp-purpose" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray transition-all" onchange="updateWorkflowFromPurpose(this.value)"></select></div></div></div>
-                    <div id="section-hardware" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> Plataforma</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5"><div class="field-wrapper" id="wrapper-vendor"><label class="block text-xs font-bold text-slate-500 mb-1.5">Fabricante</label><select id="inp-vendor" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray"></select></div><div class="col-span-1 md:col-span-2 field-wrapper" id="wrapper-model"><label class="block text-xs font-bold text-slate-500 mb-1.5">Modelo</label><input type="text" id="inp-model" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray"></div><div class="field-wrapper" id="wrapper-serial"><label class="block text-xs font-bold text-slate-500 mb-1.5">Serial (Tag)</label><input type="text" id="inp-serial" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-cpu"><label class="block text-xs font-bold text-slate-500 mb-1.5">Processador</label><input type="text" id="inp-cpu" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-gray"></div><div class="field-wrapper" id="wrapper-os"><label class="block text-xs font-bold text-slate-500 mb-1.5">Sistema Operacional</label><select id="inp-os" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-gray"></select></div></div></div>
-                    <div id="section-assembly" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-wrench text-lg"></i> Componentes</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="field-wrapper" id="wrapper-disks"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">DISCOS</label><button type="button" onclick="addDisk()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="disks-container" class="space-y-3"></div></div><div class="field-wrapper" id="wrapper-cards"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">PLACAS</label><button type="button" onclick="addCard()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="cards-container" class="space-y-3"></div></div><div class="field-wrapper" id="wrapper-ram"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">RAM</label><button type="button" onclick="addRam()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="ram-container" class="space-y-3"></div></div></div></div>
-                    <div id="section-config" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-terminal-window text-lg"></i> Rede</h4><div class="field-wrapper" id="wrapper-hostname"><label class="block text-xs font-bold text-slate-500 mb-1.5">Hostname</label><input type="text" id="inp-hostname" class="w-full border border-green-300 bg-green-50 text-green-800 font-bold font-mono rounded-lg p-3 outline-none focus:ring-1 focus:ring-green-500"></div></div>
-                    <div id="section-qa" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm field-wrapper"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-clipboard-text text-lg"></i> Controle de Qualidade</h4><div class="mb-6 field-wrapper" id="wrapper-qa_ip"><label class="block text-xs font-bold text-slate-500 mb-1.5">IP de Manutenção</label><input type="text" id="inp-qa_ip" class="w-full border border-gray-300 rounded-lg p-3 outline-none font-mono text-sm focus:border-swc-gray" placeholder="Ex: 192.168.100.50"></div><div class="field-wrapper mb-6" id="wrapper-qa_checklist"><label class="block text-xs font-bold text-slate-500 mb-3">Validações Obrigatórias</label><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_func" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Teste Funcionalidade</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_rails" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Trilhos do Servidor</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_cables" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Organização Cabos</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_stickers" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Adesivos/Etiquetas</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group col-span-1 md:col-span-2"><input type="checkbox" id="inp-qa_db" class="w-5 h-5 text-swc-green rounded focus:ring-swc-green border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Validação DB / CFG</span></label></div></div><div class="mt-4" id="wrapper-qa_details"><label class="block text-xs font-bold text-slate-500 mb-1.5">Observações Detalhadas de Teste</label><textarea id="inp-qa_details" rows="4" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-green text-sm" placeholder="Descreva detalhes dos testes..."></textarea></div></div>
-                    <div id="section-photos" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-camera text-lg"></i> Registro Fotográfico</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><div class="flex justify-between items-center mb-2"><label class="block text-xs font-bold text-slate-500">Fotos do Servidor</label><button type="button" onclick="document.getElementById('upload-server').click()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button></div><input type="file" id="upload-server" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'server')"><div id="gallery-server" class="grid grid-cols-3 gap-2"></div></div><div><div class="flex justify-between items-center mb-2"><label class="block text-xs font-bold text-slate-500">Fotos da Caixa</label><button type="button" onclick="document.getElementById('upload-box').click()" class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button></div><input type="file" id="upload-box" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'box')"><div id="gallery-box" class="grid grid-cols-3 gap-2"></div></div></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-tag text-lg"></i> Identificação</h4><div class="mb-5 field-wrapper" id="wrapper-client"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Cliente</label><input type="text" id="inp-client" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-secondary focus:ring-1 focus:ring-swc-secondary transition-all" placeholder="Nome do Cliente"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-product"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Produto</label><select id="inp-product" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-secondary transition-all"></select></div><div class="field-wrapper" id="wrapper-purpose"><label class="block text-xs font-bold text-slate-500 mb-1.5 flex items-center gap-1">Finalidade</label><select id="inp-purpose" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-secondary transition-all" onchange="updateWorkflowFromPurpose(this.value)"></select></div></div></div>
+                    <div id="section-hardware" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> Plataforma</h4><div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5"><div class="field-wrapper" id="wrapper-vendor"><label class="block text-xs font-bold text-slate-500 mb-1.5">Fabricante</label><select id="inp-vendor" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-secondary"></select></div><div class="col-span-1 md:col-span-2 field-wrapper" id="wrapper-model"><label class="block text-xs font-bold text-slate-500 mb-1.5">Modelo</label><input type="text" id="inp-model" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-secondary"></div><div class="field-wrapper" id="wrapper-serial"><label class="block text-xs font-bold text-slate-500 mb-1.5">Serial (Tag)</label><input type="text" id="inp-serial" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-secondary"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="field-wrapper" id="wrapper-cpu"><label class="block text-xs font-bold text-slate-500 mb-1.5">Processador</label><input type="text" id="inp-cpu" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-secondary"></div><div class="field-wrapper" id="wrapper-os"><label class="block text-xs font-bold text-slate-500 mb-1.5">Sistema Operacional</label><select id="inp-os" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-secondary"></select></div></div></div>
+                    <div id="section-assembly" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-wrench text-lg"></i> Componentes</h4><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="field-wrapper" id="wrapper-disks"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">DISCOS</label><button type="button" onclick="addDisk()" class="text-[10px] bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="disks-container" class="space-y-3"></div></div><div class="field-wrapper" id="wrapper-cards"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">PLACAS</label><button type="button" onclick="addCard()" class="text-[10px] bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="cards-container" class="space-y-3"></div></div><div class="field-wrapper" id="wrapper-ram"><div class="flex justify-between items-center mb-3"><label class="text-xs font-bold text-slate-500">RAM</label><button type="button" onclick="addRam()" class="text-[10px] bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black transition">+ Add</button></div><div id="ram-container" class="space-y-3"></div></div></div></div>
+                    <div id="section-config" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-terminal-window text-lg"></i> Rede</h4><div class="field-wrapper" id="wrapper-hostname"><label class="block text-xs font-bold text-slate-500 mb-1.5">Hostname</label><input type="text" id="inp-hostname" class="w-full border border-swc-secondary/50 bg-swc-secondary/5 text-swc-secondary font-bold font-mono rounded-lg p-3 outline-none focus:ring-1 focus:ring-swc-secondary"></div></div>
+                    <div id="section-qa" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm field-wrapper"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-clipboard-text text-lg"></i> Controle de Qualidade</h4><div class="mb-6 field-wrapper" id="wrapper-qa_ip"><label class="block text-xs font-bold text-slate-500 mb-1.5">IP de Manutenção</label><input type="text" id="inp-qa_ip" class="w-full border border-gray-300 rounded-lg p-3 outline-none font-mono text-sm focus:border-swc-secondary" placeholder="Ex: 192.168.100.50"></div><div class="field-wrapper mb-6" id="wrapper-qa_checklist"><label class="block text-xs font-bold text-slate-500 mb-3">Validações Obrigatórias</label><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_func" class="w-5 h-5 text-swc-primary rounded focus:ring-swc-primary border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Teste Funcionalidade</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_rails" class="w-5 h-5 text-swc-primary rounded focus:ring-swc-primary border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Trilhos do Servidor</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_cables" class="w-5 h-5 text-swc-primary rounded focus:ring-swc-primary border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Organização Cabos</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group"><input type="checkbox" id="inp-qa_stickers" class="w-5 h-5 text-swc-primary rounded focus:ring-swc-primary border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Adesivos/Etiquetas</span></label><label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition select-none group col-span-1 md:col-span-2"><input type="checkbox" id="inp-qa_db" class="w-5 h-5 text-swc-primary rounded focus:ring-swc-primary border-gray-300"><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Validação DB / CFG</span></label></div></div><div class="mt-4" id="wrapper-qa_details"><label class="block text-xs font-bold text-slate-500 mb-1.5">Observações Detalhadas de Teste</label><textarea id="inp-qa_details" rows="4" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-primary text-sm" placeholder="Descreva detalhes dos testes..."></textarea></div></div>
+                    <div id="section-photos" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-camera text-lg"></i> Registro Fotográfico</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><div class="flex justify-between items-center mb-2"><label class="block text-xs font-bold text-slate-500">Fotos do Servidor</label><button type="button" onclick="document.getElementById('upload-server').click()" class="text-[10px] bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button></div><input type="file" id="upload-server" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'server')"><div id="gallery-server" class="grid grid-cols-3 gap-2"></div></div><div><div class="flex justify-between items-center mb-2"><label class="block text-xs font-bold text-slate-500">Fotos da Caixa</label><button type="button" onclick="document.getElementById('upload-box').click()" class="text-[10px] bg-swc-sidebar text-white px-2 py-1 rounded hover:bg-black transition flex items-center gap-1"><i class="ph ph-plus"></i> Adicionar</button></div><input type="file" id="upload-box" class="hidden" multiple accept="image/*" onchange="processFiles(this, 'box')"><div id="gallery-box" class="grid grid-cols-3 gap-2"></div></div></div></div>
                     <div class="flex items-center gap-3 pt-6 mt-8 border-t border-gray-200 sticky bottom-0 bg-gray-50 pb-2 z-20">
-                        <button type="button" onclick="deleteItem('servers')" id="btn-delete" class="px-5 py-2.5 text-red-500 border border-red-200 bg-white rounded-xl hover:bg-red-50 transition font-medium hidden">Excluir</button>
+                        <button type="button" onclick="deleteItem('servers')" id="btn-delete" class="px-5 py-2.5 text-sem-error border border-sem-error/30 bg-white rounded-xl hover:bg-sem-error/10 transition font-medium hidden">Excluir</button>
                         <div class="flex-1"></div>
                         <button type="button" onclick="sendManualEmail(event, document.getElementById('item-id').value)" class="px-6 py-3 text-slate-600 border border-gray-300 hover:bg-gray-100 rounded-xl font-medium transition flex items-center gap-2" title="Enviar Email Agora"><i class="ph ph-envelope-simple text-lg"></i> Email</button>
-                        <button type="button" onclick="window.generatePDF(allServers.find(s=>s.id===document.getElementById('item-id').value))" class="px-6 py-3 text-blue-600 border border-blue-200 hover:bg-blue-50 rounded-xl font-medium transition flex items-center gap-2"><i class="ph ph-file-pdf"></i> Relatório</button>
+                        <button type="button" onclick="window.generatePDF(allServers.find(s=>s.id===document.getElementById('item-id').value))" class="px-6 py-3 text-swc-secondary border border-swc-secondary/30 hover:bg-swc-secondary/10 rounded-xl font-medium transition flex items-center gap-2"><i class="ph ph-file-pdf"></i> Relatório</button>
                         <button type="button" onclick="closeModal()" class="px-6 py-3 text-slate-500 hover:bg-gray-200 rounded-xl font-medium transition">Cancelar</button>
-                        <button type="submit" class="px-8 py-3 bg-swc-dark text-white rounded-xl font-bold shadow-lg hover:bg-black hover:shadow-xl transition transform hover:-translate-y-0.5">Salvar</button>
+                        <button type="submit" class="px-8 py-3 bg-swc-sidebar text-white rounded-xl font-bold shadow-lg hover:bg-black hover:shadow-xl transition transform hover:-translate-y-0.5">Salvar</button>
                     </div>
                 </form>
-                <div id="history-section" class="mt-8 pt-8 border-t border-gray-200 hidden"><h4 class="font-bold text-gray-800 text-sm mb-4">Histórico</h4><div id="history-list" class="space-y-0 relative border-l-2 border-gray-200 ml-3 pl-5 pb-2"></div></div>
+                <div id="history-section" class="mt-8 pt-8 border-t border-gray-200 hidden"><h4 class="font-bold text-gray-800 text-sm mb-4 font-display">Histórico</h4><div id="history-list" class="space-y-0 relative border-l-2 border-gray-200 ml-3 pl-5 pb-2"></div></div>
             </div>
         </div>
     </template>
 
-    <template id="tpl-team"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Usuário</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-name" class="w-full border p-3 rounded-lg" placeholder="Nome" required><div class="grid grid-cols-2 gap-4"><input type="text" id="inp-role" class="border p-3 rounded-lg" placeholder="Cargo" required><input type="text" id="inp-initials" class="border p-3 rounded-lg" placeholder="Sigla" required maxlength="2"></div><div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3"><h4 class="text-xs font-bold text-slate-500">Acesso</h4><input type="text" id="inp-email" class="w-full border p-3 rounded-lg" placeholder="Login" required><input type="password" id="inp-password" class="w-full border p-3 rounded-lg" placeholder="Senha" required></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('users')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
-    <template id="tpl-manual"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Manual</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><select id="inp-category" class="w-full border p-3 rounded-lg"></select><textarea id="inp-content" rows="8" class="w-full border p-3 rounded-lg font-mono text-sm" required></textarea><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('manuals')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    <template id="tpl-team"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold font-display"><span id="modal-title">Usuário</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-name" class="w-full border p-3 rounded-lg" placeholder="Nome" required><div class="grid grid-cols-2 gap-4"><input type="text" id="inp-role" class="border p-3 rounded-lg" placeholder="Cargo" required><input type="text" id="inp-initials" class="border p-3 rounded-lg" placeholder="Sigla" required maxlength="2"></div><div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3"><h4 class="text-xs font-bold text-slate-500">Acesso</h4><input type="text" id="inp-email" class="w-full border p-3 rounded-lg" placeholder="Login" required><input type="password" id="inp-password" class="w-full border p-3 rounded-lg" placeholder="Senha" required></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('users')" id="btn-delete" class="px-4 py-2 text-sem-error hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-sidebar text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    <template id="tpl-manual"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold font-display"><span id="modal-title">Manual</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><select id="inp-category" class="w-full border p-3 rounded-lg"></select><textarea id="inp-content" rows="8" class="w-full border p-3 rounded-lg font-mono text-sm" required></textarea><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('manuals')" id="btn-delete" class="px-4 py-2 text-sem-error hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-sidebar text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
     
     <template id="tpl-task">
         <div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full">
             <div class="p-8 overflow-y-auto flex-1 custom-scrollbar">
                 <div class="flex justify-between mb-6">
-                    <h3 class="text-xl font-bold"><span id="modal-title">Nova Tarefa</span></h3>
+                    <h3 class="text-xl font-bold font-display"><span id="modal-title">Nova Tarefa</span></h3>
                     <button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button>
                 </div>
                 <form id="form-generic" class="space-y-4">
@@ -221,19 +264,19 @@
                     <hr class="border-gray-100 my-2">
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="font-bold text-sm text-slate-700">Checklist</h4>
-                        <button type="button" onclick="addStep()" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded hover:bg-black transition">+ Item</button>
+                        <button type="button" onclick="addStep()" class="text-xs bg-swc-sidebar text-white px-3 py-1.5 rounded hover:bg-black transition">+ Item</button>
                     </div>
                     <div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar p-1"></div>
                     <div class="flex gap-2 pt-4 mt-4">
                         <button type="button" onclick="closeModal()" class="px-6 py-3 text-slate-500 hover:bg-gray-100 rounded-lg font-bold transition">Cancelar</button>
-                        <button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold hover:bg-black transition shadow-lg">Salvar Tarefa</button>
+                        <button type="submit" class="flex-1 bg-swc-sidebar text-white py-3 rounded-lg font-bold hover:bg-black transition shadow-lg">Salvar Tarefa</button>
                     </div>
                 </form>
             </div>
         </div>
     </template>
 
-    <template id="tpl-rotine"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Rotina</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><div class="grid grid-cols-2 gap-4"><select id="inp-frequency" class="border p-3 rounded-lg"><option value="Diária">Diária</option><option value="Semanal">Semanal</option><option value="Quinzenal">Quinzenal</option><option value="Mensal">Mensal</option></select><select id="inp-assignedTo" class="border p-3 rounded-lg"></select></div><hr><div class="flex justify-between"><h4 class="font-bold">Subtarefas</h4><button type="button" onclick="addStep()" class="text-xs bg-black text-white px-2 py-1 rounded">+ Add</button></div><div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto"></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('rotines')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    <template id="tpl-rotine"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold font-display"><span id="modal-title">Rotina</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><div class="grid grid-cols-2 gap-4"><select id="inp-frequency" class="border p-3 rounded-lg"><option value="Diária">Diária</option><option value="Semanal">Semanal</option><option value="Quinzenal">Quinzenal</option><option value="Mensal">Mensal</option></select><select id="inp-assignedTo" class="border p-3 rounded-lg"></select></div><hr><div class="flex justify-between"><h4 class="font-bold">Subtarefas</h4><button type="button" onclick="addStep()" class="text-xs bg-swc-sidebar text-white px-2 py-1 rounded">+ Add</button></div><div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto"></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('rotines')" id="btn-delete" class="px-4 py-2 text-sem-error hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-sidebar text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
 
     <script>
         const API = '/api';
@@ -248,8 +291,18 @@
 
         function showToast(msg, type='success') {
             const t = document.createElement('div');
-            t.className = `toast ${type==='error'?'toast-error':(type==='info'?'toast-info':'toast-success')} show`;
-            t.innerHTML = `<i class="ph ${type==='success'?'ph-check-circle':'ph-info'} text-xl"></i> <span>${msg}</span>`;
+            // Mapeia classes de cores semânticas
+            let typeClass = 'toast-success';
+            if (type === 'error') typeClass = 'toast-error';
+            if (type === 'info') typeClass = 'toast-info';
+            
+            // Ícones semânticos
+            let iconClass = 'ph-check-circle';
+            if (type === 'error') iconClass = 'ph-warning-circle';
+            if (type === 'info') iconClass = 'ph-info';
+
+            t.className = `toast ${typeClass} show`;
+            t.innerHTML = `<i class="ph ${iconClass} text-xl"></i> <span>${msg}</span>`;
             document.getElementById('toast-container').appendChild(t);
             setTimeout(() => t.remove(), 3000);
         }
@@ -278,11 +331,10 @@
         
         function updateHeader(view) {
             const titles = { dashboard: 'Visão Geral', rotom: 'Tarefas', rotines: 'Gerenciar Rotinas', pokeball: 'Servidores', tm: 'Manuais', team: 'Equipe', settings: 'Configurações' };
-            document.getElementById('header-left').innerHTML = `<h2 class="text-2xl font-bold text-slate-800">${titles[view] || 'Showcase Pro'}</h2>`;
+            document.getElementById('header-left').innerHTML = `<h2 class="text-2xl font-display font-bold text-slate-800">${titles[view] || 'ShowCase Pro'}</h2>`;
             let btn = '';
-            if(view==='rotom') document.getElementById('header-left').innerHTML += `<input type="date" id="date-picker" class="ml-4 bg-transparent font-bold text-slate-500" onchange="loadData('rotom')">`;
-            // ATUALIZADO: Agora 'rotom' (Tarefas) também tem botão Novo
-            if(['rotines','pokeball','tm','team','rotom'].includes(view)) btn = `<button onclick="openCreateModal('${view}')" class="bg-swc-dark text-white px-5 py-2.5 rounded-lg font-bold shadow-lg hover:bg-black transition flex items-center gap-2"><i class="ph ph-plus"></i> Novo</button>`;
+            if(view==='rotom') document.getElementById('header-left').innerHTML += `<input type="date" id="date-picker" class="ml-4 bg-transparent font-bold text-slate-500 font-display" onchange="loadData('rotom')">`;
+            if(['rotines','pokeball','tm','team','rotom'].includes(view)) btn = `<button onclick="openCreateModal('${view}')" class="bg-swc-sidebar text-white px-5 py-2.5 rounded-lg font-bold shadow-lg hover:bg-black transition flex items-center gap-2"><i class="ph ph-plus"></i> Novo</button>`;
             document.getElementById('header-action').innerHTML = btn;
             if(view==='rotom') { const d=document.getElementById('date-picker'); if(d && !d.value) d.value = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-'); }
         }
@@ -309,66 +361,80 @@
         }
 
         async function loadDashboardData() { 
+            const today = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-');
+            
             const [s, t, u] = await Promise.all([
                 fetch(`${API}/servers`).then(r=>r.json()), 
-                fetch(`${API}/tasks`).then(r=>r.json()), 
+                fetch(`${API}/tasks?date=${today}`).then(r=>r.json()), 
                 fetch(`${API}/users`).then(r=>r.json())
             ]); 
             
-            // Logic: Production is anything NOT completed
             const inProduction = s.filter(x => x.status !== 'Concluído').length;
-            
-            // --- NOVA LÓGICA DE TAREFAS ---
-            // Pendentes: Apenas DIÁRIAS que não foram concluídas
-            const dailyPending = t.filter(x => x.frequency === 'Diária' && x.status !== 'Concluído').length;
-            
-            // Feitas: Apenas SEMANAIS que foram concluídas
-            const weeklyDone = t.filter(x => x.frequency === 'Semanal' && x.status === 'Concluído').length;
-            // -----------------------------
+            const pendingToday = t.filter(x => x.status !== 'Concluído').length;
+            const doneToday = t.filter(x => x.status === 'Concluído').length;
 
             document.getElementById('dash-servers-count').innerText = inProduction;
-            document.getElementById('dash-tasks-pending').innerText = dailyPending; 
-            document.getElementById('dash-tasks-done').innerText = weeklyDone; 
+            document.getElementById('dash-tasks-pending').innerText = pendingToday; 
+            document.getElementById('dash-tasks-done').innerText = doneToday; 
             document.getElementById('dash-team-count').innerText = u.length; 
             
-            // Filter List Logic
+            // Filter List
             const filterVal = document.getElementById('dash-filter').value;
-            let listItems = s.slice().reverse(); // Show recent first
+            let listItems = s.slice().reverse();
             if(filterVal === 'Produção') listItems = listItems.filter(x => x.status !== 'Concluído');
             else if(filterVal === 'Concluído') listItems = listItems.filter(x => x.status === 'Concluído');
 
             document.getElementById('dash-server-list').innerHTML = listItems.slice(0, 5).map(i => `
                 <div class="flex justify-between items-center border-b border-gray-100 pb-2 text-sm hover:bg-gray-50 p-2 rounded cursor-pointer" onclick="navigateTo('pokeball/${i.id}')">
                     <div class="flex gap-3 items-center">
-                        <div class="w-2 h-2 rounded-full ${i.status === 'Concluído' ? 'bg-green-500' : 'bg-blue-500'}"></div>
+                        <div class="w-2 h-2 rounded-full ${i.status === 'Concluído' ? 'bg-sem-success' : 'bg-swc-secondary'}"></div>
                         <div>
-                            <span class="block font-medium">${i.hostname || 'Novo Servidor'}</span>
+                            <span class="block font-medium font-display">${i.hostname || 'Novo Servidor'}</span>
                             <span class="text-xs text-gray-400">${i.client || '-'}</span>
                         </div>
                     </div>
-                    <span class="font-bold text-xs ${i.status==='Concluído'?'text-green-600 bg-green-50 px-2 py-0.5 rounded':'text-blue-600 bg-blue-50 px-2 py-0.5 rounded'}">${i.status}</span>
+                    <span class="font-bold text-xs ${i.status==='Concluído'?'text-sem-success bg-sem-success/10 px-2 py-0.5 rounded':'text-swc-secondary bg-swc-secondary/10 px-2 py-0.5 rounded'}">${i.status}</span>
                 </div>`
             ).join(''); 
             
-            // Charts
+            // Charts (Updated Colors)
             const statusCounts = {}; s.forEach(x => statusCounts[x.status] = (statusCounts[x.status]||0)+1); 
             const teamCounts = {}; t.forEach(x => teamCounts[x.assignedTo] = (teamCounts[x.assignedTo]||0)+1); 
             
-            // Check if canvas exists before creating chart
             const ctxServers = document.getElementById('chartServers');
             if (ctxServers) {
                 if(statusChart) statusChart.destroy(); 
-                statusChart = new Chart(ctxServers, { type: 'doughnut', data: { labels: Object.keys(statusCounts), datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#3b82f6','#d9ed13','#ef4444','#10b981','#8b5cf6'] }] }, options: { maintainAspectRatio: false, plugins:{legend:{position:'right'}} } }); 
+                statusChart = new Chart(ctxServers, { 
+                    type: 'doughnut', 
+                    data: { 
+                        labels: Object.keys(statusCounts), 
+                        datasets: [{ 
+                            data: Object.values(statusCounts), 
+                            backgroundColor: ['#85B433','#34B0B1','#003E3F','#CD6619','#A0B6D9'] 
+                        }] 
+                    }, 
+                    options: { maintainAspectRatio: false, plugins:{legend:{position:'right', labels: { font: { family: 'Roboto' } }}} } 
+                }); 
             }
 
             const ctxTeam = document.getElementById('chartTeam');
             if (ctxTeam) {
                 if(teamChart) teamChart.destroy(); 
-                teamChart = new Chart(ctxTeam, { type: 'bar', data: { labels: Object.keys(teamCounts), datasets: [{ label: 'Tarefas', data: Object.values(teamCounts), backgroundColor: '#3b82f6' }] }, options: { maintainAspectRatio: false, plugins:{legend:{display:false}} } }); 
+                teamChart = new Chart(ctxTeam, { 
+                    type: 'bar', 
+                    data: { 
+                        labels: Object.keys(teamCounts), 
+                        datasets: [{ 
+                            label: 'Tarefas de Hoje', 
+                            data: Object.values(teamCounts), 
+                            backgroundColor: '#003E3F' 
+                        }] 
+                    }, 
+                    options: { maintainAspectRatio: false, plugins:{legend:{display:false}}, scales: { x: { ticks: { font: { family: 'Roboto' } } } } } 
+                }); 
             }
         }
 
-        // ... (Remaining Logic: ToggleTV, Settings, Workflows - standard) ...
         function toggleTVMode() { 
             document.body.classList.toggle('tv-mode'); 
             const isTv = document.body.classList.contains('tv-mode');
@@ -397,9 +463,9 @@
                     <div class="flex items-center mr-4 mb-1 bg-slate-100 px-2 py-1 rounded text-[10px]">
                         <span class="w-16 text-gray-600 font-bold">${FIELD_LABELS[f]}</span>
                         <input type="checkbox" class="mr-1 cursor-pointer" title="Visível" ${step.fields && step.fields.includes(f) ? 'checked' : ''} onchange="updateStepField('${purpose}', ${idx}, '${f}', 'visible', this.checked)">
-                        <input type="checkbox" class="ml-2 cursor-pointer accent-red-500" title="Obrigatório" ${step.required && step.required.includes(f) ? 'checked' : ''} onchange="updateStepField('${purpose}', ${idx}, '${f}', 'required', this.checked)">
+                        <input type="checkbox" class="ml-2 cursor-pointer accent-sem-error" title="Obrigatório" ${step.required && step.required.includes(f) ? 'checked' : ''} onchange="updateStepField('${purpose}', ${idx}, '${f}', 'required', this.checked)">
                     </div>`).join('');
-                list.innerHTML += `<div class="bg-white p-3 rounded border border-gray-200 mb-2 shadow-sm"><div class="flex justify-between items-center mb-2"><span class="text-sm font-bold text-slate-700"><span class="text-gray-400 mr-2">${idx+1}.</span>${step.name}</span><button onclick="removeWorkflowStep('${purpose}', ${idx})" class="text-red-400 hover:text-red-600"><i class="ph ph-x-circle text-lg"></i></button></div><div class="flex flex-wrap gap-y-1">${fieldsHTML}</div></div>`;
+                list.innerHTML += `<div class="bg-white p-3 rounded border border-gray-200 mb-2 shadow-sm"><div class="flex justify-between items-center mb-2"><span class="text-sm font-bold text-slate-700 font-display"><span class="text-gray-400 mr-2">${idx+1}.</span>${step.name}</span><button onclick="removeWorkflowStep('${purpose}', ${idx})" class="text-sem-error hover:text-red-700"><i class="ph ph-x-circle text-lg"></i></button></div><div class="flex flex-wrap gap-y-1">${fieldsHTML}</div></div>`;
             });
             document.getElementById('workflow-editor').classList.remove('hidden');
             if(!wf) cachedWorkflows.push({ purpose, steps: defaultSteps });
@@ -535,7 +601,7 @@
             container.innerHTML = currentPhotos[type].map((src, index) => `
                 <div class="relative h-24 border rounded-lg overflow-hidden group bg-gray-50">
                     <img src="${src}" class="w-full h-full object-cover">
-                    <button type="button" onclick="removePhoto('${type}', ${index})" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 text-xs opacity-0 group-hover:opacity-100 transition shadow-md">
+                    <button type="button" onclick="removePhoto('${type}', ${index})" class="absolute top-1 right-1 bg-sem-error text-white rounded-full p-1 text-xs opacity-0 group-hover:opacity-100 transition shadow-md">
                         <i class="ph ph-x"></i>
                     </button>
                 </div>
@@ -551,7 +617,7 @@
             const container = document.getElementById('servers-container');
             if(!list || list.length === 0) return container.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400"><i class="ph ph-hard-drives text-5xl mb-4"></i><p>Nenhum servidor encontrado.</p></div>';
             
-            const qaIcon = (val) => val ? '<i class="ph ph-check-circle text-green-500 text-sm"></i>' : '<i class="ph ph-circle text-slate-200 text-sm"></i>';
+            const qaIcon = (val) => val ? '<i class="ph ph-check-circle text-sem-success text-sm"></i>' : '<i class="ph ph-circle text-slate-200 text-sm"></i>';
 
             container.innerHTML = list.map(i => {
                 const wf = cachedWorkflows.find(w => w.purpose === i.purpose);
@@ -564,58 +630,58 @@
                 if (!isConcluido) {
                     steps.forEach((step, idx) => {
                         let colorClass = 'bg-gray-200';
-                        if (idx < stepIndex) colorClass = 'bg-swc-green'; else if (idx === stepIndex) colorClass = 'bg-blue-500 animate-pulse scale-125 shadow-sm';
+                        if (idx < stepIndex) colorClass = 'bg-swc-primary'; else if (idx === stepIndex) colorClass = 'bg-swc-secondary animate-pulse scale-125 shadow-sm';
                         let label = '';
-                        if(idx === 0 || idx === steps.length -1 || idx === stepIndex) label = `<div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-[8px] font-bold uppercase tracking-wide ${idx === stepIndex ? 'text-blue-600' : 'text-gray-400'}">${step.substring(0,8)}</div>`;
-                        timelineHTML += `<div class="relative flex-1 flex items-center h-2 group" title="${step}"><div class="w-full h-1 ${idx <= stepIndex ? 'bg-swc-green' : 'bg-gray-100'}"></div><div class="absolute left-0 w-3 h-3 rounded-full ${colorClass} transition-all z-10 border-2 border-white"></div>${label}</div>`;
+                        if(idx === 0 || idx === steps.length -1 || idx === stepIndex) label = `<div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-[8px] font-bold uppercase tracking-wide ${idx === stepIndex ? 'text-swc-secondary' : 'text-gray-400'}">${step.substring(0,8)}</div>`;
+                        timelineHTML += `<div class="relative flex-1 flex items-center h-2 group" title="${step}"><div class="w-full h-1 ${idx <= stepIndex ? 'bg-swc-primary' : 'bg-gray-100'}"></div><div class="absolute left-0 w-3 h-3 rounded-full ${colorClass} transition-all z-10 border-2 border-white"></div>${label}</div>`;
                     });
                 } else {
-                    timelineHTML = `<div class="w-full bg-green-100 text-green-700 text-center text-xs font-bold py-1 rounded">PROCESSAMENTO CONCLUÍDO</div>`;
+                    timelineHTML = `<div class="w-full bg-sem-success/20 text-sem-success text-center text-xs font-bold py-1 rounded">PROCESSAMENTO CONCLUÍDO</div>`;
                 }
 
                 const specs = [];
-                if(i.cpu) specs.push(`<span class="bg-purple-50 text-purple-700 border border-purple-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${i.cpu}</span>`);
-                if(i.ram && i.ram.length) specs.push(`<span class="bg-blue-50 text-blue-700 border border-blue-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${i.ram.length}x RAM</span>`);
+                if(i.cpu) specs.push(`<span class="bg-swc-sidebar/10 text-swc-sidebar border border-swc-sidebar/20 px-1.5 py-0.5 rounded text-[10px] font-bold">${i.cpu}</span>`);
+                if(i.ram && i.ram.length) specs.push(`<span class="bg-swc-secondary/10 text-swc-secondary border border-swc-secondary/20 px-1.5 py-0.5 rounded text-[10px] font-bold">${i.ram.length}x RAM</span>`);
                 
                 let btnAction = '';
                 if (isConcluido) {
-                    btnAction = `<span class="text-green-600"><i class="ph ph-check-circle text-xl"></i></span>`;
+                    btnAction = `<span class="text-sem-success"><i class="ph ph-check-circle text-xl"></i></span>`;
                 } else {
-                    const btnClass = isFinished ? 'bg-green-50 text-green-600 hover:bg-green-600 hover:text-white' : 'bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white';
+                    const btnClass = isFinished ? 'bg-sem-success/10 text-sem-success hover:bg-sem-success hover:text-white' : 'bg-swc-secondary/10 text-swc-secondary hover:bg-swc-secondary hover:text-white';
                     const btnIcon = isFinished ? 'ph-check' : 'ph-caret-double-right';
                     btnAction = `<button onclick="advanceStatus(event, '${i.id}', '${i.status}')" class="w-8 h-8 rounded-full ${btnClass} flex items-center justify-center transition-colors shadow-sm" title="${isFinished ? 'Finalizar' : 'Avançar Etapa'}"><i class="ph ${btnIcon} text-sm"></i></button>`;
                 }
                 
                 return `
-                <div class="bg-white p-5 rounded-xl border ${isConcluido ? 'border-green-200 ring-1 ring-green-50' : 'border-gray-200'} shadow-sm hover:shadow-md transition-all mb-4 group relative overflow-visible cursor-pointer" onclick="openEditModal('pokeball', '${i.id}')">
+                <div class="bg-white p-5 rounded-xl border ${isConcluido ? 'border-sem-success/30 ring-1 ring-sem-success/20' : 'border-gray-200'} shadow-sm hover:shadow-md transition-all mb-4 group relative overflow-visible cursor-pointer" onclick="openEditModal('pokeball', '${i.id}')">
                     <div class="flex justify-between items-center mb-2">
                         <div class="flex items-center gap-4 flex-1">
                             <div class="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-lg text-slate-400"><i class="ph ph-hard-drives"></i></div>
                             <div>
-                                <h4 class="font-bold text-base text-slate-800 flex items-center gap-2">
+                                <h4 class="font-bold font-display text-base text-slate-800 flex items-center gap-2">
                                     ${i.hostname || '<span class="italic text-slate-400 font-normal">Pendente</span>'}
-                                    <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded border border-slate-200 font-normal">${i.product || 'Prod'}</span>
+                                    <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded border border-slate-200 font-normal font-sans">${i.product || 'Prod'}</span>
                                 </h4>
                                 <div class="flex items-center gap-2 mt-1">${specs.join('')}</div>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <div class="text-right hidden sm:block"><p class="text-[10px] font-bold uppercase text-slate-400">Status</p><span class="text-xs font-bold ${isConcluido ? 'text-green-600' : 'text-blue-600'}">${i.status}</span></div>
-                            <button onclick="event.stopPropagation(); window.generatePDF({hostname:'${i.hostname}', ...${JSON.stringify(i).replace(/"/g, "'")}})" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 text-blue-600 transition-colors" title="Gerar Relatório"><i class="ph ph-file-pdf text-lg"></i></button>
+                            <div class="text-right hidden sm:block"><p class="text-[10px] font-bold uppercase text-slate-400">Status</p><span class="text-xs font-bold ${isConcluido ? 'text-sem-success' : 'text-swc-secondary'}">${i.status}</span></div>
+                            <button onclick="event.stopPropagation(); window.generatePDF({hostname:'${i.hostname}', ...${JSON.stringify(i).replace(/"/g, "'")}})" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-swc-secondary/10 text-swc-secondary transition-colors" title="Gerar Relatório"><i class="ph ph-file-pdf text-lg"></i></button>
                             <button onclick="event.stopPropagation(); sendManualEmail(event, '${i.id}')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-500 transition-colors" title="Enviar Email Manual"><i class="ph ph-envelope-simple text-lg"></i></button>
                             <button onclick="event.stopPropagation(); toggleDetails('${i.id}', this)" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition-transform chevron-icon"><i class="ph ph-caret-down text-lg"></i></button>
                             ${btnAction}
                         </div>
                     </div>
-                    <div class="mt-6 mb-2 pl-14 pr-12 relative"><div class="flex items-center w-full">${timelineHTML}<div class="relative w-3 h-3"><div class="w-3 h-3 rounded-full ${isConcluido ? 'bg-swc-green' : 'bg-gray-200'} border-2 border-white relative z-10"></div></div></div></div>
+                    <div class="mt-6 mb-2 pl-14 pr-12 relative"><div class="flex items-center w-full">${timelineHTML}<div class="relative w-3 h-3"><div class="w-3 h-3 rounded-full ${isConcluido ? 'bg-sem-success' : 'bg-gray-200'} border-2 border-white relative z-10"></div></div></div></div>
                     
                     <div id="details-${i.id}" class="details-content bg-white">
                         <div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-600">
                             <div class="space-y-2">
-                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1"><i class="ph ph-cpu text-swc-green text-sm"></i> Sistema & Cliente</p>
+                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1 font-display"><i class="ph ph-cpu text-swc-primary text-sm"></i> Sistema & Cliente</p>
                                 <div class="bg-slate-50 p-2 rounded border border-slate-100 space-y-1">
                                     <p class="flex justify-between"><span>Cliente:</span> <span class="font-bold text-slate-700">${i.client || '-'}</span></p>
-                                    <p class="flex justify-between"><span>Hostname:</span> <span class="font-mono text-blue-600">${i.hostname || '-'}</span></p>
+                                    <p class="flex justify-between"><span>Hostname:</span> <span class="font-mono text-swc-secondary">${i.hostname || '-'}</span></p>
                                     <p class="flex justify-between"><span>Tag/Serial:</span> <span class="font-mono">${i.serial || '-'}</span></p>
                                     <div class="border-t border-slate-200 my-1"></div>
                                     <p><span class="text-slate-400">OS:</span> ${i.os || '-'}</p>
@@ -623,15 +689,15 @@
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1"><i class="ph ph-circuitry text-swc-green text-sm"></i> Expansão</p>
+                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1 font-display"><i class="ph ph-circuitry text-swc-primary text-sm"></i> Expansão</p>
                                 <div class="space-y-1 max-h-24 overflow-y-auto custom-scrollbar pr-1">
                                     ${i.disks && i.disks.length ? i.disks.map(d => `<div class="flex justify-between items-center bg-slate-50 px-2 py-1 rounded border border-slate-100"><span class="flex items-center gap-1"><i class="ph ph-hard-drive text-slate-400"></i> ${d.model}</span><span class="font-bold text-[10px]">${d.size}</span></div>`).join('') : '<span class="text-slate-400 italic pl-1">Sem discos</span>'}
                                     ${i.cards && i.cards.length ? i.cards.map(c => `<div class="flex justify-between items-center bg-slate-50 px-2 py-1 rounded border border-slate-100 mt-1"><span class="flex items-center gap-1"><i class="ph ph-video-camera text-slate-400"></i> ${c.type}</span><span class="font-bold text-[10px]">${c.model}</span></div>`).join('') : '<span class="text-slate-400 italic pl-1 block mt-1">Sem placas</span>'}
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1"><i class="ph ph-clipboard-text text-swc-green text-sm"></i> QA & Rede</p>
-                                <div class="flex justify-between items-center mb-2 bg-green-50 px-2 py-1 rounded border border-green-100 text-green-700"><span>IP Manutenção</span><span class="font-mono font-bold">${i.qa_ip || 'N/A'}</span></div>
+                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1 font-display"><i class="ph ph-clipboard-text text-swc-primary text-sm"></i> QA & Rede</p>
+                                <div class="flex justify-between items-center mb-2 bg-swc-primary/10 px-2 py-1 rounded border border-swc-primary/20 text-swc-primary"><span>IP Manutenção</span><span class="font-mono font-bold">${i.qa_ip || 'N/A'}</span></div>
                                 <div class="grid grid-cols-2 gap-y-1 gap-x-2"><span class="flex items-center gap-1.5">${qaIcon(i.qa_func)} Funcional</span><span class="flex items-center gap-1.5">${qaIcon(i.qa_rails)} Trilhos</span><span class="flex items-center gap-1.5">${qaIcon(i.qa_cables)} Cabos</span><span class="flex items-center gap-1.5">${qaIcon(i.qa_stickers)} Etiquetas</span></div>
                                 ${i.qa_details ? `<p class="mt-2 text-[10px] text-slate-500 italic truncate" title="${i.qa_details}"><i class="ph ph-info"></i> ${i.qa_details}</p>` : ''}
                             </div>
@@ -656,32 +722,29 @@
             renderServers(filtered); 
         }
 
-        function renderTeam(list) { document.getElementById('team-container').innerHTML = list.map(u => `<div onclick="openEditModal('team', '${u.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer flex flex-col items-center text-center group relative"><div class="w-16 h-16 rounded-full ${u.color || 'bg-gray-800'} text-white flex items-center justify-center text-xl font-bold mb-3 transition group-hover:scale-110">${u.initials}</div><h4 class="font-bold text-lg text-slate-800">${u.name}</h4><span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded mt-1">${u.role}</span></div>`).join(''); }
-        function renderTMs(list) { document.getElementById('manuals-container').innerHTML = list.map(i => `<div onclick="openEditModal('tm', '${i.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer group relative"><h4 class="font-bold text-lg mb-2 text-slate-800">${i.title}</h4><span class="text-xs bg-gray-100 px-2 py-1 rounded text-slate-500">${i.category}</span><p class="text-xs text-slate-400 mt-4 line-clamp-3 font-mono">${i.content}</p></div>`).join(''); }
-        function renderRotinesList(list) { document.getElementById('rotines-list-container').innerHTML = list.map(i => `<div onclick="openEditModal('rotines', '${i.id}')" class="bg-white p-4 rounded border flex justify-between items-center cursor-pointer hover:bg-gray-50"><div><h4 class="font-bold text-lg text-slate-800">${i.title}</h4><p class="text-sm text-slate-500">${i.frequency} | ${i.assignedTo}</p></div><i class="ph ph-caret-right text-slate-400"></i></div>`).join(''); }
+        function renderTeam(list) { document.getElementById('team-container').innerHTML = list.map(u => `<div onclick="openEditModal('team', '${u.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer flex flex-col items-center text-center group relative"><div class="w-16 h-16 rounded-full ${u.color || 'bg-gray-800'} text-white flex items-center justify-center text-xl font-bold mb-3 transition group-hover:scale-110 font-display">${u.initials}</div><h4 class="font-bold text-lg text-slate-800 font-display">${u.name}</h4><span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded mt-1">${u.role}</span></div>`).join(''); }
+        function renderTMs(list) { document.getElementById('manuals-container').innerHTML = list.map(i => `<div onclick="openEditModal('tm', '${i.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer group relative"><h4 class="font-bold text-lg mb-2 text-slate-800 font-display">${i.title}</h4><span class="text-xs bg-gray-100 px-2 py-1 rounded text-slate-500">${i.category}</span><p class="text-xs text-slate-400 mt-4 line-clamp-3 font-mono">${i.content}</p></div>`).join(''); }
+        function renderRotinesList(list) { document.getElementById('rotines-list-container').innerHTML = list.map(i => `<div onclick="openEditModal('rotines', '${i.id}')" class="bg-white p-4 rounded border flex justify-between items-center cursor-pointer hover:bg-gray-50"><div><h4 class="font-bold text-lg text-slate-800 font-display">${i.title}</h4><p class="text-sm text-slate-500">${i.frequency} | ${i.assignedTo}</p></div><i class="ph ph-caret-right text-slate-400"></i></div>`).join(''); }
         
         function renderTasks(list) { 
             const c = document.getElementById('tasks-container'); 
             if(list.length === 0) return c.innerHTML = '<p class="text-gray-400 col-span-3 text-center py-10">Sem tarefas para esta data.</p>'; 
-            const colors = { 'Diária': 'bg-blue-100 text-blue-700', 'Semanal': 'bg-purple-100 text-purple-700', 'Quinzenal': 'bg-cyan-100 text-cyan-700', 'Mensal': 'bg-orange-100 text-orange-700', 'Semestral': 'bg-pink-100 text-pink-700', 'Anual': 'bg-red-100 text-red-700', 'Única': 'bg-yellow-100 text-yellow-700' }; 
+            const colors = { 'Diária': 'bg-swc-secondary/10 text-swc-secondary', 'Semanal': 'bg-swc-sidebar/10 text-swc-sidebar', 'Quinzenal': 'bg-swc-orange/10 text-swc-orange', 'Mensal': 'bg-swc-brown/10 text-swc-brown', 'Única': 'bg-sem-alert/10 text-sem-alert' }; 
             c.innerHTML = list.map((t, idx) => { 
                 const done = t.status === 'Concluído'; 
-                return `<div class="bg-white p-6 rounded-2xl border ${done ? 'opacity-60' : ''}"><div class="flex justify-between items-start mb-2"><div><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border w-fit ${colors[t.frequency] || 'bg-gray-100'} mb-1 inline-block">${t.frequency || 'Rotina'}</span><h4 class="font-bold text-lg leading-tight text-slate-800">${t.title}</h4></div>${done ? '<div class="bg-green-100 text-green-700 p-1.5 rounded-full"><i class="ph ph-check-fat text-lg"></i></div>' : ''}</div><div class="text-xs text-gray-500 mb-3 flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-600">${t.assignedTo ? t.assignedTo.substring(0,2).toUpperCase() : 'TI'}</div>${t.assignedTo}</div><ul class="space-y-2 mb-4 flex-1 overflow-y-auto max-h-40 custom-scrollbar pr-1">${t.checklist.map((step, sIdx) => `<li class="flex items-start gap-3 group"><div class="relative flex items-center pt-0.5"><input type="checkbox" class="peer appearance-none w-4 h-4 border border-gray-300 rounded checked:bg-swc-green checked:border-swc-green cursor-pointer transition-colors" ${step.completed ? 'checked' : ''} ${done ? 'disabled' : ''} onchange="toggleTaskStep('${t.id}', ${sIdx}, this.checked)"><i class="ph ph-check text-white text-[10px] absolute top-1 left-[3px] pointer-events-none opacity-0 peer-checked:opacity-100"></i></div><div class="flex-1"><span class="text-sm ${step.completed ? 'line-through text-gray-400' : 'text-gray-600 font-medium'} transition-colors select-none cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('input').click()">${step.step}</span>${step.manual ? `<div class="mt-1 hidden group-hover:block animate-fade-in"><div class="text-[10px] bg-blue-50 text-blue-600 p-2 rounded border border-blue-100 font-mono"><i class="ph ph-info mr-1"></i> ${step.manual}</div></div>` : ''}</div></li>`).join('')}</ul>${!done ? `<button onclick="finishTask('${t.id}')" class="mt-auto w-full bg-swc-dark text-white text-sm font-bold py-2.5 rounded-xl hover:bg-black transition shadow-lg flex items-center justify-center gap-2"><i class="ph ph-check-circle"></i> Concluir Tarefa</button>` : ''}</div>`; 
+                return `<div class="bg-white p-6 rounded-2xl border ${done ? 'opacity-60' : ''}"><div class="flex justify-between items-start mb-2"><div><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border w-fit ${colors[t.frequency] || 'bg-gray-100'} mb-1 inline-block font-sans">${t.frequency || 'Rotina'}</span><h4 class="font-bold text-lg leading-tight text-slate-800 font-display">${t.title}</h4></div>${done ? '<div class="bg-sem-success/20 text-sem-success p-1.5 rounded-full"><i class="ph ph-check-fat text-lg"></i></div>' : ''}</div><div class="text-xs text-gray-500 mb-3 flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-600">${t.assignedTo ? t.assignedTo.substring(0,2).toUpperCase() : 'TI'}</div>${t.assignedTo}</div><ul class="space-y-2 mb-4 flex-1 overflow-y-auto max-h-40 custom-scrollbar pr-1">${t.checklist.map((step, sIdx) => `<li class="flex items-start gap-3 group"><div class="relative flex items-center pt-0.5"><input type="checkbox" class="peer appearance-none w-4 h-4 border border-gray-300 rounded checked:bg-swc-primary checked:border-swc-primary cursor-pointer transition-colors" ${step.completed ? 'checked' : ''} ${done ? 'disabled' : ''} onchange="toggleTaskStep('${t.id}', ${sIdx}, this.checked)"><i class="ph ph-check text-white text-[10px] absolute top-1 left-[3px] pointer-events-none opacity-0 peer-checked:opacity-100"></i></div><div class="flex-1"><span class="text-sm ${step.completed ? 'line-through text-gray-400' : 'text-gray-600 font-medium'} transition-colors select-none cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('input').click()">${step.step}</span>${step.manual ? `<div class="mt-1 hidden group-hover:block animate-fade-in"><div class="text-[10px] bg-sem-info/10 text-sem-info p-2 rounded border border-sem-info/20 font-mono"><i class="ph ph-info mr-1"></i> ${step.manual}</div></div>` : ''}</div></li>`).join('')}</ul>${!done ? `<button onclick="finishTask('${t.id}')" class="mt-auto w-full bg-swc-sidebar text-white text-sm font-bold py-2.5 rounded-xl hover:bg-black transition shadow-lg flex items-center justify-center gap-2"><i class="ph ph-check-circle"></i> Concluir Tarefa</button>` : ''}</div>`; 
             }).join(''); 
         }
 
         function renderSettings(list) { 
             const types = { product: 'list-product', purpose: 'list-purpose', vendor: 'list-vendor', os: 'list-os', tm_category: 'list-tm_category', card_type: 'list-card_type' }; 
             Object.values(types).forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML = ''; }); 
-            list.forEach(item => { const ul = document.getElementById(types[item.type]); if(ul) ul.innerHTML += `<li class="flex justify-between items-center border-b border-gray-100 py-1"><span>${item.value}</span><button onclick="deleteOption('${item.id}')" class="text-red-400 hover:text-red-600 text-xs"><i class="ph ph-trash"></i></button></li>`; }); 
+            list.forEach(item => { const ul = document.getElementById(types[item.type]); if(ul) ul.innerHTML += `<li class="flex justify-between items-center border-b border-gray-100 py-1"><span>${item.value}</span><button onclick="deleteOption('${item.id}')" class="text-sem-error hover:text-red-700 text-xs"><i class="ph ph-trash"></i></button></li>`; }); 
         }
         
         async function openCreateModal(view) { renderModalForm(view, null); }
         async function openEditModal(view, id) {
-            let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : 'rotines'));
-            // ATUALIZADO: 'rotom' também usa endpoint 'tasks' mas a edição em si não estava implementada no card.
-            // Se o usuário clicar, vai tentar abrir. Se não houver suporte a edição completa na UI, ele só fecha.
-            // Para criação, o fluxo vai direto.
+            let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : (view === 'rotom' ? 'tasks' : 'rotines')));
             try { 
                 const res = await fetch(`${API}/${endpoint}/${id}`); 
                 if(res.ok) renderModalForm(view, await res.json()); 
@@ -692,7 +755,6 @@
         async function renderModalForm(view, data) {
             const modal = document.getElementById('modal');
             const content = document.getElementById('modal-content');
-            // ATUALIZADO: Mapeamento para o novo template
             let tplId = view === 'tm' ? 'tpl-manual' : (view === 'pokeball' ? 'tpl-server' : (view === 'team' ? 'tpl-team' : (view === 'rotom' ? 'tpl-task' : 'tpl-rotine')));
             content.innerHTML = document.getElementById(tplId).innerHTML;
             
@@ -705,7 +767,6 @@
 
             if(view === 'pokeball' || view === 'tm') await populateSelects();
             
-            // ATUALIZADO: 'rotom' precisa de usuários e manuais (para checklist)
             if(view === 'team') await populateUserSelect(); 
             if(view === 'rotines' || view === 'rotom') {
                 if(cachedTMs.length === 0) { try { const r = await fetch(`${API}/manuals`); cachedTMs = await r.json(); } catch(e){} }
@@ -723,7 +784,7 @@
                     const list = document.getElementById('history-list');
                     if(list) {
                         document.getElementById('history-section').classList.remove('hidden');
-                        list.innerHTML = data.history.map((h, idx) => `<div class="mb-4 relative pl-4 border-l-2 border-slate-200 last:border-0"><div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 ${idx===0 ? 'bg-swc-green' : 'bg-slate-300'} rounded-full border border-white"></div><p class="text-sm font-medium text-slate-700">${h.msg}</p><div class="flex gap-2 text-[10px] text-slate-400 mt-0.5"><span>${h.user}</span><span>${new Date(h.timestamp).toLocaleString('pt-BR')}</span></div></div>`).join('');
+                        list.innerHTML = data.history.map((h, idx) => `<div class="mb-4 relative pl-4 border-l-2 border-slate-200 last:border-0"><div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 ${idx===0 ? 'bg-swc-primary' : 'bg-slate-300'} rounded-full border border-white"></div><p class="text-sm font-medium text-slate-700">${h.msg}</p><div class="flex gap-2 text-[10px] text-slate-400 mt-0.5"><span>${h.user}</span><span>${new Date(h.timestamp).toLocaleString('pt-BR')}</span></div></div>`).join('');
                     }
                 }
             }
@@ -766,13 +827,11 @@
                 const steps = data.steps || data.template || [];
                 steps.forEach(s => addStep(s.title || s.step, s.manual)); 
             }
-            // ATUALIZADO: Preenchimento da Tarefa em caso de edição (futuro)
             else if(view === 'rotom' && isEdit) {
                  ['title','assignedTo','dueDate'].forEach(k => document.getElementById('inp-'+k).value = data[k]);
                  if(data.checklist) data.checklist.forEach(s => addStep(s.step, s.manual));
             }
             else if(view === 'rotom' && !isEdit) {
-                // Preenche a data com o que estava no filtro ou hoje
                 const datePicker = document.getElementById('date-picker');
                 if(datePicker && datePicker.value) document.getElementById('inp-dueDate').value = datePicker.value;
             }
@@ -782,7 +841,6 @@
         }
         
         async function saveData(view, id) {
-            // ATUALIZADO: Definição correta do endpoint para rotom -> tasks
             let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : (view === 'rotom' ? 'tasks' : 'rotines')));
             let body = { userAction: currentUser.name };
             const method = id ? 'PUT' : 'POST';
@@ -821,9 +879,8 @@
                 };
                 Object.assign(body, tempData);
             } 
-            else if (view === 'team') { Object.assign(body, { name: document.getElementById('inp-name').value, role: document.getElementById('inp-role').value, initials: document.getElementById('inp-initials').value, email: document.getElementById('inp-email').value, password: document.getElementById('inp-password').value }); if(!id) body.color = ['bg-red-500','bg-blue-500','bg-green-500'][Math.floor(Math.random()*3)]; } 
+            else if (view === 'team') { Object.assign(body, { name: document.getElementById('inp-name').value, role: document.getElementById('inp-role').value, initials: document.getElementById('inp-initials').value, email: document.getElementById('inp-email').value, password: document.getElementById('inp-password').value }); if(!id) body.color = ['bg-swc-sidebar','bg-swc-primary','bg-swc-secondary'][Math.floor(Math.random()*3)]; } 
             else if (view === 'rotines') { const steps = []; document.querySelectorAll('.step-item').forEach(div => steps.push({ title: div.querySelector('.step-title').value, manual: div.querySelector('.step-manual').value })); Object.assign(body, { title: document.getElementById('inp-title').value, frequency: document.getElementById('inp-frequency').value, assignedTo: document.getElementById('inp-assignedTo').value, steps }); } 
-            // ATUALIZADO: Lógica de salvar Tarefa Avulsa
             else if (view === 'rotom') {
                 const steps = []; 
                 document.querySelectorAll('.step-item').forEach(div => steps.push({ step: div.querySelector('.step-title').value, manual: div.querySelector('.step-manual').value, completed: false })); 
@@ -942,14 +999,14 @@
             }
         }
 
-        function addDisk(size='', model='', serial='') { const id = Date.now()+Math.random(); document.getElementById('disks-container').insertAdjacentHTML('beforeend', `<div class="disk-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="disk-${id}"><input type="text" class="d-size border p-2 rounded text-xs w-full" placeholder="Cap" value="${size}"><input type="text" class="d-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><div class="flex gap-2"><input type="text" class="d-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.disk-item').remove()" class="text-red-500"><i class="ph ph-trash"></i></button></div></div>`); }
+        function addDisk(size='', model='', serial='') { const id = Date.now()+Math.random(); document.getElementById('disks-container').insertAdjacentHTML('beforeend', `<div class="disk-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="disk-${id}"><input type="text" class="d-size border p-2 rounded text-xs w-full" placeholder="Cap" value="${size}"><input type="text" class="d-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><div class="flex gap-2"><input type="text" class="d-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.disk-item').remove()" class="text-sem-error"><i class="ph ph-trash"></i></button></div></div>`); }
         function addCard(type='Dectek', model='', serial='') { 
             const id = Date.now()+Math.random(); 
             const optionsHTML = cachedOptions.filter(o => o.type === 'card_type').map(o => `<option value="${o.value}" ${type===o.value?'selected':''}>${o.value}</option>`).join('');
-            const html = `<div class="card-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="card-${id}"><select class="c-type border p-2 rounded text-xs w-full">${optionsHTML}</select><input type="text" class="c-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><div class="flex gap-2"><input type="text" class="c-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.card-item').remove()" class="text-red-500"><i class="ph ph-trash"></i></button></div></div>`; 
+            const html = `<div class="card-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="card-${id}"><select class="c-type border p-2 rounded text-xs w-full">${optionsHTML}</select><input type="text" class="c-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><div class="flex gap-2"><input type="text" class="c-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.card-item').remove()" class="text-sem-error"><i class="ph ph-trash"></i></button></div></div>`; 
             document.getElementById('cards-container').insertAdjacentHTML('beforeend', html); 
         }
-        function addRam(model='', gb='', serial='') { const id = Date.now()+Math.random(); document.getElementById('ram-container').insertAdjacentHTML('beforeend', `<div class="ram-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="ram-${id}"><input type="text" class="r-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><input type="text" class="r-gb border p-2 rounded text-xs w-full" placeholder="GB" value="${gb}"><div class="flex gap-2"><input type="text" class="r-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.ram-item').remove()" class="text-red-500"><i class="ph ph-trash"></i></button></div></div>`); }
+        function addRam(model='', gb='', serial='') { const id = Date.now()+Math.random(); document.getElementById('ram-container').insertAdjacentHTML('beforeend', `<div class="ram-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="ram-${id}"><input type="text" class="r-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><input type="text" class="r-gb border p-2 rounded text-xs w-full" placeholder="GB" value="${gb}"><div class="flex gap-2"><input type="text" class="r-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.ram-item').remove()" class="text-sem-error"><i class="ph ph-trash"></i></button></div></div>`); }
         
         function addStep(title = '', manual = '') { 
             const id = Date.now() + Math.random(); 
@@ -961,7 +1018,7 @@
                     <select class="text-xs border rounded w-1/3" onchange="const txt = this.parentElement.nextElementSibling; txt.value = this.value;"><option value="">Importar TM</option>${tmOptions}</select>
                 </div>
                 <textarea class="step-manual w-full text-xs font-mono border p-1 rounded" rows="2" placeholder="Manual">${manual}</textarea>
-                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 text-xs absolute top-1 right-1">X</button>
+                <button type="button" onclick="this.parentElement.remove()" class="text-sem-error text-xs absolute top-1 right-1">X</button>
             </div>`; 
             document.getElementById('steps-container').insertAdjacentHTML('beforeend', html); 
         }
