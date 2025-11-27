@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Showcase Pro - V29</title>
+    <title>Showcase Pro - V35</title>
     <link rel="icon" href="data:,">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
@@ -61,18 +61,42 @@
             <div id="header-left" class="flex items-center gap-4"></div><div id="header-action"></div>
         </header>
         <div class="flex-1 overflow-y-auto p-8 scroll-smooth relative custom-scrollbar">
+            
             <div id="view-dashboard" class="view-section hidden max-w-7xl mx-auto fade-in">
                 <div class="flex justify-between items-end mb-6">
                     <div><h2 class="text-2xl font-bold text-slate-800 tv-title">Visão Geral</h2><p class="text-sm text-slate-500 tv-text flex items-center gap-2"><span class="live-dot"></span> Atualizado em tempo real</p></div>
                     <button onclick="toggleTVMode()" class="bg-slate-800 text-white px-4 py-2 rounded-lg hover:bg-black transition flex items-center gap-2 text-sm font-bold shadow-lg"><i class="ph ph-television"></i> Modo TV</button>
                 </div>
+                
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-3xl"><i class="ph ph-hard-drives"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-servers-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Produção</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-3xl"><i class="ph ph-warning-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-pending">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Pendências</p></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-3xl"><i class="ph ph-hard-drives"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-servers-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Em Produção</p></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-3xl"><i class="ph ph-warning-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-pending">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Tarefas Pendentes</p></div></div>
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-3xl"><i class="ph ph-users"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-team-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Equipe</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Entregas</p></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Tarefas Feitas</p></div></div>
                 </div>
-                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card"><h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Últimas Movimentações</h4><div id="dash-server-list" class="space-y-3"></div></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card">
+                        <h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Distribuição de Status</h4>
+                        <div class="h-64 relative"><canvas id="chartServers"></canvas></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card">
+                        <h4 class="font-bold text-slate-700 mb-4 uppercase text-xs tracking-wider tv-text">Carga de Trabalho</h4>
+                        <div class="h-64 relative"><canvas id="chartTeam"></canvas></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-slate-700 uppercase text-xs tracking-wider tv-text">Últimas Movimentações</h4>
+                        <select id="dash-filter" onchange="loadDashboardData()" class="text-xs border border-gray-300 rounded-lg p-1.5 outline-none focus:ring-1 focus:ring-blue-500 bg-gray-50 text-slate-600 font-medium">
+                            <option value="Todos">Todos</option>
+                            <option value="Produção">Em Produção</option>
+                            <option value="Concluído">Concluídos</option>
+                        </select>
+                    </div>
+                    <div id="dash-server-list" class="space-y-3"></div>
+                </div>
             </div>
 
             <div id="view-pokeball" class="view-section hidden max-w-full mx-auto fade-in">
@@ -99,7 +123,6 @@
                         <button onclick="saveCurrentWorkflow()" class="bg-swc-dark text-white px-4 py-2 rounded text-sm font-bold hover:bg-black transition">Salvar Fluxo</button>
                     </div>
                     <div id="workflow-editor" class="hidden bg-gray-50 p-4 rounded border border-gray-200">
-                        <p class="text-xs font-bold text-slate-500 uppercase mb-2">Etapas</p>
                         <ul id="workflow-steps-list" class="space-y-3 mb-4"></ul>
                         <div class="flex gap-2"><input type="text" id="new-step-name" placeholder="Nome da nova etapa" class="border p-2 rounded text-sm flex-1"><button onclick="addWorkflowStep()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Adicionar</button></div>
                     </div>
@@ -218,7 +241,7 @@
                 }
                 else if(view==='rotines'){ const r=await fetch(`${API}/rotines`); renderRotinesList(await r.json()); }
                 else if(view==='rotom'){ 
-                    const d=document.getElementById('date-picker').value || new Date().toISOString().split('T')[0]; 
+                    const d=document.getElementById('date-picker').value || new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-');
                     const r=await fetch(`${API}/tasks?date=${d}`); allTasks=await r.json(); renderTasks(allTasks); 
                 }
                 else if(view==='team'){ const r=await fetch(`${API}/users`); cachedUsers=await r.json(); renderTeam(cachedUsers); }
@@ -231,22 +254,53 @@
 
         async function loadDashboardData() { 
             const [s, t, u] = await Promise.all([fetch(`${API}/servers`).then(r=>r.json()), fetch(`${API}/tasks`).then(r=>r.json()), fetch(`${API}/users`).then(r=>r.json())]); 
-            document.getElementById('dash-servers-count').innerText = s.length; 
+            
+            // Logic: Production is anything NOT completed
+            const inProduction = s.filter(x => x.status !== 'Concluído').length;
+            
+            document.getElementById('dash-servers-count').innerText = inProduction;
             document.getElementById('dash-tasks-pending').innerText = t.filter(x=>x.status==='Pendente').length; 
             document.getElementById('dash-tasks-done').innerText = t.filter(x=>x.status==='Concluído').length; 
             document.getElementById('dash-team-count').innerText = u.length; 
-            document.getElementById('dash-server-list').innerHTML = s.slice(-5).reverse().map(i => `<div class="flex justify-between border-b border-gray-100 pb-2 text-sm"><span>${i.hostname || 'Novo'}</span><span class="font-bold ${i.status==='Despachado'?'text-green-600':'text-blue-600'}">${i.status}</span></div>`).join(''); 
             
+            // Filter List Logic
+            const filterVal = document.getElementById('dash-filter').value;
+            let listItems = s.slice().reverse(); // Show recent first
+            if(filterVal === 'Produção') listItems = listItems.filter(x => x.status !== 'Concluído');
+            else if(filterVal === 'Concluído') listItems = listItems.filter(x => x.status === 'Concluído');
+
+            document.getElementById('dash-server-list').innerHTML = listItems.slice(0, 5).map(i => `
+                <div class="flex justify-between items-center border-b border-gray-100 pb-2 text-sm hover:bg-gray-50 p-2 rounded cursor-pointer" onclick="navigateTo('pokeball/${i.id}')">
+                    <div class="flex gap-3 items-center">
+                        <div class="w-2 h-2 rounded-full ${i.status === 'Concluído' ? 'bg-green-500' : 'bg-blue-500'}"></div>
+                        <div>
+                            <span class="block font-medium">${i.hostname || 'Novo Servidor'}</span>
+                            <span class="text-xs text-gray-400">${i.client || '-'}</span>
+                        </div>
+                    </div>
+                    <span class="font-bold text-xs ${i.status==='Concluído'?'text-green-600 bg-green-50 px-2 py-0.5 rounded':'text-blue-600 bg-blue-50 px-2 py-0.5 rounded'}">${i.status}</span>
+                </div>`
+            ).join(''); 
+            
+            // Charts
             const statusCounts = {}; s.forEach(x => statusCounts[x.status] = (statusCounts[x.status]||0)+1); 
             const teamCounts = {}; t.forEach(x => teamCounts[x.assignedTo] = (teamCounts[x.assignedTo]||0)+1); 
             
-            if(statusChart) statusChart.destroy(); 
-            statusChart = new Chart(document.getElementById('chartServers'), { type: 'doughnut', data: { labels: Object.keys(statusCounts), datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#3b82f6','#d9ed13','#ef4444','#10b981','#8b5cf6'] }] }, options: { maintainAspectRatio: false, plugins:{legend:{position:'right'}} } }); 
-            
-            if(teamChart) teamChart.destroy(); 
-            teamChart = new Chart(document.getElementById('chartTeam'), { type: 'bar', data: { labels: Object.keys(teamCounts), datasets: [{ label: 'Tarefas', data: Object.values(teamCounts), backgroundColor: '#3b82f6' }] }, options: { maintainAspectRatio: false, plugins:{legend:{display:false}} } }); 
+            // Check if canvas exists before creating chart
+            const ctxServers = document.getElementById('chartServers');
+            if (ctxServers) {
+                if(statusChart) statusChart.destroy(); 
+                statusChart = new Chart(ctxServers, { type: 'doughnut', data: { labels: Object.keys(statusCounts), datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#3b82f6','#d9ed13','#ef4444','#10b981','#8b5cf6'] }] }, options: { maintainAspectRatio: false, plugins:{legend:{position:'right'}} } }); 
+            }
+
+            const ctxTeam = document.getElementById('chartTeam');
+            if (ctxTeam) {
+                if(teamChart) teamChart.destroy(); 
+                teamChart = new Chart(ctxTeam, { type: 'bar', data: { labels: Object.keys(teamCounts), datasets: [{ label: 'Tarefas', data: Object.values(teamCounts), backgroundColor: '#3b82f6' }] }, options: { maintainAspectRatio: false, plugins:{legend:{display:false}} } }); 
+            }
         }
 
+        // ... (Remaining Logic: ToggleTV, Settings, Workflows - standard) ...
         function toggleTVMode() { 
             document.body.classList.toggle('tv-mode'); 
             const isTv = document.body.classList.contains('tv-mode');
@@ -313,7 +367,6 @@
             }
         }
         
-        // --- FORMATADOR DE ESPECIFICAÇÕES ---
         function getFormattedSpecs(s) {
             let t = `Equipamento: ${s.product||'N/A'}\n`;
             t += `Servidor ${s.vendor||''} ${s.model||''}, S/N: ${s.serial||'N/A'}\n`;
@@ -430,6 +483,8 @@
             const container = document.getElementById('servers-container');
             if(!list || list.length === 0) return container.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400"><i class="ph ph-hard-drives text-5xl mb-4"></i><p>Nenhum servidor encontrado.</p></div>';
             
+            const qaIcon = (val) => val ? '<i class="ph ph-check-circle text-green-500 text-sm"></i>' : '<i class="ph ph-circle text-slate-200 text-sm"></i>';
+
             container.innerHTML = list.map(i => {
                 const wf = cachedWorkflows.find(w => w.purpose === i.purpose);
                 const steps = wf ? wf.steps.map(s => s.name) : (i.steps ? i.steps.map(s=>s.name) : [i.status]);
@@ -463,7 +518,58 @@
                     btnAction = `<button onclick="advanceStatus(event, '${i.id}', '${i.status}')" class="w-8 h-8 rounded-full ${btnClass} flex items-center justify-center transition-colors shadow-sm" title="${isFinished ? 'Finalizar' : 'Avançar Etapa'}"><i class="ph ${btnIcon} text-sm"></i></button>`;
                 }
                 
-                return `<div class="bg-white p-5 rounded-xl border ${isConcluido ? 'border-green-200 ring-1 ring-green-50' : 'border-gray-200'} shadow-sm hover:shadow-md transition-all mb-4 group relative overflow-visible cursor-pointer" onclick="openEditModal('pokeball', '${i.id}')"><div class="flex justify-between items-center mb-2"><div class="flex items-center gap-4 flex-1"><div class="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-lg text-slate-400"><i class="ph ph-hard-drives"></i></div><div><h4 class="font-bold text-base text-slate-800 flex items-center gap-2">${i.hostname || '<span class="italic text-slate-400 font-normal">Pendente</span>'}<span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded border border-slate-200 font-normal">${i.product || 'Prod'}</span></h4><div class="flex items-center gap-2 mt-1">${specs.join('')}</div></div></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="text-[10px] font-bold uppercase text-slate-400">Status</p><span class="text-xs font-bold ${isConcluido ? 'text-green-600' : 'text-blue-600'}">${i.status}</span></div><button onclick="event.stopPropagation(); window.generatePDF({hostname:'${i.hostname}', ...${JSON.stringify(i).replace(/"/g, "'")}})" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 text-blue-600 transition-colors" title="Gerar Relatório"><i class="ph ph-file-pdf text-lg"></i></button><button onclick="event.stopPropagation(); sendManualEmail(event, '${i.id}')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-500 transition-colors" title="Enviar Email Manual"><i class="ph ph-envelope-simple text-lg"></i></button><button onclick="event.stopPropagation(); toggleDetails('${i.id}', this)" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition-transform chevron-icon"><i class="ph ph-caret-down text-lg"></i></button>${btnAction}</div></div><div class="mt-6 mb-2 pl-14 pr-12 relative"><div class="flex items-center w-full">${timelineHTML}<div class="relative w-3 h-3"><div class="w-3 h-3 rounded-full ${isConcluido ? 'bg-swc-green' : 'bg-gray-200'} border-2 border-white relative z-10"></div></div></div></div><div id="details-${i.id}" class="details-content bg-white"><div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600"><div><p class="font-bold text-slate-400 uppercase mb-1">Base</p><p>Fabr.: ${i.vendor||'-'} ${i.model||''}</p><p>S/N: ${i.serial||'-'} | OS: ${i.os||'-'}</p></div><div><p class="font-bold text-slate-400 uppercase mb-1">Expansões</p>${i.disks ? i.disks.map(d=>`<div>• ${d.size} ${d.model}</div>`).join('') : ''}</div></div></div></div>`;
+                return `
+                <div class="bg-white p-5 rounded-xl border ${isConcluido ? 'border-green-200 ring-1 ring-green-50' : 'border-gray-200'} shadow-sm hover:shadow-md transition-all mb-4 group relative overflow-visible cursor-pointer" onclick="openEditModal('pokeball', '${i.id}')">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="flex items-center gap-4 flex-1">
+                            <div class="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-lg text-slate-400"><i class="ph ph-hard-drives"></i></div>
+                            <div>
+                                <h4 class="font-bold text-base text-slate-800 flex items-center gap-2">
+                                    ${i.hostname || '<span class="italic text-slate-400 font-normal">Pendente</span>'}
+                                    <span class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded border border-slate-200 font-normal">${i.product || 'Prod'}</span>
+                                </h4>
+                                <div class="flex items-center gap-2 mt-1">${specs.join('')}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-right hidden sm:block"><p class="text-[10px] font-bold uppercase text-slate-400">Status</p><span class="text-xs font-bold ${isConcluido ? 'text-green-600' : 'text-blue-600'}">${i.status}</span></div>
+                            <button onclick="event.stopPropagation(); window.generatePDF({hostname:'${i.hostname}', ...${JSON.stringify(i).replace(/"/g, "'")}})" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 text-blue-600 transition-colors" title="Gerar Relatório"><i class="ph ph-file-pdf text-lg"></i></button>
+                            <button onclick="event.stopPropagation(); sendManualEmail(event, '${i.id}')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-500 transition-colors" title="Enviar Email Manual"><i class="ph ph-envelope-simple text-lg"></i></button>
+                            <button onclick="event.stopPropagation(); toggleDetails('${i.id}', this)" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 transition-transform chevron-icon"><i class="ph ph-caret-down text-lg"></i></button>
+                            ${btnAction}
+                        </div>
+                    </div>
+                    <div class="mt-6 mb-2 pl-14 pr-12 relative"><div class="flex items-center w-full">${timelineHTML}<div class="relative w-3 h-3"><div class="w-3 h-3 rounded-full ${isConcluido ? 'bg-swc-green' : 'bg-gray-200'} border-2 border-white relative z-10"></div></div></div></div>
+                    
+                    <div id="details-${i.id}" class="details-content bg-white">
+                        <div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-600">
+                            <div class="space-y-2">
+                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1"><i class="ph ph-cpu text-swc-green text-sm"></i> Sistema & Cliente</p>
+                                <div class="bg-slate-50 p-2 rounded border border-slate-100 space-y-1">
+                                    <p class="flex justify-between"><span>Cliente:</span> <span class="font-bold text-slate-700">${i.client || '-'}</span></p>
+                                    <p class="flex justify-between"><span>Hostname:</span> <span class="font-mono text-blue-600">${i.hostname || '-'}</span></p>
+                                    <p class="flex justify-between"><span>Tag/Serial:</span> <span class="font-mono">${i.serial || '-'}</span></p>
+                                    <div class="border-t border-slate-200 my-1"></div>
+                                    <p><span class="text-slate-400">OS:</span> ${i.os || '-'}</p>
+                                    <p><span class="text-slate-400">RAM:</span> ${i.ram && i.ram.length ? i.ram.reduce((acc, r) => acc + parseInt(r.gb || 0), 0) + 'GB Total' : '-'}</p>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1"><i class="ph ph-circuitry text-swc-green text-sm"></i> Expansão</p>
+                                <div class="space-y-1 max-h-24 overflow-y-auto custom-scrollbar pr-1">
+                                    ${i.disks && i.disks.length ? i.disks.map(d => `<div class="flex justify-between items-center bg-slate-50 px-2 py-1 rounded border border-slate-100"><span class="flex items-center gap-1"><i class="ph ph-hard-drive text-slate-400"></i> ${d.model}</span><span class="font-bold text-[10px]">${d.size}</span></div>`).join('') : '<span class="text-slate-400 italic pl-1">Sem discos</span>'}
+                                    ${i.cards && i.cards.length ? i.cards.map(c => `<div class="flex justify-between items-center bg-slate-50 px-2 py-1 rounded border border-slate-100 mt-1"><span class="flex items-center gap-1"><i class="ph ph-video-camera text-slate-400"></i> ${c.type}</span><span class="font-bold text-[10px]">${c.model}</span></div>`).join('') : '<span class="text-slate-400 italic pl-1 block mt-1">Sem placas</span>'}
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="font-bold text-slate-800 uppercase text-[10px] tracking-wider mb-2 flex items-center gap-1"><i class="ph ph-clipboard-text text-swc-green text-sm"></i> QA & Rede</p>
+                                <div class="flex justify-between items-center mb-2 bg-green-50 px-2 py-1 rounded border border-green-100 text-green-700"><span>IP Manutenção</span><span class="font-mono font-bold">${i.qa_ip || 'N/A'}</span></div>
+                                <div class="grid grid-cols-2 gap-y-1 gap-x-2"><span class="flex items-center gap-1.5">${qaIcon(i.qa_func)} Funcional</span><span class="flex items-center gap-1.5">${qaIcon(i.qa_rails)} Trilhos</span><span class="flex items-center gap-1.5">${qaIcon(i.qa_cables)} Cabos</span><span class="flex items-center gap-1.5">${qaIcon(i.qa_stickers)} Etiquetas</span></div>
+                                ${i.qa_details ? `<p class="mt-2 text-[10px] text-slate-500 italic truncate" title="${i.qa_details}"><i class="ph ph-info"></i> ${i.qa_details}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
             }).join('');
         }
         function toggleDetails(id, btn) { const content = document.getElementById(`details-${id}`); content.classList.toggle('open'); btn.classList.toggle('rotate'); }
@@ -502,7 +608,6 @@
             list.forEach(item => { const ul = document.getElementById(types[item.type]); if(ul) ul.innerHTML += `<li class="flex justify-between items-center border-b border-gray-100 py-1"><span>${item.value}</span><button onclick="deleteOption('${item.id}')" class="text-red-400 hover:text-red-600 text-xs"><i class="ph ph-trash"></i></button></li>`; }); 
         }
         
-        // --- MODAL & FORMS ---
         async function openCreateModal(view) { renderModalForm(view, null); }
         async function openEditModal(view, id) {
             let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : 'rotines'));
@@ -519,7 +624,6 @@
             let tplId = view === 'tm' ? 'tpl-manual' : (view === 'pokeball' ? 'tpl-server' : (view === 'team' ? 'tpl-team' : 'tpl-rotine'));
             content.innerHTML = document.getElementById(tplId).innerHTML;
             
-            // Reset animation state
             modal.classList.remove('hidden');
             content.classList.remove('scale-95', 'opacity-0');
             content.classList.add('scale-100', 'opacity-100');
@@ -551,7 +655,6 @@
                 if(isEdit) {
                     ['hostname','client','product','purpose','vendor','model','serial','cpu','os'].forEach(k => { const el=document.getElementById('inp-'+k); if(el) el.value = data[k] || ''; });
                     
-                    // QA
                     document.getElementById('inp-qa_ip').value = data.qa_ip || '';
                     if(document.getElementById('inp-qa_details')) document.getElementById('inp-qa_details').value = data.qa_details || '';
                     
@@ -659,7 +762,6 @@
             const steps = wf.steps.map(st => st.name);
             const idx = steps.indexOf(currentStatus);
             
-            // Lógica de Conclusão: Se estiver no último ou além, finaliza.
             let nextStep = '';
             let finishing = false;
             
@@ -677,10 +779,8 @@
             }
 
             try {
-                // Atualiza status
                 await fetch(`${API}/servers/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: nextStep, userAction: currentUser.name }) });
                 
-                // Se finalizou, notifica
                 if (finishing) {
                     const updatedS = await fetch(`${API}/servers/${id}`).then(r=>r.json());
                     const pdf = await window.generatePDFBlob(updatedS);
@@ -693,7 +793,7 @@
                             pdf, 
                             user: currentUser.name,
                             details: updatedS.qa_details,
-                            specs: getFormattedSpecs(updatedS) // <--- ADICIONADO AQUI
+                            specs: getFormattedSpecs(updatedS)
                         })
                     });
                     showToast('Processo concluído e notificado!');
@@ -728,7 +828,7 @@
                         pdf: pdfBase64,
                         user: currentUser.name,
                         details: "Envio manual solicitado pelo usuário.",
-                        specs: getFormattedSpecs(data) // <--- ADICIONADO AQUI TAMBÉM
+                        specs: getFormattedSpecs(data)
                     })
                 });
 
@@ -741,7 +841,6 @@
             }
         }
 
-        // --- DYNAMIC FIELDS ---
         function addDisk(size='', model='', serial='') { const id = Date.now()+Math.random(); document.getElementById('disks-container').insertAdjacentHTML('beforeend', `<div class="disk-item grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200" id="disk-${id}"><input type="text" class="d-size border p-2 rounded text-xs w-full" placeholder="Cap" value="${size}"><input type="text" class="d-model border p-2 rounded text-xs w-full" placeholder="Mod" value="${model}"><div class="flex gap-2"><input type="text" class="d-serial border p-2 rounded text-xs w-full" placeholder="S/N" value="${serial}"><button type="button" onclick="this.closest('.disk-item').remove()" class="text-red-500"><i class="ph ph-trash"></i></button></div></div>`); }
         function addCard(type='Dectek', model='', serial='') { 
             const id = Date.now()+Math.random(); 
