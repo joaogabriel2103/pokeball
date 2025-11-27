@@ -3,63 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ShowCase Pro</title>
+    <title>Login - ShowCase PRO</title>
+    <link rel="icon" href="data:,">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: { swc: { dark: '#18181b', green: '#d9ed13', gray: '#27272a' } }
-                }
-            }
+        // Mesma configuração do index.html (V39)
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { 
+                        sans: ['Roboto', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif']
+                    }, 
+                    colors: { 
+                        swc: { 
+                            primary: '#85B433',   // Verde Principal
+                            secondary: '#34B0B1', // Azul Secundário
+                            sidebar: '#003E3F',   // Fundo da Página
+                            gray: '#334155', 
+                            surface: '#f8fafc' 
+                        },
+                        sem: {
+                            error: '#F6242A'
+                        }
+                    },
+                    animation: { 'fade-in': 'fadeIn 0.5s ease-out' }, 
+                    keyframes: { fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } } 
+                } 
+            } 
         }
     </script>
 </head>
-<body class="bg-swc-dark h-screen flex items-center justify-center font-sans">
+<body class="bg-swc-sidebar h-screen flex items-center justify-center font-sans relative overflow-hidden">
+    
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-10">
+        <i class="ph ph-hard-drives text-white text-[20rem] absolute -top-20 -left-20"></i>
+        <i class="ph ph-circuitry text-white text-[20rem] absolute -bottom-20 -right-20"></i>
+    </div>
 
-    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-2 bg-swc-green"></div>
+    <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md relative z-10 animate-fade-in border border-gray-100">
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-swc-primary to-swc-secondary rounded-t-2xl"></div>
 
-        <div class="text-center mb-8">
-            <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-swc-green">
-                <span class="text-3xl font-bold text-swc-dark">O</span>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-800">ShowCase<span class="text-swc-green">Pro</span></h1>
-            <p class="text-gray-500 text-sm">Gestão de T.I. Inteligente</p>
+        <div class="text-center mb-10 mt-2">
+            <img src="logo.png" alt="ShowCase PRO" class="h-16 mx-auto mb-4 object-contain drop-shadow-sm">
+            <p class="text-swc-gray text-sm font-medium">Acesso ao Sistema de Produção</p>
+        </div>
+
+        <div id="error-msg" class="hidden bg-sem-error/10 border border-sem-error/20 text-sem-error text-sm p-3 rounded-lg mb-6 flex items-center gap-2 animate-pulse">
+            <i class="ph ph-warning-circle text-lg"></i>
+            <span>Usuário ou senha incorretos.</span>
         </div>
 
         <form id="login-form" class="space-y-5">
             <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Usuário ou Email</label>
+                <label class="block text-xs font-bold text-swc-sidebar mb-1.5 uppercase tracking-wider">Usuário</label>
                 <div class="relative">
-                    <i class="ph ph-user absolute left-3 top-3 text-gray-400 text-lg"></i>
-                    
-                    <input type="text" id="email" class="w-full border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 outline-none focus:border-swc-green focus:ring-1 focus:ring-swc-green transition" placeholder="Ex: swc ou seu@email.com" required>
-                
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="ph ph-user text-lg"></i></div>
+                    <input type="text" id="email" class="w-full border border-gray-300 rounded-lg py-3 pl-10 pr-4 text-sm outline-none focus:border-swc-secondary focus:ring-1 focus:ring-swc-secondary transition-all bg-gray-50 focus:bg-white" placeholder="Ex: jgoncalves" required>
                 </div>
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Senha</label>
+                <label class="block text-xs font-bold text-swc-sidebar mb-1.5 uppercase tracking-wider">Senha</label>
                 <div class="relative">
-                    <i class="ph ph-lock-key absolute left-3 top-3 text-gray-400 text-lg"></i>
-                    <input type="password" id="password" class="w-full border border-gray-200 rounded-lg py-2.5 pl-10 pr-4 outline-none focus:border-swc-green focus:ring-1 focus:ring-swc-green transition" placeholder="••••••••" required>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="ph ph-lock-key text-lg"></i></div>
+                    <input type="password" id="password" class="w-full border border-gray-300 rounded-lg py-3 pl-10 pr-4 text-sm outline-none focus:border-swc-secondary focus:ring-1 focus:ring-swc-secondary transition-all bg-gray-50 focus:bg-white" placeholder="••••••••" required>
                 </div>
             </div>
 
-            <div id="error-msg" class="hidden text-red-500 text-sm text-center bg-red-50 p-2 rounded">
-                Credenciais inválidas.
-            </div>
-
-            <button type="submit" class="w-full bg-swc-dark text-white font-bold py-3 rounded-lg hover:bg-black transition shadow-lg flex justify-center items-center gap-2">
-                Entrar no Sistema <i class="ph ph-arrow-right"></i>
+            <button type="submit" class="w-full bg-swc-primary text-white font-display font-bold py-3.5 rounded-lg hover:brightness-110 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                Acessar Painel <i class="ph ph-sign-in text-lg"></i>
             </button>
         </form>
 
-        <p class="text-center text-xs text-gray-400 mt-6">© 2025 ShowCase Pro - #jgoncalves</p>
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+            <p class="text-xs text-gray-400">
+                &copy; 2025 <strong class="text-swc-sidebar">ShowCase PRO</strong><br>
+                <span class="opacity-70 mt-1 block">Powered by <span class="text-swc-secondary font-bold">#jgoncalves</span></span>
+            </p>
+        </div>
     </div>
 
     <script>
@@ -68,26 +95,33 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorMsg = document.getElementById('error-msg');
+            const btn = e.target.querySelector('button');
+            const originalContent = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i>';
+            errorMsg.classList.add('hidden');
 
             try {
                 const res = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    // Envia o campo como "email" mesmo sendo usuário, o back-end vai tratar
                     body: JSON.stringify({ email, password })
                 });
 
                 if (res.ok) {
                     const user = await res.json();
-                    // Salva o usuário na sessão
                     localStorage.setItem('user_session', JSON.stringify(user));
                     window.location.href = 'index.html';
                 } else {
-                    errorMsg.classList.remove('hidden');
-                    errorMsg.innerText = "Usuário ou senha incorretos.";
+                    throw new Error('Credenciais inválidas');
                 }
             } catch (err) {
                 errorMsg.classList.remove('hidden');
-                errorMsg.innerText = "Erro ao conectar ao servidor.";
+                errorMsg.querySelector('span').innerText = "Acesso negado. Verifique suas credenciais.";
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
             }
         });
     </script>

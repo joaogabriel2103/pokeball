@@ -1,4 +1,4 @@
-// server.js - ShowcasePro V42 (Routine Scheduler Fixed)
+// server.js - ShowcasePro V43 (Flexible Login & Daily Focus)
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -294,8 +294,14 @@ app.post('/api/notify', async (req, res) => {
     } catch (error) { res.json({ success: false, error: error.message }); }
 });
 
+// --- ROTA DE LOGIN ATUALIZADA ---
 app.post('/api/login', (req, res) => {
-    const u = db.data.users.find(x => x.email === req.body.email && x.password === req.body.password);
+    const { email, password } = req.body;
+    // Verifica se o email do banco bate OU se o prefixo (antes do @) bate
+    const u = db.data.users.find(x => 
+        (x.email === email || x.email.split('@')[0] === email) && 
+        x.password === password
+    );
     u ? res.json(u) : res.status(401).json({ error: 'Inválido' });
 });
 
@@ -369,6 +375,6 @@ const init = async () => {
     await db.read();
     db.data ||= {servers:[], users:[], workflows:[], options:[], rotines:[], tasks:[], manuals:[]};
     await db.write();
-    app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Server V42 Rodando na porta ${PORT}`));
+    app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Server V43 Rodando na porta ${PORT}`));
 };
 init();

@@ -1445,11 +1445,6 @@
       "value": "HP"
     },
     {
-      "id": "b23a947c-8674-4ad4-9be9-9bb57fb6b857",
-      "type": "card_type",
-      "value": "Nvidia"
-    },
-    {
       "id": "5a57b1fe-00a5-4bc7-907e-ef1897884646",
       "type": "card_type",
       "value": "TBS"
@@ -1478,6 +1473,11 @@
       "id": "6b9f49ce-4d01-4588-ba02-f87006e383f0",
       "type": "purpose",
       "value": "DEMONSTRAÇÃO"
+    },
+    {
+      "type": "card_type",
+      "value": "Nvidia",
+      "id": "17bfec00-4be9-457c-bc1e-590c23cc0cab"
     }
   ]
 }
