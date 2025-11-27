@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Showcase Pro - V35</title>
+    <title>Showcase Pro - V36</title>
     <link rel="icon" href="data:,">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
@@ -68,11 +68,30 @@
                     <button onclick="toggleTVMode()" class="bg-slate-800 text-white px-4 py-2 rounded-lg hover:bg-black transition flex items-center gap-2 text-sm font-bold shadow-lg"><i class="ph ph-television"></i> Modo TV</button>
                 </div>
                 
+                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl mb-6 flex items-start gap-3 shadow-sm">
+                    <div class="bg-indigo-100 text-indigo-600 p-2 rounded-lg">
+                        <i class="ph ph-question text-xl font-bold"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-indigo-900 text-sm mb-1">Entenda os Indicadores</h4>
+                        <div class="flex flex-col sm:flex-row gap-4 text-xs text-indigo-700">
+                            <span class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                <strong>Diárias Pendentes:</strong> Contabiliza apenas rotinas <span class="underline decoration-orange-300">DIÁRIAS</span> em aberto.
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                <strong>Semanais Feitas:</strong> Contabiliza rotinas <span class="underline decoration-green-300">SEMANAIS</span> já concluídas.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-3xl"><i class="ph ph-hard-drives"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-servers-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Em Produção</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-3xl"><i class="ph ph-warning-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-pending">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Tarefas Pendentes</p></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-3xl"><i class="ph ph-warning-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-pending">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Diárias Pendentes</p></div></div>
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-3xl"><i class="ph ph-users"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-team-count">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Equipe</p></div></div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Tarefas Feitas</p></div></div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm tv-card flex items-center gap-5"><div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-3xl"><i class="ph ph-check-circle"></i></div><div><h4 class="text-4xl font-bold text-slate-800 tv-number" id="dash-tasks-done">0</h4><p class="text-xs text-slate-500 font-bold uppercase tv-text">Semanais Feitas</p></div></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -178,6 +197,42 @@
 
     <template id="tpl-team"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Usuário</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-name" class="w-full border p-3 rounded-lg" placeholder="Nome" required><div class="grid grid-cols-2 gap-4"><input type="text" id="inp-role" class="border p-3 rounded-lg" placeholder="Cargo" required><input type="text" id="inp-initials" class="border p-3 rounded-lg" placeholder="Sigla" required maxlength="2"></div><div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3"><h4 class="text-xs font-bold text-slate-500">Acesso</h4><input type="text" id="inp-email" class="w-full border p-3 rounded-lg" placeholder="Login" required><input type="password" id="inp-password" class="w-full border p-3 rounded-lg" placeholder="Senha" required></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('users')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
     <template id="tpl-manual"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Manual</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><select id="inp-category" class="w-full border p-3 rounded-lg"></select><textarea id="inp-content" rows="8" class="w-full border p-3 rounded-lg font-mono text-sm" required></textarea><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('manuals')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
+    
+    <template id="tpl-task">
+        <div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full">
+            <div class="p-8 overflow-y-auto flex-1 custom-scrollbar">
+                <div class="flex justify-between mb-6">
+                    <h3 class="text-xl font-bold"><span id="modal-title">Nova Tarefa</span></h3>
+                    <button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button>
+                </div>
+                <form id="form-generic" class="space-y-4">
+                    <input type="hidden" id="item-id">
+                    <input type="text" id="inp-title" class="w-full border p-3 rounded-lg" placeholder="Título da Tarefa" required>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Data de Execução</label>
+                            <input type="date" id="inp-dueDate" class="w-full border p-3 rounded-lg" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Responsável</label>
+                            <select id="inp-assignedTo" class="w-full border p-3 rounded-lg"></select>
+                        </div>
+                    </div>
+                    <hr class="border-gray-100 my-2">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="font-bold text-sm text-slate-700">Checklist</h4>
+                        <button type="button" onclick="addStep()" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded hover:bg-black transition">+ Item</button>
+                    </div>
+                    <div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar p-1"></div>
+                    <div class="flex gap-2 pt-4 mt-4">
+                        <button type="button" onclick="closeModal()" class="px-6 py-3 text-slate-500 hover:bg-gray-100 rounded-lg font-bold transition">Cancelar</button>
+                        <button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold hover:bg-black transition shadow-lg">Salvar Tarefa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+
     <template id="tpl-rotine"><div class="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl h-full"><div class="p-8 overflow-y-auto flex-1 custom-scrollbar"><div class="flex justify-between mb-6"><h3 class="text-xl font-bold"><span id="modal-title">Rotina</span></h3><button onclick="closeModal()" class="text-gray-400"><i class="ph ph-x text-xl"></i></button></div><form id="form-generic" class="space-y-4"><input type="hidden" id="item-id"><input type="text" id="inp-title" class="w-full border p-3 rounded-lg" required><div class="grid grid-cols-2 gap-4"><select id="inp-frequency" class="border p-3 rounded-lg"><option value="Diária">Diária</option><option value="Semanal">Semanal</option><option value="Quinzenal">Quinzenal</option><option value="Mensal">Mensal</option></select><select id="inp-assignedTo" class="border p-3 rounded-lg"></select></div><hr><div class="flex justify-between"><h4 class="font-bold">Subtarefas</h4><button type="button" onclick="addStep()" class="text-xs bg-black text-white px-2 py-1 rounded">+ Add</button></div><div id="steps-container" class="space-y-2 max-h-48 overflow-y-auto"></div><div class="flex gap-2 pt-4"><button type="button" onclick="deleteItem('rotines')" id="btn-delete" class="px-4 py-2 text-red-500 hidden">Excluir</button><button type="submit" class="flex-1 bg-swc-dark text-white py-3 rounded-lg font-bold">Salvar</button></div></form></div></div></template>
 
     <script>
@@ -226,7 +281,8 @@
             document.getElementById('header-left').innerHTML = `<h2 class="text-2xl font-bold text-slate-800">${titles[view] || 'Showcase Pro'}</h2>`;
             let btn = '';
             if(view==='rotom') document.getElementById('header-left').innerHTML += `<input type="date" id="date-picker" class="ml-4 bg-transparent font-bold text-slate-500" onchange="loadData('rotom')">`;
-            if(['rotines','pokeball','tm','team'].includes(view)) btn = `<button onclick="openCreateModal('${view}')" class="bg-swc-dark text-white px-5 py-2.5 rounded-lg font-bold shadow-lg hover:bg-black transition flex items-center gap-2"><i class="ph ph-plus"></i> Novo</button>`;
+            // ATUALIZADO: Agora 'rotom' (Tarefas) também tem botão Novo
+            if(['rotines','pokeball','tm','team','rotom'].includes(view)) btn = `<button onclick="openCreateModal('${view}')" class="bg-swc-dark text-white px-5 py-2.5 rounded-lg font-bold shadow-lg hover:bg-black transition flex items-center gap-2"><i class="ph ph-plus"></i> Novo</button>`;
             document.getElementById('header-action').innerHTML = btn;
             if(view==='rotom') { const d=document.getElementById('date-picker'); if(d && !d.value) d.value = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-'); }
         }
@@ -253,14 +309,26 @@
         }
 
         async function loadDashboardData() { 
-            const [s, t, u] = await Promise.all([fetch(`${API}/servers`).then(r=>r.json()), fetch(`${API}/tasks`).then(r=>r.json()), fetch(`${API}/users`).then(r=>r.json())]); 
+            const [s, t, u] = await Promise.all([
+                fetch(`${API}/servers`).then(r=>r.json()), 
+                fetch(`${API}/tasks`).then(r=>r.json()), 
+                fetch(`${API}/users`).then(r=>r.json())
+            ]); 
             
             // Logic: Production is anything NOT completed
             const inProduction = s.filter(x => x.status !== 'Concluído').length;
             
+            // --- NOVA LÓGICA DE TAREFAS ---
+            // Pendentes: Apenas DIÁRIAS que não foram concluídas
+            const dailyPending = t.filter(x => x.frequency === 'Diária' && x.status !== 'Concluído').length;
+            
+            // Feitas: Apenas SEMANAIS que foram concluídas
+            const weeklyDone = t.filter(x => x.frequency === 'Semanal' && x.status === 'Concluído').length;
+            // -----------------------------
+
             document.getElementById('dash-servers-count').innerText = inProduction;
-            document.getElementById('dash-tasks-pending').innerText = t.filter(x=>x.status==='Pendente').length; 
-            document.getElementById('dash-tasks-done').innerText = t.filter(x=>x.status==='Concluído').length; 
+            document.getElementById('dash-tasks-pending').innerText = dailyPending; 
+            document.getElementById('dash-tasks-done').innerText = weeklyDone; 
             document.getElementById('dash-team-count').innerText = u.length; 
             
             // Filter List Logic
@@ -595,7 +663,7 @@
         function renderTasks(list) { 
             const c = document.getElementById('tasks-container'); 
             if(list.length === 0) return c.innerHTML = '<p class="text-gray-400 col-span-3 text-center py-10">Sem tarefas para esta data.</p>'; 
-            const colors = { 'Diária': 'bg-blue-100 text-blue-700', 'Semanal': 'bg-purple-100 text-purple-700', 'Quinzenal': 'bg-cyan-100 text-cyan-700', 'Mensal': 'bg-orange-100 text-orange-700', 'Semestral': 'bg-pink-100 text-pink-700', 'Anual': 'bg-red-100 text-red-700' }; 
+            const colors = { 'Diária': 'bg-blue-100 text-blue-700', 'Semanal': 'bg-purple-100 text-purple-700', 'Quinzenal': 'bg-cyan-100 text-cyan-700', 'Mensal': 'bg-orange-100 text-orange-700', 'Semestral': 'bg-pink-100 text-pink-700', 'Anual': 'bg-red-100 text-red-700', 'Única': 'bg-yellow-100 text-yellow-700' }; 
             c.innerHTML = list.map((t, idx) => { 
                 const done = t.status === 'Concluído'; 
                 return `<div class="bg-white p-6 rounded-2xl border ${done ? 'opacity-60' : ''}"><div class="flex justify-between items-start mb-2"><div><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border w-fit ${colors[t.frequency] || 'bg-gray-100'} mb-1 inline-block">${t.frequency || 'Rotina'}</span><h4 class="font-bold text-lg leading-tight text-slate-800">${t.title}</h4></div>${done ? '<div class="bg-green-100 text-green-700 p-1.5 rounded-full"><i class="ph ph-check-fat text-lg"></i></div>' : ''}</div><div class="text-xs text-gray-500 mb-3 flex items-center gap-2"><div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-600">${t.assignedTo ? t.assignedTo.substring(0,2).toUpperCase() : 'TI'}</div>${t.assignedTo}</div><ul class="space-y-2 mb-4 flex-1 overflow-y-auto max-h-40 custom-scrollbar pr-1">${t.checklist.map((step, sIdx) => `<li class="flex items-start gap-3 group"><div class="relative flex items-center pt-0.5"><input type="checkbox" class="peer appearance-none w-4 h-4 border border-gray-300 rounded checked:bg-swc-green checked:border-swc-green cursor-pointer transition-colors" ${step.completed ? 'checked' : ''} ${done ? 'disabled' : ''} onchange="toggleTaskStep('${t.id}', ${sIdx}, this.checked)"><i class="ph ph-check text-white text-[10px] absolute top-1 left-[3px] pointer-events-none opacity-0 peer-checked:opacity-100"></i></div><div class="flex-1"><span class="text-sm ${step.completed ? 'line-through text-gray-400' : 'text-gray-600 font-medium'} transition-colors select-none cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('input').click()">${step.step}</span>${step.manual ? `<div class="mt-1 hidden group-hover:block animate-fade-in"><div class="text-[10px] bg-blue-50 text-blue-600 p-2 rounded border border-blue-100 font-mono"><i class="ph ph-info mr-1"></i> ${step.manual}</div></div>` : ''}</div></li>`).join('')}</ul>${!done ? `<button onclick="finishTask('${t.id}')" class="mt-auto w-full bg-swc-dark text-white text-sm font-bold py-2.5 rounded-xl hover:bg-black transition shadow-lg flex items-center justify-center gap-2"><i class="ph ph-check-circle"></i> Concluir Tarefa</button>` : ''}</div>`; 
@@ -611,6 +679,9 @@
         async function openCreateModal(view) { renderModalForm(view, null); }
         async function openEditModal(view, id) {
             let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : 'rotines'));
+            // ATUALIZADO: 'rotom' também usa endpoint 'tasks' mas a edição em si não estava implementada no card.
+            // Se o usuário clicar, vai tentar abrir. Se não houver suporte a edição completa na UI, ele só fecha.
+            // Para criação, o fluxo vai direto.
             try { 
                 const res = await fetch(`${API}/${endpoint}/${id}`); 
                 if(res.ok) renderModalForm(view, await res.json()); 
@@ -621,7 +692,8 @@
         async function renderModalForm(view, data) {
             const modal = document.getElementById('modal');
             const content = document.getElementById('modal-content');
-            let tplId = view === 'tm' ? 'tpl-manual' : (view === 'pokeball' ? 'tpl-server' : (view === 'team' ? 'tpl-team' : 'tpl-rotine'));
+            // ATUALIZADO: Mapeamento para o novo template
+            let tplId = view === 'tm' ? 'tpl-manual' : (view === 'pokeball' ? 'tpl-server' : (view === 'team' ? 'tpl-team' : (view === 'rotom' ? 'tpl-task' : 'tpl-rotine')));
             content.innerHTML = document.getElementById(tplId).innerHTML;
             
             modal.classList.remove('hidden');
@@ -632,8 +704,13 @@
             if(document.getElementById('modal-title')) document.getElementById('modal-title').innerText = isEdit ? 'Editar' : 'Novo';
 
             if(view === 'pokeball' || view === 'tm') await populateSelects();
+            
+            // ATUALIZADO: 'rotom' precisa de usuários e manuais (para checklist)
             if(view === 'team') await populateUserSelect(); 
-            if(view === 'rotines') await populateUserSelect();
+            if(view === 'rotines' || view === 'rotom') {
+                if(cachedTMs.length === 0) { try { const r = await fetch(`${API}/manuals`); cachedTMs = await r.json(); } catch(e){} }
+                await populateUserSelect();
+            }
 
             currentPhotos = { server: [], box: [] };
 
@@ -689,13 +766,24 @@
                 const steps = data.steps || data.template || [];
                 steps.forEach(s => addStep(s.title || s.step, s.manual)); 
             }
+            // ATUALIZADO: Preenchimento da Tarefa em caso de edição (futuro)
+            else if(view === 'rotom' && isEdit) {
+                 ['title','assignedTo','dueDate'].forEach(k => document.getElementById('inp-'+k).value = data[k]);
+                 if(data.checklist) data.checklist.forEach(s => addStep(s.step, s.manual));
+            }
+            else if(view === 'rotom' && !isEdit) {
+                // Preenche a data com o que estava no filtro ou hoje
+                const datePicker = document.getElementById('date-picker');
+                if(datePicker && datePicker.value) document.getElementById('inp-dueDate').value = datePicker.value;
+            }
             else if(view === 'tm' && isEdit) { ['title','category','content'].forEach(k => document.getElementById('inp-'+k).value = data[k]); }
 
             document.getElementById('form-generic').onsubmit = async (e) => { e.preventDefault(); await saveData(view, isEdit ? data.id : null); }
         }
         
         async function saveData(view, id) {
-            let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : 'rotines'));
+            // ATUALIZADO: Definição correta do endpoint para rotom -> tasks
+            let endpoint = view === 'tm' ? 'manuals' : (view === 'pokeball' ? 'servers' : (view === 'team' ? 'users' : (view === 'rotom' ? 'tasks' : 'rotines')));
             let body = { userAction: currentUser.name };
             const method = id ? 'PUT' : 'POST';
             const url = id ? `${API}/${endpoint}/${id}` : `${API}/${endpoint}`;
@@ -735,6 +823,19 @@
             } 
             else if (view === 'team') { Object.assign(body, { name: document.getElementById('inp-name').value, role: document.getElementById('inp-role').value, initials: document.getElementById('inp-initials').value, email: document.getElementById('inp-email').value, password: document.getElementById('inp-password').value }); if(!id) body.color = ['bg-red-500','bg-blue-500','bg-green-500'][Math.floor(Math.random()*3)]; } 
             else if (view === 'rotines') { const steps = []; document.querySelectorAll('.step-item').forEach(div => steps.push({ title: div.querySelector('.step-title').value, manual: div.querySelector('.step-manual').value })); Object.assign(body, { title: document.getElementById('inp-title').value, frequency: document.getElementById('inp-frequency').value, assignedTo: document.getElementById('inp-assignedTo').value, steps }); } 
+            // ATUALIZADO: Lógica de salvar Tarefa Avulsa
+            else if (view === 'rotom') {
+                const steps = []; 
+                document.querySelectorAll('.step-item').forEach(div => steps.push({ step: div.querySelector('.step-title').value, manual: div.querySelector('.step-manual').value, completed: false })); 
+                Object.assign(body, { 
+                    title: document.getElementById('inp-title').value, 
+                    dueDate: document.getElementById('inp-dueDate').value, 
+                    assignedTo: document.getElementById('inp-assignedTo').value, 
+                    frequency: 'Única',
+                    status: 'Pendente',
+                    checklist: steps 
+                });
+            }
             else if (view === 'tm') { Object.assign(body, { title: document.getElementById('inp-title').value, category: document.getElementById('inp-category').value, content: document.getElementById('inp-content').value }); }
 
             try { 

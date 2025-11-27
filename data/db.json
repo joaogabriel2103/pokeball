@@ -267,6 +267,184 @@
       ],
       "history": [],
       "createdAt": "2025-11-27T15:20:18.163Z"
+    },
+    {
+      "id": "872e8831-0b73-40c1-a42b-6dfabf13090b",
+      "title": "Rotina Diária TI",
+      "templateId": "46228d9a-471e-4f0d-a3b6-c477118e7ec4",
+      "dueDate": "2025-11-26",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "assignedTo": "Eduardo Bacchiega",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi.\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\" com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia.",
+          "completed": true
+        },
+        {
+          "step": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices.\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo.\n4 - Verificar se o \"10.10.12.1\" está acessível.",
+          "completed": true
+        },
+        {
+          "step": "Olhar Deskmanager e designar novos chamados em aberto",
+          "manual": "1 - Acessar o DeskManager com seu login.\n2 - https://showcasepro.desk.ms/?Ticket#ChamadosSuporte -> Checar Chamados na Distribuição \"Na Fila\".\n3 - Abrir a Aba Transferência e definir o destino Grupo ou Operador.\n4 - Salvar",
+          "completed": true
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-27T15:34:42.398Z"
+    },
+    {
+      "id": "5114a58d-b7b0-4b9d-8e35-1ff5f31dfebc",
+      "title": "Rotina Diária Infra/Prod",
+      "templateId": "e27c29e4-bffe-466c-a6a1-faef8422d7e9",
+      "dueDate": "2025-11-26",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "assignedTo": "Keven Ramos",
+      "checklist": [
+        {
+          "step": "Ligar servidores em montagem na Bancada",
+          "manual": "1 - Verifique se há algum servidor sendo instalado pela equipe de DEV e ligue se necessário.\n2 - Certifique que estão acessíveis.",
+          "completed": true
+        },
+        {
+          "step": "Checar Monitoração",
+          "manual": "1 - Na Sala 2G visualize se todos os decoders estão com sinais na televisão de monitoração.\n2 - Caso algum esteja \"Sem Sinal\" reinicie ou troque a saída do divisor.",
+          "completed": true
+        },
+        {
+          "step": "Aferindo baias de PROD 19C",
+          "manual": "1 - Faça uma análise superficial na sala para garantir que as produções estejam sendo executadas corretamente.",
+          "completed": true
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-27T15:34:42.398Z"
+    },
+    {
+      "id": "8f3d84e8-540e-4aee-b020-65eb903cc74d",
+      "title": "Rotina Diária Infra/TI/Redes",
+      "templateId": "688e3c29-928c-4e8c-a272-de9106b943b9",
+      "dueDate": "2025-11-26",
+      "frequency": "Diária",
+      "status": "Concluído",
+      "assignedTo": "João Gabriel",
+      "checklist": [
+        {
+          "step": "Checar disponibilidade de servidores na 115G",
+          "manual": "1 - Na sala 115G verificar servidores no rack e garantir que todos estão ligados e acessíveis.\n",
+          "completed": true
+        },
+        {
+          "step": "Conferir a rotina de Backup do MAM SP para o Drive",
+          "manual": "1 - Acessar o https://drive.google.com/drive/u/0/folders/1mFbXOMnUuuPEBhbHfBkbETe6sktxyBKz.\n2 - Checar a Data do último upload.",
+          "completed": true
+        },
+        {
+          "step": "Checagem de montagem e supervisão de entregas",
+          "manual": "1 - Checar como está a montagem de equipamentos/produtos.\n2 - Garantir a qualidade na montagem entrega de produtos.",
+          "completed": true
+        },
+        {
+          "step": "Garantir que todos os equipamentos de rede estejam acessíveis.",
+          "manual": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices.\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo.\n4 - Checar Status do Pfsense",
+          "completed": true
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-27T15:34:42.398Z"
+    },
+    {
+      "id": "1ef16cae-7dfc-4cb8-8af4-e614c87e54d8",
+      "title": "Rotina Diária TI",
+      "templateId": "46228d9a-471e-4f0d-a3b6-c477118e7ec4",
+      "dueDate": "2025-11-25",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "Eduardo Bacchiega",
+      "checklist": [
+        {
+          "step": "Ligar TV do T.I e Iniciar Dashboard",
+          "manual": "1 - Ligar Cubi.\n2 - Acessar pelo teamviewer \"swc-monitoramento-ti\" com senha difícil.\n3 - Abrir Google Chrome e acessar todos os links que estão favoritados.\n4 - Apertar F11 para ficar em modo Tela Cheia.",
+          "completed": false
+        },
+        {
+          "step": "Checar Dispositivos UNIFI e Pfsense",
+          "manual": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices.\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo.\n4 - Verificar se o \"10.10.12.1\" está acessível.",
+          "completed": false
+        },
+        {
+          "step": "Olhar Deskmanager e designar novos chamados em aberto",
+          "manual": "1 - Acessar o DeskManager com seu login.\n2 - https://showcasepro.desk.ms/?Ticket#ChamadosSuporte -> Checar Chamados na Distribuição \"Na Fila\".\n3 - Abrir a Aba Transferência e definir o destino Grupo ou Operador.\n4 - Salvar",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-27T15:34:43.939Z"
+    },
+    {
+      "id": "49fa36f1-7514-4218-a625-fac81e21d124",
+      "title": "Rotina Diária Infra/Prod",
+      "templateId": "e27c29e4-bffe-466c-a6a1-faef8422d7e9",
+      "dueDate": "2025-11-25",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "Keven Ramos",
+      "checklist": [
+        {
+          "step": "Ligar servidores em montagem na Bancada",
+          "manual": "1 - Verifique se há algum servidor sendo instalado pela equipe de DEV e ligue se necessário.\n2 - Certifique que estão acessíveis.",
+          "completed": false
+        },
+        {
+          "step": "Checar Monitoração",
+          "manual": "1 - Na Sala 2G visualize se todos os decoders estão com sinais na televisão de monitoração.\n2 - Caso algum esteja \"Sem Sinal\" reinicie ou troque a saída do divisor.",
+          "completed": false
+        },
+        {
+          "step": "Aferindo baias de PROD 19C",
+          "manual": "1 - Faça uma análise superficial na sala para garantir que as produções estejam sendo executadas corretamente.",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-27T15:34:43.939Z"
+    },
+    {
+      "id": "ee116e8c-2a1e-4115-a37f-5026bc324512",
+      "title": "Rotina Diária Infra/TI/Redes",
+      "templateId": "688e3c29-928c-4e8c-a272-de9106b943b9",
+      "dueDate": "2025-11-25",
+      "frequency": "Diária",
+      "status": "Pendente",
+      "assignedTo": "João Gabriel",
+      "checklist": [
+        {
+          "step": "Checar disponibilidade de servidores na 115G",
+          "manual": "1 - Na sala 115G verificar servidores no rack e garantir que todos estão ligados e acessíveis.\n",
+          "completed": false
+        },
+        {
+          "step": "Conferir a rotina de Backup do MAM SP para o Drive",
+          "manual": "1 - Acessar o https://drive.google.com/drive/u/0/folders/1mFbXOMnUuuPEBhbHfBkbETe6sktxyBKz.\n2 - Checar a Data do último upload.",
+          "completed": false
+        },
+        {
+          "step": "Checagem de montagem e supervisão de entregas",
+          "manual": "1 - Checar como está a montagem de equipamentos/produtos.\n2 - Garantir a qualidade na montagem entrega de produtos.",
+          "completed": false
+        },
+        {
+          "step": "Garantir que todos os equipamentos de rede estejam acessíveis.",
+          "manual": "1 - Acessar o seguinte link e verificar dispositivos \"ONLINE\"\n\nhttps://unifi.ui.com/consoles/D021F957703900000000063CBB87000000000686B42F0000000061C7414D:30048393/network/default/devices.\n\n2 - Caso tenha algum \"UP TO DATE\" reiniciar individualmente para que o mesmo atualize.\n3 - Caso tenha algum \"OFFLINE\" se direcionar ao setor e ligá-lo.\n4 - Checar Status do Pfsense",
+          "completed": false
+        }
+      ],
+      "history": [],
+      "createdAt": "2025-11-27T15:34:43.939Z"
     }
   ],
   "users": [
