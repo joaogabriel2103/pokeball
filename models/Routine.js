@@ -1,10 +1,24 @@
+// models/Routine.js
 import mongoose from 'mongoose';
 
 const RoutineSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  title: String,
-  frequency: String,
-  assignedTo: { type: [String], default: [] }, // MUDA: de String para Array de Strings  steps: [mongoose.Schema.Types.Mixed] // Ou defina a estrutura exata se souber
-});
+    // 🔥 CORREÇÃO: ID manual obrigatório
+    id: { type: String, required: true, unique: true },
+    
+    title: { type: String, required: true },
+    frequency: String,
+    
+    // 🔥 CORREÇÃO: Aceita array de usuários
+    assignedTo: { type: mongoose.Schema.Types.Mixed, required: true },
+    
+    // Normalização dos passos (steps)
+    steps: [{
+        title: String, 
+        step: String, // O front as vezes envia 'step', as vezes 'title'
+        manual: String
+    }],
+    
+    createdAt: { type: Date, default: Date.now }
+}, { strict: false });
 
-export default mongoose.model('rotines', RoutineSchema);
+export default mongoose.model('Routine', RoutineSchema);
