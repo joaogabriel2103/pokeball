@@ -453,7 +453,7 @@ app.post('/api/notify', async (req, res) => {
             }
 
             let pdfDownloadLink = '';
-            if (pdf) { try { const base64Data = pdf.split(',')[1]; const urlSafeName = `Laudo_${Date.now()}_${safeClient.replace(/\s+/g, '')}.pdf`; fs.writeFileSync(path.join(UPLOADS_DIR, urlSafeName), Buffer.from(base64Data, 'base64')); pdfDownloadLink = `\n\n📄 *Baixar Laudo (PDF):* http://localhost:3000/uploads/${urlSafeName}`; } catch(e) { } }
+            if (pdf) { try { const base64Data = pdf.split(',')[1]; const urlSafeName = `Laudo_${Date.now()}_${safeClient.replace(/\s+/g, '')}.pdf`; fs.writeFileSync(path.join(UPLOADS_DIR, urlSafeName), Buffer.from(base64Data, 'base64')); pdfDownloadLink = `\n\n📄 *Baixar Laudo (PDF):* https://10.90.90.65:3000/uploads/${urlSafeName}`; } catch(e) { } }
 
             await sendInAppNotification('Comercial', 'Equipamento Finalizado', `A T.I gerou o laudo final para ${safeClient}.`, 'status');
             await sendToChat(`*${threadSubject}*\n\n${bodyContent}${pdfDownloadLink}`, threadSubject); 

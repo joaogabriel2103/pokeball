@@ -11,6 +11,7 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import https from 'https'; // HTTPS Mantido
 
 // Importação dos Modelos
 import TaskModel from './models/Task.js';
@@ -31,6 +32,11 @@ const UPLOADS_DIR = path.join(PUBLIC_DIR, 'uploads');
 
 if (!fs.existsSync(PUBLIC_DIR)) console.error('❌ ERRO CRÍTICO: Pasta "public" não encontrada!');
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+
+const httpsOptions = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+};
 
 // --- ⚙️ CONFIGURAÇÕES ---
 const CONFIG = {
@@ -385,6 +391,7 @@ Object.keys(models).forEach(col => {
 });
 
 // --- ROTA DE NOTIFICAÇÃO HÍBRIDA (TAREFAS + SERVIDORES + ORDENS) ---
+// --- ROTA DE NOTIFICAÇÃO HÍBRIDA (TAREFAS + SERVIDORES + ORDENS) ---
 app.post('/api/notify', async (req, res) => {
     try {
         if (req.body.type === 'order_created') {
@@ -446,7 +453,7 @@ app.post('/api/notify', async (req, res) => {
             }
 
             let pdfDownloadLink = '';
-            if (pdf) { try { const base64Data = pdf.split(',')[1]; const urlSafeName = `Laudo_${Date.now()}_${safeClient.replace(/\s+/g, '')}.pdf`; fs.writeFileSync(path.join(UPLOADS_DIR, urlSafeName), Buffer.from(base64Data, 'base64')); pdfDownloadLink = `\n\n📄 *Baixar Laudo (PDF):* http://localhost:3000/uploads/${urlSafeName}`; } catch(e) { } }
+            if (pdf) { try { const base64Data = pdf.split(',')[1]; const urlSafeName = `Laudo_${Date.now()}_${safeClient.replace(/\s+/g, '')}.pdf`; fs.writeFileSync(path.join(UPLOADS_DIR, urlSafeName), Buffer.from(base64Data, 'base64')); pdfDownloadLink = `\n\n📄 *Baixar Laudo (PDF):* https://10.90.90.65:3000/uploads/${urlSafeName}`; } catch(e) { } }
 
             await sendInAppNotification('Comercial', 'Equipamento Finalizado', `A T.I gerou o laudo final para ${safeClient}.`, 'status');
             await sendToChat(`*${threadSubject}*\n\n${bodyContent}${pdfDownloadLink}`, threadSubject); 
@@ -557,4 +564,7 @@ setInterval(() => {
     if (now.getHours() === 16 && now.getMinutes() === 0) checkAndNotifyDelays();
 }, 60000);
 
-app.listen(PORT, '0.0.0.0', () => { console.log(`🚀 Server HTTP V61 (Notificações Integradas) Rodando na porta ${PORT}`); });
+// --- INICIALIZAÇÃO HTTPS ---
+https.createServer(httpsOptions, app).listen(PORT, '0.0.0.0', () => {
+    console.log(`🔒 Server POKEDEX Rodando na porta ${PORT}`);
+});

@@ -177,7 +177,7 @@
                     </div>
 
                     <div id="section-hardware" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> PLATAFORMA</h4>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> Plataforma</h4>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5">
                             <div class="field-wrapper" id="wrapper-vendor"><label class="block text-xs font-bold text-slate-500 mb-1.5">Fabricante</label><select id="inp-vendor" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-secondary"></select></div>
                             <div class="col-span-1 md:col-span-2 field-wrapper" id="wrapper-model"><label class="block text-xs font-bold text-slate-500 mb-1.5">Modelo</label><input type="text" id="inp-model" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-secondary"></div>
@@ -553,7 +553,7 @@
             try { await fetch(`${API}/options/${id}`, { method: 'DELETE' }); showToast('Opção removida!'); loadData('settings'); } catch(e) { showToast('Erro ao remover', 'error'); }
         }        
 
-        async function viewServerDetails(id) {
+	async function viewServerDetails(id) {
             try {
                 let s = allServers.find(x => x.id === id);
                 if (!s) { const res = await fetch(`${API}/servers/${id}`); if (res.ok) s = await res.json(); else throw new Error('Not found'); }
@@ -1072,7 +1072,7 @@
         function renderTMs(list) { document.getElementById('manuals-container').innerHTML = list.map(i => `<div onclick="navigateTo('tm', '${i.id}')" class="bg-white p-6 rounded-2xl border hover:shadow-md cursor-pointer group relative"><h4 class="font-bold text-lg mb-2 text-slate-800 font-display">${i.title}</h4><span class="text-xs bg-gray-100 px-2 py-1 rounded text-slate-500">${i.category}</span><p class="text-xs text-slate-400 mt-4 line-clamp-3 font-mono">${i.content}</p></div>`).join(''); }
         function renderRotinesList(list) { document.getElementById('rotines-list-container').innerHTML = list.map(i => `<div onclick="navigateTo('rotines', '${i.id}')" class="bg-white p-4 rounded border flex justify-between items-center cursor-pointer hover:bg-gray-50"><div><h4 class="font-bold text-lg text-slate-800 font-display">${i.title}</h4><p class="text-sm text-slate-500">${Array.isArray(i.assignedTo) ? i.assignedTo.join(', ') : i.assignedTo} | ${i.frequency}</p></div><i class="ph ph-caret-right text-slate-400"></i></div>`).join(''); }
 
-        function renderStatusPanel() {
+	function renderStatusPanel() {
             const container = document.getElementById('status-container'); if (!container) return;
             const term = (document.getElementById('status-search')?.value || '').toLowerCase();
             let activeServers = allServers.filter(s => s.status !== 'Concluído' && s.status !== 'Cancelado');
