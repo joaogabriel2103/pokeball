@@ -39,12 +39,20 @@ const CONFIG = {
         port: 587,
         secure: false,
         user: 'alertas@showcasepro.com.br',
-        pass: 'cafe iysx tkwj obny' 
+        pass: 'cafe iysx tkwj obny' // Troque essa senha no Google depois!
     },
-    emailDestino: 'jgoncalves@showcasepro.com.br',
-    financeiroEmail: 'ativosswc@showcasepro.com.br',
-    googleChatWebhook: [
-         'https://chat.googleapis.com/v1/spaces/AAQAn3lW-gI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=9S2SEYXgKXonAEtTPuTsz17wcL0-6WhwxwXWd0ouHFk'
+    emailDestino: 'ti@showcasepro.com.br',
+    financeiroEmail: 'financeiro@showcasepro.com.br',
+    
+    // webhookGeral: Agora é uma LISTA (Array) para aceitar várias URLs
+    webhookGeral: [
+        'https://chat.googleapis.com/v1/spaces/AAQA5dO9Txo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=hVE7zljSHdXH9JkK2r0L8E2Xjwu_ilCyH7wdWF6L3b8',
+        'https://chat.googleapis.com/v1/spaces/AAQAn3lW-gI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=9S2SEYXgKXonAEtTPuTsz17wcL0-6WhwxwXWd0ouHFk'
+    ],
+    
+    // webhookServidores: Também deixei como LISTA para mantermos o mesmo padrão
+    webhookServidores: [
+        'https://chat.googleapis.com/v1/spaces/AAAAJB7VM8M/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PBFvZvKF6jut-XLn3j9lk7mTunTSw1cAyzgF9I2yYmo'
     ]
 };
 
@@ -142,10 +150,29 @@ const transporter = nodemailer.createTransport({
     auth: { user: CONFIG.email.user, pass: CONFIG.email.pass }
 });
 
-const sendToChat = async (textMessage, threadKey = null) => {
-    if (!CONFIG.googleChatWebhook || !Array.isArray(CONFIG.googleChatWebhook)) return;
+const sendToChat = async (textMessage, threadKey = null, isTaskFlag = false) => {
+    // 1. INTELIGÊNCIA DE ROTEAMENTO EXATA
+    // Agora ele só considera Tarefa se a gente avisar explicitamente (isTaskFlag = true)
+    // Ignoramos a leitura de texto para evitar envios falsos!
+    const isTarefa = isTaskFlag;
+
+    // 2. MONTA A LISTA DE QUEM VAI RECEBER
+    let urlsParaNotificar = [];
     
-    const envios = CONFIG.googleChatWebhook.map(async (url) => {
+    // O Geral recebe tudo (Soma as listas de URLs)
+    if (CONFIG.webhookGeral) {
+        urlsParaNotificar = urlsParaNotificar.concat(CONFIG.webhookGeral);
+    }
+    
+    // O Servidores só recebe se NÃO for Tarefa (Soma na lista também)
+    if (CONFIG.webhookServidores && !isTarefa) {
+        urlsParaNotificar = urlsParaNotificar.concat(CONFIG.webhookServidores);
+    }
+
+    if (urlsParaNotificar.length === 0) return; // Nenhuma URL configurada
+    
+    // 3. FAZ O DISPARO PARA AS URLS DA LISTA
+    const envios = urlsParaNotificar.map(async (url) => {
         try {
             let fetchUrl = url;
             if (threadKey) {
@@ -171,7 +198,9 @@ const sendToChat = async (textMessage, threadKey = null) => {
                     else console.log('✅ Mensagem entregue ao Chat (Plano B concluído).');
                 }
             } else {
-                console.log('✅ Mensagem entregue ao Chat com sucesso.');
+                // Log corrigido para identificar corretamente se a URL é do array Geral ou Servidores
+                const nomeWebhook = (CONFIG.webhookGeral || []).includes(url) ? 'Geral' : 'Servidores';
+                console.log(`✅ Mensagem entregue com sucesso ao Webhook (${nomeWebhook}).`);
             }
         } catch (e) { 
             // Só cai aqui se a internet cair ou der timeout
@@ -224,7 +253,7 @@ const checkAndNotifyDelays = async () => {
     const pendingTasks = await TaskModel.find({ dueDate: today, status: { $ne: 'Concluído' }, isDeleted: { $ne: true } });
     if (pendingTasks.length > 0) {
         const taskList = pendingTasks.map(t => `• ${t.title} (Resp: ${t.assignedTo || 'T.I'})`).join('\n');
-        sendToChat(`⚠️ *ALERTA DE PENDÊNCIAS* - ${today}\n\n${taskList}\n\nFavor regularizar.`);
+        sendToChat(`⚠️ *ALERTA DE PENDÊNCIAS* - ${today}\n\n${taskList}\n\nFavor regularizar.`, null, true);
         await sendInAppNotification('T.I', 'Pendências do Dia', `Existem ${pendingTasks.length} tarefas não concluídas hoje.`, 'rotom');
     }
 };
@@ -356,7 +385,6 @@ Object.keys(models).forEach(col => {
 });
 
 // --- ROTA DE NOTIFICAÇÃO HÍBRIDA (TAREFAS + SERVIDORES + ORDENS) ---
-// --- ROTA DE NOTIFICAÇÃO HÍBRIDA (TAREFAS + SERVIDORES + ORDENS) ---
 app.post('/api/notify', async (req, res) => {
     try {
         if (req.body.type === 'order_created') {
@@ -452,7 +480,11 @@ app.post('/api/notify', async (req, res) => {
             msg += `\nShowCase PRO`;
 
             await sendInAppNotification('Todos', 'Tarefa Concluída', `${user} concluiu: ${title}`, 'rotom');
-            await sendToChat(msg); await transporter.sendMail({ from: `"ShowCase PRO" <${CONFIG.email.user}>`, to: CONFIG.emailDestino, subject: `Tarefa Concluída: ${title}`, text: msg });
+            
+            // 👉 A MÁGICA ACONTECE AQUI: Adicionamos o "null, true" para avisar que é uma Tarefa!
+            await sendToChat(msg, null, true); 
+            
+            await transporter.sendMail({ from: `"ShowCase PRO" <${CONFIG.email.user}>`, to: CONFIG.emailDestino, subject: `Tarefa Concluída: ${title}`, text: msg });
             return res.json({ success: true });
         }
 

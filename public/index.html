@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ShowCase Pro - V61</title>
+    <title>CRM - SHOWCASEPRO</title>
     
     <link rel="icon" href="data:,">
     
@@ -177,7 +177,7 @@
                     </div>
 
                     <div id="section-hardware" class="step-content bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> Plataforma</h4>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-5 flex items-center gap-2"><i class="ph ph-cpu text-lg"></i> PLATAFORMA</h4>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5">
                             <div class="field-wrapper" id="wrapper-vendor"><label class="block text-xs font-bold text-slate-500 mb-1.5">Fabricante</label><select id="inp-vendor" class="w-full border border-gray-300 rounded-lg p-3 bg-white outline-none focus:border-swc-secondary"></select></div>
                             <div class="col-span-1 md:col-span-2 field-wrapper" id="wrapper-model"><label class="block text-xs font-bold text-slate-500 mb-1.5">Modelo</label><input type="text" id="inp-model" class="w-full border border-gray-300 rounded-lg p-3 outline-none focus:border-swc-secondary"></div>
@@ -645,9 +645,8 @@
                                 <div class="grid grid-cols-2 gap-y-2 gap-x-4">
                                     <div class="col-span-2"><span class="text-gray-400 block text-[10px] uppercase">Produto</span> <strong class="text-sm text-slate-700">${s.product || '-'}</strong></div>
                                     <div><span class="text-gray-400 block text-[10px] uppercase">Modelo</span> <strong>${s.vendor || ''} ${s.model || '-'}</strong></div>
-                                    <div><span class="text-gray-400 block text-[10px] uppercase">S/N (Tag)</span> <strong class="font-mono text-swc-secondary">${s.serial || '-'}</strong></div>
-                                    <div><span class="text-gray-400 block text-[10px] uppercase">Hostname</span> <strong class="font-mono">${s.hostname || '-'}</strong></div>
-                                    <div><span class="text-gray-400 block text-[10px] uppercase">IP Manutenção</span> <strong class="font-mono">${s.qa_ip || '-'}</strong></div>
+                                    <div><span class="text-gray-400 block text-[10px] uppercase">Processador</span> <strong>${s.cpu || '-'}</strong></div>
+                                    <div class="col-span-2"><span class="text-gray-400 block text-[10px] uppercase">S/N (Tag)</span> <strong class="font-mono text-swc-secondary">${s.serial || '-'}</strong></div>
                                 </div>
                                 <div class="mt-3 text-xs text-slate-700 border-t border-swc-sidebar/10 pt-2">${compHtml ? compHtml : '<span class="italic text-gray-400">Sem discos ou placas registrados.</span>'}</div>
                             </div>
